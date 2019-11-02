@@ -7,6 +7,13 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".tsx", ".js"]
   },
+  devServer: {
+    open: true,
+    openPage:"index.html",
+    contentBase: path.join(__dirname, 'dist'),
+    watchContentBase: true,
+    port: 3000,
+  },
   module: {
     rules: [
       {
@@ -27,7 +34,7 @@ module.exports = {
   },
   output: {
     filename: "index.js",
-    path: path.resolve(__dirname, "dist"),
-    libraryTarget: "this"
+    path: path.join(__dirname, "dist"),
+    libraryTarget: "this",
   }
 };
