@@ -1,0 +1,53 @@
+{
+  "name": "rich-todos",
+  "version": "1.0.0",
+  "description": "rich todo app for testing frontend tech",
+  "main": "dist/index.js",
+  "author": "Kei Fujikawa",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "remove": "rm -rf dist/; mkdir -p dist/",
+    "start": "yarn remove; cp src/index.html dist/index.html; webpack -w",
+    "build": "webpack",
+    "watch": "webpack -w",
+    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.9.3",
+    "@typescript-eslint/eslint-plugin": "^2.6.0",
+    "@typescript-eslint/parser": "^2.6.0",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.16.0",
+    "husky": "^3.0.9",
+    "lint-staged": "^9.4.2",
+    "path": "^0.12.7",
+    "prettier": "^1.18.2",
+    "source-map-loader": "^0.2.4",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.6.4",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
+}
