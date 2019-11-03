@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import { Hello } from './components/Hello';
+import { IndexPage } from './components/IndexPage';
 
-ReactDOM.render(<Hello />, document.getElementById('example'));
+ReactDOM.render(<IndexPage />, document.getElementById('example'));

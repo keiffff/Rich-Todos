@@ -38,6 +38,9 @@
   "dependencies": {
     "@material-ui/core": "^4.5.2",
     "@material-ui/icons": "^4.5.1",
+    "@types/classnames": "^2.2.9",
+    "classnames": "^2.2.6",
+    "emotion": "^10.0.23",
     "react": "^16.11.0",
     "react-dom": "^16.11.0"
   },
