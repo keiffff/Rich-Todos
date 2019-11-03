@@ -3,4 +3,4 @@ import * as ReactDOM from 'react-dom';
 
 import { IndexPage } from './components/IndexPage';
 
-ReactDOM.render(<IndexPage />, document.getElementById('example'));
+ReactDOM.render(<IndexPage />, document.getElementById('app'));
