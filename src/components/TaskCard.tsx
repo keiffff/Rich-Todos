@@ -2,6 +2,11 @@ import * as React from 'react';
 import { css } from 'emotion';
 import { Avatar, Card, CardActions, CardContent, CardHeader, Fab } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
+import { Task } from '../models/models';
+
+type Props = {
+  task: Task;
+};
 
 const cardStyle = css({
   width: 296,
@@ -15,7 +20,7 @@ const buttonContainerStyle = css({
   marginLeft: 'auto',
 });
 
-export const TaskCard = () => {
+export const TaskCard = ({ task }: Props) => {
   return (
     <Card className={cardStyle}>
       <CardHeader
@@ -26,10 +31,10 @@ export const TaskCard = () => {
             </span>
           </Avatar>
         )}
-        title="task"
-        subheader="2019/11/3"
+        title={task.title}
+        subheader="Add ServerTimeStamp here"
       />
-      <CardContent>Task</CardContent>
+      <CardContent>{task.content}</CardContent>
       <CardActions>
         <div className={buttonContainerStyle}>
           <Fab color="primary">

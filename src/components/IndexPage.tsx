@@ -3,6 +3,7 @@ import ClassNames from 'classnames';
 import { css } from 'emotion';
 import { AppBar, Grid } from '@material-ui/core';
 import { TaskLane } from './TaskLane';
+import { tasks } from '../mocks/index';
 
 const baseStyle = css({
   verticalAlign: 'center',
@@ -39,13 +40,7 @@ export const IndexPage = () => {
       </AppBar>
       <Grid container>
         <Grid item xs={4}>
-          <TaskLane />
-        </Grid>
-        <Grid item xs={4}>
-          <TaskLane />
-        </Grid>
-        <Grid item xs={4}>
-          <TaskLane />
+          <TaskLane tasks={tasks} />
         </Grid>
       </Grid>
     </div>
