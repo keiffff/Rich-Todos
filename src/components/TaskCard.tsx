@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { css } from 'emotion';
-import { Avatar, Card, CardActions, CardContent, CardHeader, Fab } from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
+import { Avatar, Card, CardActions, CardContent, CardHeader, Chip, Fab } from '@material-ui/core';
+import { Edit } from '@material-ui/icons';
 import { Task } from '../models/models';
 
 type Props = {
@@ -16,8 +16,11 @@ const avatarStyle = css({
   background: 'black',
 });
 
-const buttonContainerStyle = css({
-  marginLeft: 'auto',
+const footerStyle = css({
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
 });
 
 export const TaskCard = ({ task }: Props) => {
@@ -36,11 +39,16 @@ export const TaskCard = ({ task }: Props) => {
       />
       <CardContent>{task.content}</CardContent>
       <CardActions>
-        <div className={buttonContainerStyle}>
+        <footer className={footerStyle}>
+          <div>
+            {task.labels.map(label => (
+              <Chip key={label} label={label} />
+            ))}
+          </div>
           <Fab color="primary">
-            <EditIcon />
+            <Edit />
           </Fab>
-        </div>
+        </footer>
       </CardActions>
     </Card>
   );
