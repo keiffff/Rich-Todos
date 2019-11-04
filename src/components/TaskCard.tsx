@@ -12,10 +12,6 @@ const cardStyle = css({
   width: 296,
 });
 
-const avatarStyle = css({
-  background: 'black',
-});
-
 const footerStyle = css({
   width: '100%',
   display: 'flex',
@@ -27,13 +23,13 @@ export const TaskCard = ({ task }: Props) => {
   return (
     <Card className={cardStyle}>
       <CardHeader
-        avatar={(
-          <Avatar className={avatarStyle}>
+        avatar={
+          <Avatar>
             <span role="img" aria-label="task">
               📌
             </span>
           </Avatar>
-        )}
+        }
         title={task.title}
         subheader="Add ServerTimeStamp here"
       />

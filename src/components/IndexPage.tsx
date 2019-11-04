@@ -7,10 +7,6 @@ import { TaskLane } from './TaskLane';
 import { tasks } from '../mocks/index';
 import { Task, TaskStatus } from '../models/models';
 
-const baseStyle = css({
-  verticalAlign: 'center',
-});
-
 const offsetStyle = css({
   paddingTop: 72,
 });
@@ -55,7 +51,7 @@ export const IndexPage = () => {
   const doneTasks = (tasks as Task[]).filter(task => task.status === TaskStatus.done);
 
   return (
-    <div className={ClassNames(offsetStyle, baseStyle)}>
+    <div className={ClassNames(offsetStyle)}>
       <AppBar className={headerStyle} color="default">
         <div className={headerTitleContainerStyle}>
           <h1 className={headerTitleStyle}>Rich Todos</h1>
