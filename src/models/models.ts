@@ -1,4 +1,8 @@
-export type TaskStatus = 'TODO' | 'IN_PROGRESS' | 'DONE';
+export enum TaskStatus {
+  todo = 'TODO',
+  inProgress = 'IN_PROGRESS',
+  done = 'DONE',
+}
 
 export type Task = {
   title: string;

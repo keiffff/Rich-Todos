@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { css } from 'emotion';
 import { TaskCard } from './TaskCard';
-import { Task } from '../models/models';
+import { Task, TaskStatus } from '../models/models';
 
 type Props = {
   tasks: Task[];
@@ -28,18 +28,23 @@ const taskListStyle = css({
   },
 });
 
+const taskStatusText: { [K in TaskStatus]: string } = {
+  [TaskStatus.todo]: 'Todo',
+  [TaskStatus.inProgress]: 'In Progress',
+  [TaskStatus.done]: 'Done',
+};
+
 export const TaskLane = ({ tasks }: Props) => {
-  const todoTasks = tasks.filter(task => task.status === 'TODO');
-  const inProgressTasks = tasks.filter(task => task.status === 'IN_PROGRESS');
-  const doneTasks = tasks.filter(task => task.status === 'DONE');
+  const todoTasks = tasks.filter(task => task.status === TaskStatus.todo);
+  const inProgressTasks = tasks.filter(task => task.status === TaskStatus.inProgress);
+  const doneTasks = tasks.filter(task => task.status === TaskStatus.done);
 
   return (
     <section className={baseStyle}>
       <div>
         <header>
           <span className={headerTextStyle}>
-            Todo:
-            {todoTasks.length}
+            {taskStatusText.TODO}: {todoTasks.length}
           </span>
         </header>
         <ul className={taskListStyle}>
@@ -53,8 +58,7 @@ export const TaskLane = ({ tasks }: Props) => {
       <div>
         <header>
           <span className={headerTextStyle}>
-            In progress:
-            {inProgressTasks.length}
+            {taskStatusText.IN_PROGRESS}: {inProgressTasks.length}
           </span>
         </header>
         <ul className={taskListStyle}>
@@ -68,8 +72,7 @@ export const TaskLane = ({ tasks }: Props) => {
       <div>
         <header>
           <span className={headerTextStyle}>
-            Done:
-            {doneTasks.length}
+            {taskStatusText.DONE}: {doneTasks.length}
           </span>
         </header>
         <ul className={taskListStyle}>

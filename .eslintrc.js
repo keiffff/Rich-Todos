@@ -43,6 +43,9 @@ module.exports = {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
     ],
+    'react/jsx-one-expression-per-line': [
+      'off'
+    ]
   },
   settings: {
     'import/parsers': {
