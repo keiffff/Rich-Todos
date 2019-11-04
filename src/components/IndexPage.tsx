@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ClassNames from 'classnames';
 import { css } from 'emotion';
-import { AppBar, Grid, Fab } from '@material-ui/core';
+import { AppBar, Fab } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import { TaskLane } from './TaskLane';
 import { tasks } from '../mocks/index';
@@ -45,11 +45,7 @@ export const IndexPage = () => {
           <h1 className={headerTitleStyle}>Rich Todos</h1>
         </div>
       </AppBar>
-      <Grid container>
-        <Grid item xs={4}>
-          <TaskLane tasks={tasks} />
-        </Grid>
-      </Grid>
+      <TaskLane tasks={tasks} />
       <div className={addButtonContainerStyle}>
         <Fab color="primary">
           <Add />
