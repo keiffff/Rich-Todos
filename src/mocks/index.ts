@@ -4,19 +4,19 @@ const taskJson = `
     "title": "seedデータ入れる",
     "content": "cloud firestoreにseedデータを入れる。試しに10件",
     "labels": ["server"],
-    "status": "IN_PROGRESS"
+    "status": "DONE"
   },
   {
     "title": "seedデータを取得するロジックを書く",
     "content": "firestoreからデータを取得するロジックを書く",
     "labels": ["front"],
-    "status": "TODO"
+    "status": "IN_PROGRESS"
   },
   {
     "title": "取得したデータをコンポーネントに埋め込む",
     "content": "seedデータをコンポーネントに埋め込む",
     "labels": ["front"],
-    "status": "TODO"
+    "status": "IN_PROGRESS"
   },
   {
     "title": "データ追加用ダイアログを作成",
