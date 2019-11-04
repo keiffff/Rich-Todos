@@ -51,7 +51,7 @@ export const TaskLane = ({ tasks }: Props) => {
         </ul>
       </div>
       <div>
-        <header className={headerTextStyle}>
+        <header>
           <span className={headerTextStyle}>
             In progress:
             {inProgressTasks.length}
@@ -66,7 +66,7 @@ export const TaskLane = ({ tasks }: Props) => {
         </ul>
       </div>
       <div>
-        <header className={headerTextStyle}>
+        <header>
           <span className={headerTextStyle}>
             Done:
             {doneTasks.length}
