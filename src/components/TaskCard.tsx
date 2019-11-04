@@ -8,10 +8,6 @@ type Props = {
   task: Task;
 };
 
-const cardStyle = css({
-  width: 296,
-});
-
 const footerStyle = css({
   width: '100%',
   display: 'flex',
@@ -21,7 +17,7 @@ const footerStyle = css({
 
 export const TaskCard = ({ task }: Props) => {
   return (
-    <Card className={cardStyle}>
+    <Card>
       <CardHeader
         avatar={
           <Avatar>

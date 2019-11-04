@@ -8,6 +8,15 @@ type Props = {
   tasks: Task[];
 };
 
+const baseStyle = css({
+  padding: 16,
+  border: '1px solid #d3d3d3',
+  borderRadius: 8,
+  '& + &': {
+    marginLeft: 16,
+  },
+});
+
 const headerTextStyle = css({
   fontWeight: 'bold',
 });
@@ -26,7 +35,7 @@ const taskListStyle = css({
 
 export const TaskLane = ({ title, tasks }: Props) => {
   return (
-    <div>
+    <div className={baseStyle}>
       <header>
         <span className={headerTextStyle}>
           {title}: {tasks.length}
