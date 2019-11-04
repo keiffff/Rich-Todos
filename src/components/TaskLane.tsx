@@ -12,6 +12,10 @@ const baseStyle = css({
   flex: 'auto',
 });
 
+const headerTextStyle = css({
+  fontWeight: 'bold',
+});
+
 const taskListStyle = css({
   width: 328,
   margin: 0,
@@ -33,35 +37,35 @@ export const TaskLane = ({ tasks }: Props) => {
     <section className={baseStyle}>
       <div>
         <header>
-          <span>Todo</span>
+          <span className={headerTextStyle}>Todo</span>
         </header>
         <ul className={taskListStyle}>
           {todoTasks.map(task => (
-            <li draggable>
+            <li key={task.content} draggable>
               <TaskCard task={task} />
             </li>
           ))}
         </ul>
       </div>
       <div>
-        <header>
+        <header className={headerTextStyle}>
           <span>In progress</span>
         </header>
         <ul className={taskListStyle}>
           {inProgressTasks.map(task => (
-            <li draggable>
+            <li key={task.content} draggable>
               <TaskCard task={task} />
             </li>
           ))}
         </ul>
       </div>
       <div>
-        <header>
+        <header className={headerTextStyle}>
           <span>Done</span>
         </header>
         <ul className={taskListStyle}>
           {doneTasks.map(task => (
-            <li draggable>
+            <li key={task.content} draggable>
               <TaskCard task={task} />
             </li>
           ))}
