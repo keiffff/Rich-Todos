@@ -31,6 +31,7 @@ const headerTitleStyle = css({
 const taskLanesContainerStyle = css({
   display: 'flex',
   flex: 'auto',
+  padding: 20,
 });
 
 const addButtonContainerStyle = css({
