@@ -5,6 +5,7 @@ import { AppBar, Fab } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import { TaskLane } from './TaskLane';
 import { tasks } from '../mocks/index';
+import { Task, TaskStatus } from '../models/models';
 
 const baseStyle = css({
   verticalAlign: 'center',
@@ -31,13 +32,28 @@ const headerTitleStyle = css({
   color: 'transparent',
 });
 
+const taskLanesContainerStyle = css({
+  display: 'flex',
+  flex: 'auto',
+});
+
 const addButtonContainerStyle = css({
   position: 'fixed',
   bottom: 20,
   right: 20,
 });
 
+const taskStatusText: { [K in TaskStatus]: string } = {
+  [TaskStatus.todo]: 'Todo',
+  [TaskStatus.inProgress]: 'In Progress',
+  [TaskStatus.done]: 'Done',
+};
+
 export const IndexPage = () => {
+  const todoTasks = (tasks as Task[]).filter(task => task.status === TaskStatus.todo);
+  const inProgressTasks = (tasks as Task[]).filter(task => task.status === TaskStatus.inProgress);
+  const doneTasks = (tasks as Task[]).filter(task => task.status === TaskStatus.done);
+
   return (
     <div className={ClassNames(offsetStyle, baseStyle)}>
       <AppBar className={headerStyle} color="default">
@@ -45,7 +61,11 @@ export const IndexPage = () => {
           <h1 className={headerTitleStyle}>Rich Todos</h1>
         </div>
       </AppBar>
-      <TaskLane tasks={tasks} />
+      <section className={taskLanesContainerStyle}>
+        <TaskLane title={taskStatusText.TODO} tasks={todoTasks} />
+        <TaskLane title={taskStatusText.IN_PROGRESS} tasks={inProgressTasks} />
+        <TaskLane title={taskStatusText.DONE} tasks={doneTasks} />
+      </section>
       <div className={addButtonContainerStyle}>
         <Fab color="primary">
           <Add />
