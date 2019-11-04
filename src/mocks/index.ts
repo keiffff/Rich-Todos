@@ -1,4 +1,4 @@
-const json = `
+const taskJson = `
 [
   {
     "title": "seedデータ入れる",
@@ -69,4 +69,4 @@ const json = `
 ]
 `;
 
-export const tasks = JSON.parse(json);
+export const tasks = JSON.parse(taskJson);
