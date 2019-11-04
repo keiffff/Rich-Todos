@@ -37,7 +37,10 @@ export const TaskLane = ({ tasks }: Props) => {
     <section className={baseStyle}>
       <div>
         <header>
-          <span className={headerTextStyle}>Todo</span>
+          <span className={headerTextStyle}>
+            Todo:
+            {todoTasks.length}
+          </span>
         </header>
         <ul className={taskListStyle}>
           {todoTasks.map(task => (
@@ -49,7 +52,10 @@ export const TaskLane = ({ tasks }: Props) => {
       </div>
       <div>
         <header className={headerTextStyle}>
-          <span>In progress</span>
+          <span className={headerTextStyle}>
+            In progress:
+            {inProgressTasks.length}
+          </span>
         </header>
         <ul className={taskListStyle}>
           {inProgressTasks.map(task => (
@@ -61,7 +67,10 @@ export const TaskLane = ({ tasks }: Props) => {
       </div>
       <div>
         <header className={headerTextStyle}>
-          <span>Done</span>
+          <span className={headerTextStyle}>
+            Done:
+            {doneTasks.length}
+          </span>
         </header>
         <ul className={taskListStyle}>
           {doneTasks.map(task => (
