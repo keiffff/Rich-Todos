@@ -17,6 +17,11 @@ const baseStyle = css({
   },
 });
 
+const baseDragOverStyle = css(baseStyle, {
+  border: '2px dashed #222222',
+  backgroundColor: '#E0E0E0',
+});
+
 const headerTextStyle = css({
   fontWeight: 'bold',
 });
@@ -34,8 +39,31 @@ const taskListStyle = css({
 });
 
 export const TaskLane = ({ title, tasks }: Props) => {
+  const baseRef = React.useRef<HTMLDivElement>(null);
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    if (!baseRef.current) return;
+    baseRef.current.classList.add(baseDragOverStyle);
+  };
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    if (!baseRef.current) return;
+    baseRef.current.classList.remove(baseDragOverStyle);
+  };
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    if (!baseRef.current) return;
+    baseRef.current.classList.remove(baseDragOverStyle);
+  };
+
   return (
-    <div className={baseStyle}>
+    <div
+      className={baseStyle}
+      ref={baseRef}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+    >
       <header>
         <span className={headerTextStyle}>
           {title}: {tasks.length}
