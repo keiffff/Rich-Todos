@@ -40,12 +40,6 @@ const addButtonContainerStyle = css({
   right: 20,
 });
 
-const taskStatusText: { [K in TaskStatus]: string } = {
-  [TaskStatus.todo]: 'Todo',
-  [TaskStatus.inProgress]: 'In Progress',
-  [TaskStatus.done]: 'Done',
-};
-
 export const IndexPage = () => {
   const [tasks, setTasks] = React.useState<Task[]>([]);
   const [draggedId, setDraggedId] = React.useState(-1);
@@ -65,19 +59,19 @@ export const IndexPage = () => {
       </AppBar>
       <section className={taskLanesContainerStyle}>
         <TaskLane
-          title={taskStatusText.TODO}
+          status={TaskStatus.todo}
           tasks={todoTasks}
           draggedId={draggedId}
           onChangeDraggedId={handleChangeDraggedId}
         />
         <TaskLane
-          title={taskStatusText.IN_PROGRESS}
+          status={TaskStatus.inProgress}
           tasks={inProgressTasks}
           draggedId={draggedId}
           onChangeDraggedId={handleChangeDraggedId}
         />
         <TaskLane
-          title={taskStatusText.DONE}
+          status={TaskStatus.done}
           tasks={doneTasks}
           draggedId={draggedId}
           onChangeDraggedId={handleChangeDraggedId}

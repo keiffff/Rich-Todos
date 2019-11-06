@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { css } from 'emotion';
 import { TaskCard } from './TaskCard';
-import { Task } from '../models/models';
+import { Task, TaskStatus } from '../models/models';
 
 type Props = {
-  title: string;
+  status: TaskStatus;
   tasks: Task[];
   draggedId: number;
   onChangeDraggedId: (id: number) => void;
@@ -40,7 +40,13 @@ const taskListStyle = css({
   },
 });
 
-export const TaskLane = ({ title, tasks, draggedId, onChangeDraggedId }: Props) => {
+const taskStatusText: { [K in TaskStatus]: string } = {
+  [TaskStatus.todo]: 'Todo',
+  [TaskStatus.inProgress]: 'In Progress',
+  [TaskStatus.done]: 'Done',
+};
+
+export const TaskLane = ({ status, tasks, draggedId, onChangeDraggedId }: Props) => {
   const baseRef = React.useRef<HTMLDivElement>(null);
   const handleDrag = (e: React.DragEvent<HTMLElement>) => {
     e.preventDefault();
@@ -74,7 +80,7 @@ export const TaskLane = ({ title, tasks, draggedId, onChangeDraggedId }: Props) 
     >
       <header>
         <span className={headerTextStyle}>
-          {title}: {tasks.length}
+          {taskStatusText[status]}: {tasks.length}
         </span>
       </header>
       <ul className={taskListStyle}>
