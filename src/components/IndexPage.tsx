@@ -44,11 +44,14 @@ export const IndexPage = () => {
   const [tasks, setTasks] = React.useState<Task[]>([]);
   const [draggedId, setDraggedId] = React.useState(-1);
   const handleChangeDraggedId = React.useCallback((id: number) => setDraggedId(id), []);
+  const handleChangeTaskStatus = React.useCallback((status: TaskStatus) => {
+    const targetTask = tasks.find(task => task.id === draggedId);
+    if (!targetTask) return;
+    targetTask.status = status;
+  }, []);
   React.useEffect(() => setTasks(tasksData), []);
 
-  const todoTasks = tasks.filter(task => task.status === TaskStatus.todo);
-  const inProgressTasks = tasks.filter(task => task.status === TaskStatus.inProgress);
-  const doneTasks = tasks.filter(task => task.status === TaskStatus.done);
+  const statusLists = [TaskStatus.todo, TaskStatus.inProgress, TaskStatus.done];
 
   return (
     <div className={ClassNames(offsetStyle)}>
@@ -58,24 +61,14 @@ export const IndexPage = () => {
         </div>
       </AppBar>
       <section className={taskLanesContainerStyle}>
-        <TaskLane
-          status={TaskStatus.todo}
-          tasks={todoTasks}
-          draggedId={draggedId}
-          onChangeDraggedId={handleChangeDraggedId}
-        />
-        <TaskLane
-          status={TaskStatus.inProgress}
-          tasks={inProgressTasks}
-          draggedId={draggedId}
-          onChangeDraggedId={handleChangeDraggedId}
-        />
-        <TaskLane
-          status={TaskStatus.done}
-          tasks={doneTasks}
-          draggedId={draggedId}
-          onChangeDraggedId={handleChangeDraggedId}
-        />
+        {statusLists.map(status => (
+          <TaskLane
+            status={status}
+            tasks={tasks.filter(task => task.status === status)}
+            onChangeDraggedId={handleChangeDraggedId}
+            onChangeTaskStatus={handleChangeTaskStatus}
+          />
+        ))}
       </section>
       <div className={addButtonContainerStyle}>
         <Fab color="primary">

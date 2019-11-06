@@ -6,8 +6,8 @@ import { Task, TaskStatus } from '../models/models';
 type Props = {
   status: TaskStatus;
   tasks: Task[];
-  draggedId: number;
   onChangeDraggedId: (id: number) => void;
+  onChangeTaskStatus: (status: TaskStatus) => void;
 };
 
 const baseStyle = css({
@@ -46,7 +46,7 @@ const taskStatusText: { [K in TaskStatus]: string } = {
   [TaskStatus.done]: 'Done',
 };
 
-export const TaskLane = ({ status, tasks, draggedId, onChangeDraggedId }: Props) => {
+export const TaskLane = ({ status, tasks, onChangeDraggedId, onChangeTaskStatus }: Props) => {
   const baseRef = React.useRef<HTMLDivElement>(null);
   const handleDrag = (e: React.DragEvent<HTMLElement>) => {
     e.preventDefault();
@@ -66,8 +66,7 @@ export const TaskLane = ({ status, tasks, draggedId, onChangeDraggedId }: Props)
     e.preventDefault();
     if (!baseRef.current) return;
     baseRef.current.classList.remove(baseDragOverStyle);
-    const draggedTask = tasks.find(task => task.id === draggedId);
-    console.log(draggedTask);
+    onChangeTaskStatus(status);
   };
 
   return (
