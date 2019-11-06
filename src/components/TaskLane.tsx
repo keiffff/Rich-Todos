@@ -6,6 +6,8 @@ import { Task } from '../models/models';
 type Props = {
   title: string;
   tasks: Task[];
+  draggedId: number;
+  onChangeDraggedId: (id: number) => void;
 };
 
 const baseStyle = css({
@@ -38,22 +40,28 @@ const taskListStyle = css({
   },
 });
 
-export const TaskLane = ({ title, tasks }: Props) => {
+export const TaskLane = ({ title, tasks, draggedId, onChangeDraggedId }: Props) => {
   const baseRef = React.useRef<HTMLDivElement>(null);
-  const handleDragOver = (e: React.DragEvent) => {
+  const handleDrag = (e: React.DragEvent<HTMLElement>) => {
+    e.preventDefault();
+    onChangeDraggedId(Number(e.currentTarget.dataset.id));
+  };
+  const handleDragOver = (e: React.DragEvent<HTMLElement>) => {
     e.preventDefault();
     if (!baseRef.current) return;
     baseRef.current.classList.add(baseDragOverStyle);
   };
-  const handleDragLeave = (e: React.DragEvent) => {
+  const handleDragLeave = (e: React.DragEvent<HTMLElement>) => {
     e.preventDefault();
     if (!baseRef.current) return;
     baseRef.current.classList.remove(baseDragOverStyle);
   };
-  const handleDrop = (e: React.DragEvent) => {
+  const handleDrop = (e: React.DragEvent<HTMLElement>) => {
     e.preventDefault();
     if (!baseRef.current) return;
     baseRef.current.classList.remove(baseDragOverStyle);
+    const draggedTask = tasks.find(task => task.id === draggedId);
+    console.log(draggedTask);
   };
 
   return (
@@ -71,7 +79,7 @@ export const TaskLane = ({ title, tasks }: Props) => {
       </header>
       <ul className={taskListStyle}>
         {tasks.map(task => (
-          <li key={task.content} draggable>
+          <li key={task.id} draggable data-id={task.id} onDrag={handleDrag}>
             <TaskCard task={task} />
           </li>
         ))}

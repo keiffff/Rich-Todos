@@ -48,6 +48,8 @@ const taskStatusText: { [K in TaskStatus]: string } = {
 
 export const IndexPage = () => {
   const [tasks, setTasks] = React.useState<Task[]>([]);
+  const [draggedId, setDraggedId] = React.useState(-1);
+  const handleChangeDraggedId = React.useCallback((id: number) => setDraggedId(id), []);
   React.useEffect(() => setTasks(tasksData), []);
 
   const todoTasks = tasks.filter(task => task.status === TaskStatus.todo);
@@ -62,9 +64,24 @@ export const IndexPage = () => {
         </div>
       </AppBar>
       <section className={taskLanesContainerStyle}>
-        <TaskLane title={taskStatusText.TODO} tasks={todoTasks} />
-        <TaskLane title={taskStatusText.IN_PROGRESS} tasks={inProgressTasks} />
-        <TaskLane title={taskStatusText.DONE} tasks={doneTasks} />
+        <TaskLane
+          title={taskStatusText.TODO}
+          tasks={todoTasks}
+          draggedId={draggedId}
+          onChangeDraggedId={handleChangeDraggedId}
+        />
+        <TaskLane
+          title={taskStatusText.IN_PROGRESS}
+          tasks={inProgressTasks}
+          draggedId={draggedId}
+          onChangeDraggedId={handleChangeDraggedId}
+        />
+        <TaskLane
+          title={taskStatusText.DONE}
+          tasks={doneTasks}
+          draggedId={draggedId}
+          onChangeDraggedId={handleChangeDraggedId}
+        />
       </section>
       <div className={addButtonContainerStyle}>
         <Fab color="primary">
