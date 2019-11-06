@@ -4,7 +4,7 @@ import { css } from 'emotion';
 import { AppBar, Fab } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import { TaskLane } from './TaskLane';
-import { tasks } from '../mocks/index';
+import { tasks as tasksData } from '../mocks/index';
 import { Task, TaskStatus } from '../models/models';
 
 const offsetStyle = css({
@@ -47,9 +47,12 @@ const taskStatusText: { [K in TaskStatus]: string } = {
 };
 
 export const IndexPage = () => {
-  const todoTasks = (tasks as Task[]).filter(task => task.status === TaskStatus.todo);
-  const inProgressTasks = (tasks as Task[]).filter(task => task.status === TaskStatus.inProgress);
-  const doneTasks = (tasks as Task[]).filter(task => task.status === TaskStatus.done);
+  const [tasks, setTasks] = React.useState<Task[]>([]);
+  React.useEffect(() => setTasks(tasksData), []);
+
+  const todoTasks = tasks.filter(task => task.status === TaskStatus.todo);
+  const inProgressTasks = tasks.filter(task => task.status === TaskStatus.inProgress);
+  const doneTasks = tasks.filter(task => task.status === TaskStatus.done);
 
   return (
     <div className={ClassNames(offsetStyle)}>
