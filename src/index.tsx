@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import { IndexPage } from './components/IndexPage';
+import { TaskIndex } from './components/TaskIndex';
 
-ReactDOM.render(<IndexPage />, document.getElementById('app'));
+ReactDOM.render(<TaskIndex />, document.getElementById('app'));

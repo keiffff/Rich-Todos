@@ -40,7 +40,7 @@ const addButtonContainerStyle = css({
   right: 20,
 });
 
-export const IndexPage = () => {
+export const TaskIndex = () => {
   const [tasks, setTasks] = React.useState<Task[]>([]);
   const [draggedId, setDraggedId] = React.useState(-1);
   const handleChangeDraggedId = React.useCallback((id: number) => setDraggedId(id), []);
