@@ -47,9 +47,9 @@ export const TaskIndex = () => {
   const handleChangeTaskStatus = (status: TaskStatus) => {
     setTasks((prevTasks: Task[]) => {
       const draggedTask = prevTasks.find(task => task.id === draggedId);
-      const newTasks = prevTasks.filter(task => task.id !== draggedId);
+      const rests = prevTasks.filter(task => task.id !== draggedId);
 
-      return [...newTasks, { ...draggedTask, status } as Task];
+      return [...rests, { ...draggedTask, status } as Task];
     });
   };
   React.useEffect(() => setTasks(tasksData), []);
