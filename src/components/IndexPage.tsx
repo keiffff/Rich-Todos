@@ -44,11 +44,14 @@ export const IndexPage = () => {
   const [tasks, setTasks] = React.useState<Task[]>([]);
   const [draggedId, setDraggedId] = React.useState(-1);
   const handleChangeDraggedId = React.useCallback((id: number) => setDraggedId(id), []);
-  const handleChangeTaskStatus = React.useCallback((status: TaskStatus) => {
-    const targetTask = tasks.find(task => task.id === draggedId);
-    if (!targetTask) return;
-    targetTask.status = status;
-  }, []);
+  const handleChangeTaskStatus = (status: TaskStatus) => {
+    setTasks((prevTasks: Task[]) => {
+      const draggedTask = prevTasks.find(task => task.id === draggedId);
+      const newTasks = prevTasks.filter(task => task.id !== draggedId);
+
+      return [...newTasks, { ...draggedTask, status } as Task];
+    });
+  };
   React.useEffect(() => setTasks(tasksData), []);
 
   const statusLists = [TaskStatus.todo, TaskStatus.inProgress, TaskStatus.done];
@@ -63,6 +66,7 @@ export const IndexPage = () => {
       <section className={taskLanesContainerStyle}>
         {statusLists.map(status => (
           <TaskLane
+            key={status}
             status={status}
             tasks={tasks.filter(task => task.status === status)}
             onChangeDraggedId={handleChangeDraggedId}

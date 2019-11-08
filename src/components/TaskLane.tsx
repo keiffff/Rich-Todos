@@ -67,6 +67,7 @@ export const TaskLane = ({ status, tasks, onChangeDraggedId, onChangeTaskStatus 
     if (!baseRef.current) return;
     baseRef.current.classList.remove(baseDragOverStyle);
     onChangeTaskStatus(status);
+    onChangeDraggedId(-1);
   };
 
   return (
