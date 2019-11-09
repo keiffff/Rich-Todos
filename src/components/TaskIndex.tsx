@@ -46,7 +46,7 @@ export const TaskIndex = () => {
   const [draggedId, setDraggedId] = React.useState(-1);
   const [dialogVisible, setDialogVisible] = React.useState(false);
   const handleChangeDraggedId = React.useCallback((id: number) => setDraggedId(id), []);
-  const handleChangeTaskStatus = (status: TaskStatus) => {
+  const handleEditTaskStatus = (status: TaskStatus) => {
     setTasks((prevTasks: Task[]) => {
       const draggedTask = prevTasks.find(task => task.id === draggedId);
       const rests = prevTasks.filter(task => task.id !== draggedId);
@@ -75,7 +75,7 @@ export const TaskIndex = () => {
               status={status}
               tasks={tasks.filter(task => task.status === status)}
               onChangeDraggedId={handleChangeDraggedId}
-              onChangeTaskStatus={handleChangeTaskStatus}
+              onEditTaskStatus={handleEditTaskStatus}
             />
           ))}
         </section>

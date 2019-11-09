@@ -8,7 +8,7 @@ type Props = {
   status: TaskStatus;
   tasks: Task[];
   onChangeDraggedId: (id: number) => void;
-  onChangeTaskStatus: (status: TaskStatus) => void;
+  onEditTaskStatus: (status: TaskStatus) => void;
 };
 
 const baseStyle = css({
@@ -41,7 +41,7 @@ const taskListStyle = css({
   },
 });
 
-export const TaskLane = ({ status, tasks, onChangeDraggedId, onChangeTaskStatus }: Props) => {
+export const TaskLane = ({ status, tasks, onChangeDraggedId, onEditTaskStatus }: Props) => {
   const baseRef = React.useRef<HTMLDivElement>(null);
   const handleDrag = (e: React.DragEvent<HTMLElement>) => {
     e.preventDefault();
@@ -61,7 +61,7 @@ export const TaskLane = ({ status, tasks, onChangeDraggedId, onChangeTaskStatus 
     e.preventDefault();
     if (!baseRef.current) return;
     baseRef.current.classList.remove(baseDragOverStyle);
-    onChangeTaskStatus(status);
+    onEditTaskStatus(status);
     onChangeDraggedId(-1);
   };
 
