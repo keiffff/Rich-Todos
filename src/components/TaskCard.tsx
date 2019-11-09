@@ -9,6 +9,7 @@ type Props = {
 };
 
 const cardStyle = css({
+  cursor: 'pointer',
   '&:hover': {
     transition: 'background 0.5s',
     background: '#ededed',
