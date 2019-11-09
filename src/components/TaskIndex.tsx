@@ -4,6 +4,7 @@ import { css } from 'emotion';
 import { AppBar, Fab } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import { TaskLane } from './TaskLane';
+import { CreateTaskDialog } from './CreateTaskDialog';
 import { tasks as tasksData } from '../mocks/index';
 import { Task, TaskStatus } from '../models/models';
 
@@ -43,6 +44,7 @@ const addButtonContainerStyle = css({
 export const TaskIndex = () => {
   const [tasks, setTasks] = React.useState<Task[]>([]);
   const [draggedId, setDraggedId] = React.useState(-1);
+  const [dialogVisible, setDialogVisible] = React.useState(false);
   const handleChangeDraggedId = React.useCallback((id: number) => setDraggedId(id), []);
   const handleChangeTaskStatus = (status: TaskStatus) => {
     setTasks((prevTasks: Task[]) => {
@@ -52,33 +54,38 @@ export const TaskIndex = () => {
       return [...rests, { ...draggedTask, status } as Task];
     });
   };
+  const handleClickAddButton = React.useCallback(() => setDialogVisible(true), []);
+  const handleCloseDialog = React.useCallback(() => setDialogVisible(false), []);
   React.useEffect(() => setTasks(tasksData), []);
 
   const statusLists = [TaskStatus.todo, TaskStatus.inProgress, TaskStatus.done];
 
   return (
-    <div className={ClassNames(offsetStyle)}>
-      <AppBar className={headerStyle} color="default">
-        <div className={headerTitleContainerStyle}>
-          <h1 className={headerTitleStyle}>Rich Todos</h1>
+    <>
+      <div className={ClassNames(offsetStyle)}>
+        <AppBar className={headerStyle} color="default">
+          <div className={headerTitleContainerStyle}>
+            <h1 className={headerTitleStyle}>Rich Todos</h1>
+          </div>
+        </AppBar>
+        <section className={taskLanesContainerStyle}>
+          {statusLists.map(status => (
+            <TaskLane
+              key={status}
+              status={status}
+              tasks={tasks.filter(task => task.status === status)}
+              onChangeDraggedId={handleChangeDraggedId}
+              onChangeTaskStatus={handleChangeTaskStatus}
+            />
+          ))}
+        </section>
+        <div className={addButtonContainerStyle}>
+          <Fab color="primary" onClick={handleClickAddButton}>
+            <Add />
+          </Fab>
         </div>
-      </AppBar>
-      <section className={taskLanesContainerStyle}>
-        {statusLists.map(status => (
-          <TaskLane
-            key={status}
-            status={status}
-            tasks={tasks.filter(task => task.status === status)}
-            onChangeDraggedId={handleChangeDraggedId}
-            onChangeTaskStatus={handleChangeTaskStatus}
-          />
-        ))}
-      </section>
-      <div className={addButtonContainerStyle}>
-        <Fab color="primary">
-          <Add />
-        </Fab>
       </div>
-    </div>
+      <CreateTaskDialog open={dialogVisible} onClose={handleCloseDialog} />
+    </>
   );
 };
