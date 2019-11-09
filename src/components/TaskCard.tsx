@@ -8,6 +8,13 @@ type Props = {
   task: Task;
 };
 
+const cardStyle = css({
+  '&:hover': {
+    transition: 'background 0.5s',
+    background: '#ededed',
+  },
+});
+
 const footerStyle = css({
   width: '100%',
   display: 'flex',
@@ -17,7 +24,7 @@ const footerStyle = css({
 
 export const TaskCard = ({ task }: Props) => {
   return (
-    <Card>
+    <Card className={cardStyle}>
       <CardHeader
         avatar={
           <Avatar>
