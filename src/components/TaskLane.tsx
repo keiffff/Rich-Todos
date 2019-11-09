@@ -2,6 +2,7 @@ import * as React from 'react';
 import { css } from 'emotion';
 import { TaskCard } from './TaskCard';
 import { Task, TaskStatus } from '../models/models';
+import { taskStatusText } from '../constants/constants';
 
 type Props = {
   status: TaskStatus;
@@ -39,12 +40,6 @@ const taskListStyle = css({
     marginTop: 8,
   },
 });
-
-const taskStatusText: { [K in TaskStatus]: string } = {
-  [TaskStatus.todo]: 'Todo',
-  [TaskStatus.inProgress]: 'In Progress',
-  [TaskStatus.done]: 'Done',
-};
 
 export const TaskLane = ({ status, tasks, onChangeDraggedId, onChangeTaskStatus }: Props) => {
   const baseRef = React.useRef<HTMLDivElement>(null);
