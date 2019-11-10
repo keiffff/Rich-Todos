@@ -51,9 +51,12 @@ export const TaskIndex = ({ tasks, onEditTaskStatus }: Props) => {
   const handleChangeDraggedId = React.useCallback((id: number) => setDraggedId(id), []);
   const handleClickAddButton = React.useCallback(() => setDialogVisible(true), []);
   const handleCloseDialog = React.useCallback(() => setDialogVisible(false), []);
-  const handleEditTaskStatus = (status: TaskStatus) => {
-    onEditTaskStatus({ status, targetId: draggedId });
-  };
+  const handleEditTaskStatus = React.useCallback(
+    (status: TaskStatus) => {
+      onEditTaskStatus({ status, targetId: draggedId });
+    },
+    [draggedId],
+  );
   const statusLists = [TaskStatus.todo, TaskStatus.inProgress, TaskStatus.done];
 
   return (
