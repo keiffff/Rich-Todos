@@ -92,6 +92,10 @@ export const CreateTaskDialog = ({ open, onClose, onAddNewTask }: Props) => {
       labels,
     };
     onAddNewTask(newTask);
+    setTitle('');
+    setContent('');
+    setStatus(TaskStatus.todo);
+    setLabels([]);
     onClose();
   };
 
