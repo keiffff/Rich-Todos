@@ -3,7 +3,7 @@ import { css } from 'emotion';
 import { Chip, Dialog, DialogContent, Input, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
 import { OpenWith } from '@material-ui/icons';
 import { TaskStatus } from '../models/models';
-import { taskStatusText } from '../constants/constants';
+import { taskStatusText, statusLists } from '../constants/constants';
 
 type Props = {
   open: boolean;
@@ -46,14 +46,40 @@ const titleTextFieldStyle = css({
   width: '100%',
 });
 
-const selectStyle = css({
+const selectBaseStyle = css({
   marginTop: 8,
+});
+
+const statusSelectStyle = css(selectBaseStyle, {
   width: '40%',
+});
+
+const labelsSelectStyle = css(selectBaseStyle, {
+  width: '100%',
 });
 
 const labelTexts = ['front', 'server', 'infra', 'feat', 'bugfix', 'hotfix'];
 
 export const CreateTaskDialog = ({ open, onClose }: Props) => {
+  const [title, setTitle] = React.useState('');
+  const [content, setContent] = React.useState('');
+  const [status, setStatus] = React.useState(TaskStatus.todo);
+  const [labels, setLabels] = React.useState<string[]>([]);
+  const handleChangeTitle = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value),
+    [],
+  );
+  const handleChangeContent = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => setContent(e.currentTarget.value),
+    [],
+  );
+  const handleChangeStatus = React.useCallback((e: React.ChangeEvent<{ value: unknown }>) => {
+    setStatus(e.target.value as TaskStatus);
+  }, []);
+  const handleChangeLabels = React.useCallback((e: React.ChangeEvent<{ value: unknown }>) => {
+    setLabels(e.target.value as string[]);
+  }, []);
+
   return (
     <Dialog className={dialogStyle} open={open} onClose={onClose} maxWidth="lg">
       <DialogContent>
@@ -66,31 +92,49 @@ export const CreateTaskDialog = ({ open, onClose }: Props) => {
         <div className={formContainerStyle}>
           <form>
             <div className={controlStyle}>
-              <TextField className={titleTextFieldStyle} required label="タイトル" />
+              <TextField
+                className={titleTextFieldStyle}
+                required
+                label="タイトル"
+                value={title}
+                onChange={handleChangeTitle}
+              />
             </div>
             <div className={controlStyle}>
-              <TextField className={titleTextFieldStyle} multiline rows={8} label="内容" variant="outlined" />
+              <TextField
+                className={titleTextFieldStyle}
+                required
+                multiline
+                rows={8}
+                label="内容"
+                variant="outlined"
+                value={content}
+                onChange={handleChangeContent}
+              />
             </div>
             <div className={controlStyle}>
               <InputLabel>ステータス</InputLabel>
-              <Select className={selectStyle} value={TaskStatus.todo}>
-                <MenuItem value={TaskStatus.todo}>{taskStatusText[TaskStatus.todo]}</MenuItem>
-                <MenuItem value={TaskStatus.inProgress}>{taskStatusText[TaskStatus.inProgress]}</MenuItem>
-                <MenuItem value={TaskStatus.done}>{taskStatusText[TaskStatus.done]}</MenuItem>
+              <Select className={statusSelectStyle} value={status} onChange={handleChangeStatus}>
+                {statusLists.map(item => (
+                  <MenuItem key={item} value={item}>
+                    {taskStatusText[item]}
+                  </MenuItem>
+                ))}
               </Select>
             </div>
             <div className={controlStyle}>
               <InputLabel>ラベル</InputLabel>
               <Select
-                className={selectStyle}
-                value={[]}
-                input={<Input />}
                 multiple
+                input={<Input />}
+                className={labelsSelectStyle}
+                value={labels}
                 renderValue={selected => (selected as string[]).map(v => <Chip key={v} label={v} />)}
+                onChange={handleChangeLabels}
               >
-                {labelTexts.map(text => (
-                  <MenuItem key={text} value={text}>
-                    {text}
+                {labelTexts.map(item => (
+                  <MenuItem key={item} value={item}>
+                    {item}
                   </MenuItem>
                 ))}
               </Select>

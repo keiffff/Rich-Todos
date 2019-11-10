@@ -6,6 +6,7 @@ import { Add } from '@material-ui/icons';
 import { TaskLane } from './TaskLane';
 import { CreateTaskDialog } from './CreateTaskDialog';
 import { Task, TaskStatus } from '../models/models';
+import { statusLists } from '../constants/constants';
 
 type Props = {
   tasks: Task[];
@@ -57,7 +58,6 @@ export const TaskIndex = ({ tasks, onEditTaskStatus }: Props) => {
     },
     [draggedId],
   );
-  const statusLists = [TaskStatus.todo, TaskStatus.inProgress, TaskStatus.done];
 
   return (
     <>

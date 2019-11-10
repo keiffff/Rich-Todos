@@ -5,3 +5,5 @@ export const taskStatusText: { [K in TaskStatus]: string } = {
   [TaskStatus.inProgress]: 'In Progress',
   [TaskStatus.done]: 'Done',
 };
+
+export const statusLists = [TaskStatus.todo, TaskStatus.inProgress, TaskStatus.done];
