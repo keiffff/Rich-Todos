@@ -5,8 +5,12 @@ import { AppBar, Fab } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import { TaskLane } from './TaskLane';
 import { CreateTaskDialog } from './CreateTaskDialog';
-import { tasks as tasksData } from '../mocks/index';
 import { Task, TaskStatus } from '../models/models';
+
+type Props = {
+  tasks: Task[];
+  onEditTaskStatus: ({ status, targetId }: { status: TaskStatus; targetId: number }) => void;
+};
 
 const offsetStyle = css({
   paddingTop: 72,
@@ -41,23 +45,15 @@ const addButtonContainerStyle = css({
   right: 20,
 });
 
-export const TaskIndex = () => {
-  const [tasks, setTasks] = React.useState<Task[]>([]);
+export const TaskIndex = ({ tasks, onEditTaskStatus }: Props) => {
   const [draggedId, setDraggedId] = React.useState(-1);
   const [dialogVisible, setDialogVisible] = React.useState(false);
   const handleChangeDraggedId = React.useCallback((id: number) => setDraggedId(id), []);
-  const handleEditTaskStatus = (status: TaskStatus) => {
-    setTasks((prevTasks: Task[]) => {
-      const draggedTask = prevTasks.find(task => task.id === draggedId);
-      const rests = prevTasks.filter(task => task.id !== draggedId);
-
-      return [...rests, { ...draggedTask, status } as Task];
-    });
-  };
   const handleClickAddButton = React.useCallback(() => setDialogVisible(true), []);
   const handleCloseDialog = React.useCallback(() => setDialogVisible(false), []);
-  React.useEffect(() => setTasks(tasksData), []);
-
+  const handleEditTaskStatus = (status: TaskStatus) => {
+    onEditTaskStatus({ status, targetId: draggedId });
+  };
   const statusLists = [TaskStatus.todo, TaskStatus.inProgress, TaskStatus.done];
 
   return (

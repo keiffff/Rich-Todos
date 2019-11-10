@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import { TaskIndex } from './components/TaskIndex';
+import { TaskIndexContainer } from './containers/TaskIndex';
 
-ReactDOM.render(<TaskIndex />, document.getElementById('app'));
+ReactDOM.render(<TaskIndexContainer />, document.getElementById('app'));
