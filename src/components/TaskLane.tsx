@@ -79,7 +79,7 @@ export const TaskLane = ({ status, tasks, onChangeDraggedId, onEditTaskStatus }:
         </span>
       </header>
       <ul className={taskListStyle}>
-        {tasks.map(task => (
+        {[...tasks].reverse().map(task => (
           <li key={task.id} draggable data-id={task.id} onDrag={handleDrag}>
             <TaskCard task={task} />
           </li>
