@@ -7,8 +7,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "remove": "rm -rf dist/; mkdir -p dist/",
-    "start": "yarn remove; cp src/index.html dist/index.html; webpack-dev-server --hot",
+    "remake": "rm -rf dist/; mkdir -p dist/",
+    "start": "yarn remake; cp src/index.html dist/index.html; webpack-dev-server",
     "build": "webpack --config webpack.config.js",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'"
   },
