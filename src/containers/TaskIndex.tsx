@@ -7,10 +7,10 @@ export const TaskIndexContainer = () => {
   const [tasks, setTasks] = React.useState<Task[]>([]);
   const handleEditTaskStatus = ({ status, targetId }: { status: TaskStatus; targetId: number }) => {
     setTasks((prevTasks: Task[]) => {
-      const draggedTask = prevTasks.find(task => task.id === targetId);
+      const targetTask = prevTasks.find(task => task.id === targetId);
       const rests = prevTasks.filter(task => task.id !== targetId);
 
-      return [...rests, { ...draggedTask, status } as Task];
+      return [...rests, { ...targetTask, status } as Task];
     });
   };
   React.useEffect(() => setTasks(tasksData), []);
