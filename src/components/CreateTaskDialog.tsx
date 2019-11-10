@@ -84,7 +84,7 @@ export const CreateTaskDialog = ({ open, onClose, onAddNewTask }: Props) => {
   const handleChangeLabels = React.useCallback((e: React.ChangeEvent<{ value: unknown }>) => {
     setLabels(e.target.value as string[]);
   }, []);
-  const handleClickAddButton = React.useCallback(() => {
+  const handleClickAddButton = () => {
     const newTask = {
       title,
       content,
@@ -93,7 +93,7 @@ export const CreateTaskDialog = ({ open, onClose, onAddNewTask }: Props) => {
     };
     onAddNewTask(newTask);
     onClose();
-  }, []);
+  };
 
   return (
     <Dialog className={dialogStyle} open={open} onClose={onClose} maxWidth="lg">
