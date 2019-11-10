@@ -11,6 +11,7 @@ import { statusLists } from '../constants/constants';
 type Props = {
   tasks: Task[];
   onEditTaskStatus: ({ status, targetId }: { status: TaskStatus; targetId: number }) => void;
+  onAddNewTask: (task: Omit<Task, 'id'>) => void;
 };
 
 const offsetStyle = css({
@@ -46,7 +47,7 @@ const addButtonContainerStyle = css({
   right: 20,
 });
 
-export const TaskIndex = ({ tasks, onEditTaskStatus }: Props) => {
+export const TaskIndex = ({ tasks, onEditTaskStatus, onAddNewTask }: Props) => {
   const [draggedId, setDraggedId] = React.useState(-1);
   const [dialogVisible, setDialogVisible] = React.useState(false);
   const handleChangeDraggedId = React.useCallback((id: number) => setDraggedId(id), []);
@@ -84,7 +85,7 @@ export const TaskIndex = ({ tasks, onEditTaskStatus }: Props) => {
           </Fab>
         </div>
       </div>
-      <CreateTaskDialog open={dialogVisible} onClose={handleCloseDialog} />
+      <CreateTaskDialog open={dialogVisible} onClose={handleCloseDialog} onAddNewTask={onAddNewTask} />
     </>
   );
 };

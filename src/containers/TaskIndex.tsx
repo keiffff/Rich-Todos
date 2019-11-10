@@ -13,7 +13,14 @@ export const TaskIndexContainer = () => {
       return [...rests, { ...targetTask, status } as Task];
     });
   };
+  const handleAddNewTask = (task: Omit<Task, 'id'>) => {
+    setTasks((prevTasks: Task[]) => {
+      const newTaskId = prevTasks.reduce((maxId, item) => (maxId < item.id ? item.id : maxId), 0) + 1;
+
+      return [...prevTasks, { id: newTaskId, ...task }];
+    });
+  };
   React.useEffect(() => setTasks(tasksData), []);
 
-  return <TaskIndex tasks={tasks} onEditTaskStatus={handleEditTaskStatus} />;
+  return <TaskIndex tasks={tasks} onEditTaskStatus={handleEditTaskStatus} onAddNewTask={handleAddNewTask} />;
 };

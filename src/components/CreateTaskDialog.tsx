@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { css } from 'emotion';
-import { Chip, Dialog, DialogContent, Input, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
-import { OpenWith } from '@material-ui/icons';
-import { TaskStatus } from '../models/models';
+import { Chip, Dialog, DialogContent, Button, Input, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
+import { Navigation, OpenWith } from '@material-ui/icons';
+import { Task, TaskStatus } from '../models/models';
 import { taskStatusText, statusLists } from '../constants/constants';
 
 type Props = {
   open: boolean;
   onClose: () => void;
+  onAddNewTask: (task: Omit<Task, 'id'>) => void;
 };
 
 const dialogStyle = css({
@@ -58,9 +59,13 @@ const labelsSelectStyle = css(selectBaseStyle, {
   width: '100%',
 });
 
+const addButtonStyle = css({
+  width: '100%',
+});
+
 const labelTexts = ['front', 'server', 'infra', 'feat', 'bugfix', 'hotfix'];
 
-export const CreateTaskDialog = ({ open, onClose }: Props) => {
+export const CreateTaskDialog = ({ open, onClose, onAddNewTask }: Props) => {
   const [title, setTitle] = React.useState('');
   const [content, setContent] = React.useState('');
   const [status, setStatus] = React.useState(TaskStatus.todo);
@@ -78,6 +83,16 @@ export const CreateTaskDialog = ({ open, onClose }: Props) => {
   }, []);
   const handleChangeLabels = React.useCallback((e: React.ChangeEvent<{ value: unknown }>) => {
     setLabels(e.target.value as string[]);
+  }, []);
+  const handleClickAddButton = React.useCallback(() => {
+    const newTask = {
+      title,
+      content,
+      status,
+      labels,
+    };
+    onAddNewTask(newTask);
+    onClose();
   }, []);
 
   return (
@@ -138,6 +153,18 @@ export const CreateTaskDialog = ({ open, onClose }: Props) => {
                   </MenuItem>
                 ))}
               </Select>
+            </div>
+            <div className={controlStyle}>
+              <Button
+                className={addButtonStyle}
+                variant="contained"
+                color="primary"
+                aria-label="Add"
+                onClick={handleClickAddButton}
+              >
+                <Navigation />
+                送信
+              </Button>
             </div>
           </form>
         </div>
