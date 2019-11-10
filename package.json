@@ -7,9 +7,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "remake": "rm -rf dist/; mkdir -p dist/",
-    "start": "yarn remake; cp src/index.html dist/index.html; webpack-dev-server",
-    "build": "yarn remake; cp src/index.html dist/index.html; webpack --config webpack.config.js",
+    "remake": "rm -rf dist/; mkdir -p dist/; cp src/index.html dist/index.html;",
+    "start": "yarn remake; webpack-dev-server",
+    "build": "yarn remake; webpack --config webpack.config.js",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'"
   },
   "devDependencies": {
