@@ -14,6 +14,7 @@
     "deploy": "yarn build; firebase deploy --only hosting"
   },
   "devDependencies": {
+    "@types/node": "^12.12.7",
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.9.3",
     "@typescript-eslint/eslint-plugin": "^2.6.0",
@@ -41,8 +42,10 @@
     "@material-ui/icons": "^4.5.1",
     "@types/classnames": "^2.2.9",
     "classnames": "^2.2.6",
+    "commander": "^4.0.1",
     "emotion": "^10.0.23",
     "firebase": "^7.3.0",
+    "firebase-admin": "^8.7.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0"
   },

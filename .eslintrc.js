@@ -26,6 +26,8 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-unused-vars': 'error',
     '@typescript-eslint/prefer-interface': 'off',
+    'no-fallthrough': 'off',
+    'no-restricted-syntax': 'off',
     // prettier
     'prettier/prettier': [
       'warn',
