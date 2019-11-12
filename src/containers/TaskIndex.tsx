@@ -20,7 +20,7 @@ export const TaskIndexContainer = () => {
       return [...prevTasks, { id: newTaskId, ...task }];
     });
   };
-  React.useEffect(() => setTasks(tasksData), []);
+  React.useEffect(() => setTasks(tasksData as Task[]), []);
 
   return <TaskIndex tasks={tasks} onEditTaskStatus={handleEditTaskStatus} onAddNewTask={handleAddNewTask} />;
 };
