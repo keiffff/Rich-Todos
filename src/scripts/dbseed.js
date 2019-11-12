@@ -22,10 +22,7 @@ const uploadSeed = async collection => {
         })) || [];
 
       for await (const doc of docs) {
-        const { id } = doc;
-        const docWithoutId = { ...doc };
-        delete docWithoutId.id;
-        await ref.doc().set(docWithoutId);
+        await ref.add(doc);
       }
 
       return;
