@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { TaskIndex } from '../components/TaskIndex';
-import { tasks as tasksData } from '../mocks/index';
 import { Task, TaskStatus } from '../models/models';
+import { useTasks } from '../hooks/useTasks';
 
 export const TaskIndexContainer = () => {
-  const [tasks, setTasks] = React.useState<Task[]>([]);
+  const { tasks } = useTasks();
+  const [tasksState, setTasksState] = React.useState<Task[]>([]);
   const handleEditTaskStatus = ({ status, targetId }: { status: TaskStatus; targetId: number }) => {
-    setTasks((prevTasks: Task[]) => {
+    setTasksState((prevTasks: Task[]) => {
       const targetTask = prevTasks.find(task => task.id === targetId);
       const rests = prevTasks.filter(task => task.id !== targetId);
 
@@ -14,13 +15,13 @@ export const TaskIndexContainer = () => {
     });
   };
   const handleAddNewTask = (task: Omit<Task, 'id'>) => {
-    setTasks((prevTasks: Task[]) => {
+    setTasksState((prevTasks: Task[]) => {
       const newTaskId = prevTasks.reduce((maxId, item) => (maxId < item.id ? item.id : maxId), 0) + 1;
 
       return [...prevTasks, { id: newTaskId, ...task }];
     });
   };
-  React.useEffect(() => setTasks(tasksData as Task[]), []);
+  React.useEffect(() => setTasksState(tasks as Task[]), [tasks]);
 
-  return <TaskIndex tasks={tasks} onEditTaskStatus={handleEditTaskStatus} onAddNewTask={handleAddNewTask} />;
+  return <TaskIndex tasks={tasksState} onEditTaskStatus={handleEditTaskStatus} onAddNewTask={handleAddNewTask} />;
 };

@@ -1,3 +1,5 @@
+import { firestore } from 'firebase/app';
+
 export enum TaskStatus {
   todo = 'TODO',
   inProgress = 'IN_PROGRESS',
@@ -10,4 +12,6 @@ export type Task = {
   content: string;
   labels: string[];
   status: TaskStatus;
+  createdAt?: firestore.Timestamp | null;
+  updatedAt?: firestore.Timestamp | null;
 };

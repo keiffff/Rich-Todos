@@ -1,23 +1,7 @@
 import * as React from 'react';
-import { firestore } from 'firebase/app';
 import { collectionName } from '../constants/collectionName';
 import { FirebaseContext } from '../contexts';
-
-enum TaskStatus {
-  todo = 'TODO',
-  inProgress = 'IN_PROGRESS',
-  done = 'DONE',
-}
-
-type Task = {
-  id: number;
-  title: string;
-  content: string;
-  labels: string[];
-  status: TaskStatus;
-  createdAt: firestore.Timestamp | null;
-  updatedAt: firestore.Timestamp | null;
-};
+import { Task } from '../models/models';
 
 export const useTasks = () => {
   const [tasks, setTasks] = React.useState<Task[]>([]);
