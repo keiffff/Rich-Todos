@@ -1,7 +1,7 @@
 const commander = require("commander");
 const admin = require("firebase-admin");
 const serviceAccount = require("../firebase-adminsdk.json");
-const tasks = require("../mocks/tasks.json");
+const tasks = require("../seeds/tasks.json.js");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
