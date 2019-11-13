@@ -45,6 +45,7 @@
     "@types/classnames": "^2.2.9",
     "classnames": "^2.2.6",
     "commander": "^4.0.1",
+    "date-fns": "^2.7.0",
     "emotion": "^10.0.23",
     "firebase": "^7.3.0",
     "firebase-admin": "^8.7.0",
