@@ -1,7 +1,7 @@
 const commander = require("commander");
 const admin = require("firebase-admin");
 const serviceAccount = require("../firebase-adminsdk.json");
-const tasks = require("../seeds/tasks.json.js");
+const tasks = require("../seeds/tasks.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -22,7 +22,10 @@ const uploadSeed = async collection => {
         })) || [];
 
       for await (const doc of docs) {
-        await ref.add(doc);
+        const { id } = doc;
+        const docWithoutId = { ...doc };
+        delete docWithoutId.id;
+        await ref.doc(id.toString()).set(docWithoutId);
       }
 
       return;
