@@ -3,7 +3,7 @@ import { collectionName } from '../constants/collectionName';
 import { FirebaseContext } from '../contexts';
 import { Task } from '../models/models';
 
-export const useTasks = () => {
+export const useFetchTasks = () => {
   const [tasks, setTasks] = React.useState<Task[]>([]);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<Error | null>(null);

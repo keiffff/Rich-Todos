@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { TaskIndex } from '../components/TaskIndex';
 import { Task, TaskStatus } from '../models/models';
-import { useTasks } from '../hooks/useTasks';
+import { useFetchTasks } from '../hooks/Task';
 import { TasksContext } from '../contexts';
 
 export const TaskIndexContainer = () => {
-  const { tasks } = useTasks();
+  const { tasks } = useFetchTasks();
   const { tasksState, setTasksState } = React.useContext(TasksContext);
   const handleEditTaskStatus = ({ status, targetId }: { status: TaskStatus; targetId: number }) => {
     setTasksState((prevState: Task[]) => {
