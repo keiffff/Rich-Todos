@@ -37,9 +37,7 @@ export const TaskCard = ({ task }: Props) => {
       <CardContent>
         {task.content}
         <footer className={footerStyle}>
-          {task.labels.map(label => (
-            <Chip key={label} label={label} />
-          ))}
+          {task.labels.length ? task.labels.map(label => <Chip key={label} label={label} />) : null}
         </footer>
       </CardContent>
     </Card>
