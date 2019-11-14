@@ -11,7 +11,11 @@ import { statusLists } from '../constants/constants';
 type Props = {
   tasks: Task[];
   onEditTaskStatus: ({ status, targetId }: { status: TaskStatus; targetId: number }) => void;
-  onAddNewTask: (task: Omit<Task, 'id'>) => void;
+  onAddNewTask: ({
+    taskAttributeWithoutId,
+  }: {
+    taskAttributeWithoutId: Pick<Task, 'title' | 'content' | 'labels' | 'status'>;
+  }) => void;
 };
 
 const offsetStyle = css({

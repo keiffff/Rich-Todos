@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { TaskIndex } from '../components/TaskIndex';
 import { Task, TaskStatus } from '../models/models';
-import { useFetchTasks } from '../hooks/Task';
+import { useFetchTasks, addTask } from '../api/Task';
 import { TasksContext } from '../contexts';
 
 export const TaskIndexContainer = () => {
@@ -15,12 +15,13 @@ export const TaskIndexContainer = () => {
       return [...rests, { ...targetTask, status } as Task];
     });
   };
-  const handleAddNewTask = (task: Omit<Task, 'id'>) => {
-    setTasksState((prevState: Task[]) => {
-      const newTaskId = prevState.reduce((maxId, item) => (maxId < item.id ? item.id : maxId), 0) + 1;
-
-      return [...prevState, { id: newTaskId, ...task }];
-    });
+  const handleAddNewTask = ({
+    taskAttributeWithoutId,
+  }: {
+    taskAttributeWithoutId: Pick<Task, 'title' | 'content' | 'labels' | 'status'>;
+  }) => {
+    const newTaskId = tasksState.reduce((maxId, item) => (maxId < item.id ? item.id : maxId), 0) + 1;
+    addTask({ taskAttribute: { ...taskAttributeWithoutId, id: newTaskId } });
   };
   React.useEffect(() => setTasksState(tasks as Task[]), [tasks]);
 

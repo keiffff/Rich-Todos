@@ -8,7 +8,11 @@ import { taskStatusText, statusLists } from '../constants/constants';
 type Props = {
   open: boolean;
   onClose: () => void;
-  onAddNewTask: (task: Omit<Task, 'id'>) => void;
+  onAddNewTask: ({
+    taskAttributeWithoutId,
+  }: {
+    taskAttributeWithoutId: Pick<Task, 'title' | 'content' | 'labels' | 'status'>;
+  }) => void;
 };
 
 const dialogStyle = css({
@@ -91,7 +95,7 @@ export const CreateTaskDialog = ({ open, onClose, onAddNewTask }: Props) => {
       status,
       labels,
     };
-    onAddNewTask(newTask);
+    onAddNewTask({ taskAttributeWithoutId: newTask });
     setTitle('');
     setContent('');
     setStatus(TaskStatus.todo);
