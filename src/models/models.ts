@@ -12,6 +12,6 @@ export type Task = {
   content: string;
   labels: string[];
   status: TaskStatus;
-  createdAt?: firestore.Timestamp | null;
-  updatedAt?: firestore.Timestamp | null;
+  createdAt: firestore.Timestamp | null;
+  updatedAt: firestore.Timestamp | null;
 };

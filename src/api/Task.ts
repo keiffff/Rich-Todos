@@ -15,8 +15,8 @@ export const addTask = async ({
 }: {
   taskAttribute: Pick<Task, 'id' | 'title' | 'content' | 'labels' | 'status'>;
 }) => {
-  const query = firestore().collection(collectionName.tasks);
-  await query.doc(taskAttribute.id.toString()).set({
+  const collection = firestore().collection(collectionName.tasks);
+  await collection.doc(taskAttribute.id.toString()).set({
     ...taskAttribute,
     createdAt: firestore.FieldValue.serverTimestamp(),
     updatedAt: firestore.FieldValue.serverTimestamp(),
