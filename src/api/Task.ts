@@ -22,3 +22,17 @@ export const addTask = async ({
     updatedAt: firestore.FieldValue.serverTimestamp(),
   });
 };
+
+export const updateTask = async ({
+  updateTaskAttribute,
+  targetId,
+}: {
+  updateTaskAttribute: Partial<Pick<Task, 'title' | 'content' | 'labels' | 'status'>>;
+  targetId: number;
+}) => {
+  const collection = firestore().collection(collectionName.tasks);
+  await collection.doc(targetId.toString()).update({
+    ...updateTaskAttribute,
+    updatedAt: firestore.FieldValue.serverTimestamp(),
+  });
+};
