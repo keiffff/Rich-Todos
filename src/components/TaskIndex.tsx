@@ -10,7 +10,7 @@ import { statusLists } from '../constants/constants';
 
 type Props = {
   tasks: Task[];
-  onEditTaskStatus: ({ status, targetId }: { status: TaskStatus; targetId: number }) => void;
+  onUpdateTaskStatus: ({ status, targetId }: { status: TaskStatus; targetId: number }) => void;
   onAddNewTask: ({
     taskAttributeWithoutId,
   }: {
@@ -63,7 +63,7 @@ const circularProgressStyle = css({
   outline: 'none',
 });
 
-export const TaskIndex = ({ tasks, onEditTaskStatus, onAddNewTask, loading }: Props) => {
+export const TaskIndex = ({ tasks, onUpdateTaskStatus, onAddNewTask, loading }: Props) => {
   const [draggedId, setDraggedId] = React.useState(-1);
   const [dialogVisible, setDialogVisible] = React.useState(false);
   const handleChangeDraggedId = React.useCallback((id: number) => setDraggedId(id), []);
@@ -71,7 +71,7 @@ export const TaskIndex = ({ tasks, onEditTaskStatus, onAddNewTask, loading }: Pr
   const handleCloseDialog = React.useCallback(() => setDialogVisible(false), []);
   const handleEditTaskStatus = React.useCallback(
     (status: TaskStatus) => {
-      onEditTaskStatus({ status, targetId: draggedId });
+      onUpdateTaskStatus({ status, targetId: draggedId });
     },
     [draggedId],
   );

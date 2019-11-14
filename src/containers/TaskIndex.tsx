@@ -13,7 +13,7 @@ export const TaskIndexContainer = () => {
     setLoading(false);
   };
 
-  const handleEditTaskStatus = ({ status, targetId }: { status: TaskStatus; targetId: number }) => {
+  const handleUpdateTaskStatus = ({ status, targetId }: { status: TaskStatus; targetId: number }) => {
     updateTask({ updateTaskAttribute: { status }, targetId });
 
     load();
@@ -35,7 +35,7 @@ export const TaskIndexContainer = () => {
   return (
     <TaskIndex
       tasks={tasks}
-      onEditTaskStatus={handleEditTaskStatus}
+      onUpdateTaskStatus={handleUpdateTaskStatus}
       onAddNewTask={handleAddNewTask}
       loading={loading}
     />
