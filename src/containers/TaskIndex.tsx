@@ -2,12 +2,11 @@ import * as React from 'react';
 import { TaskIndex } from '../components/TaskIndex';
 import { Task, TaskStatus } from '../models/models';
 import { fetchTasks, addTask } from '../api/Task';
-import { TasksContext } from '../contexts';
 
 export const TaskIndexContainer = () => {
-  const { tasksState, setTasksState } = React.useContext(TasksContext);
+  const [tasks, setTasks] = React.useState<Task[]>([]);
   const handleEditTaskStatus = ({ status, targetId }: { status: TaskStatus; targetId: number }) => {
-    setTasksState((prevState: Task[]) => {
+    setTasks((prevState: Task[]) => {
       const targetTask = prevState.find(task => task.id === targetId);
       const rests = prevState.filter(task => task.id !== targetId);
 
@@ -19,17 +18,17 @@ export const TaskIndexContainer = () => {
   }: {
     taskAttributeWithoutId: Pick<Task, 'title' | 'content' | 'labels' | 'status'>;
   }) => {
-    const newTaskId = tasksState.reduce((maxId, item) => (maxId < item.id ? item.id : maxId), 0) + 1;
+    const newTaskId = tasks.reduce((maxId, item) => (maxId < item.id ? item.id : maxId), 0) + 1;
     addTask({ taskAttribute: { ...taskAttributeWithoutId, id: newTaskId } });
   };
   React.useEffect(() => {
     const load = async () => {
       const tasksData = await fetchTasks();
-      setTasksState(tasksData);
+      setTasks(tasksData);
     };
 
     load();
-  }, []);
+  }, [tasks]);
 
-  return <TaskIndex tasks={tasksState} onEditTaskStatus={handleEditTaskStatus} onAddNewTask={handleAddNewTask} />;
+  return <TaskIndex tasks={tasks} onEditTaskStatus={handleEditTaskStatus} onAddNewTask={handleAddNewTask} />;
 };
