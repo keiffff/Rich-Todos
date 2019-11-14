@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ClassNames from 'classnames';
 import { css } from 'emotion';
-import { AppBar, Fab } from '@material-ui/core';
+import { AppBar, CircularProgress, Fab, Modal } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import { TaskLane } from './TaskLane';
 import { CreateTaskDialog } from './CreateTaskDialog';
@@ -16,6 +16,7 @@ type Props = {
   }: {
     taskAttributeWithoutId: Pick<Task, 'title' | 'content' | 'labels' | 'status'>;
   }) => void;
+  loading: boolean;
 };
 
 const offsetStyle = css({
@@ -51,7 +52,18 @@ const addButtonContainerStyle = css({
   right: 20,
 });
 
-export const TaskIndex = ({ tasks, onEditTaskStatus, onAddNewTask }: Props) => {
+const modalStyle = css({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: 'white',
+});
+
+const circularProgressStyle = css({
+  outline: 'none',
+});
+
+export const TaskIndex = ({ tasks, onEditTaskStatus, onAddNewTask, loading }: Props) => {
   const [draggedId, setDraggedId] = React.useState(-1);
   const [dialogVisible, setDialogVisible] = React.useState(false);
   const handleChangeDraggedId = React.useCallback((id: number) => setDraggedId(id), []);
@@ -90,6 +102,9 @@ export const TaskIndex = ({ tasks, onEditTaskStatus, onAddNewTask }: Props) => {
         </div>
       </div>
       <CreateTaskDialog open={dialogVisible} onClose={handleCloseDialog} onAddNewTask={onAddNewTask} />
+      <Modal className={modalStyle} open={loading}>
+        <CircularProgress className={circularProgressStyle} size={60} />
+      </Modal>
     </>
   );
 };

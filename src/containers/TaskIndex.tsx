@@ -5,6 +5,8 @@ import { fetchTasks, addTask } from '../api/Task';
 
 export const TaskIndexContainer = () => {
   const [tasks, setTasks] = React.useState<Task[]>([]);
+  const [loading, setLoading] = React.useState(false);
+
   const handleEditTaskStatus = ({ status, targetId }: { status: TaskStatus; targetId: number }) => {
     setTasks((prevState: Task[]) => {
       const targetTask = prevState.find(task => task.id === targetId);
@@ -23,12 +25,21 @@ export const TaskIndexContainer = () => {
   };
   React.useEffect(() => {
     const load = async () => {
+      setLoading(true);
       const tasksData = await fetchTasks();
       setTasks(tasksData);
+      setLoading(false);
     };
 
     load();
   }, [tasks]);
 
-  return <TaskIndex tasks={tasks} onEditTaskStatus={handleEditTaskStatus} onAddNewTask={handleAddNewTask} />;
+  return (
+    <TaskIndex
+      tasks={tasks}
+      onEditTaskStatus={handleEditTaskStatus}
+      onAddNewTask={handleAddNewTask}
+      loading={loading}
+    />
+  );
 };
