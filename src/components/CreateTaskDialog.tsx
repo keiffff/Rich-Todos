@@ -70,6 +70,7 @@ const addButtonStyle = css({
 const labelTexts = ['front', 'server', 'infra', 'feat', 'bugfix', 'hotfix'];
 
 export const CreateTaskDialog = ({ open, onClose, onAddNewTask }: Props) => {
+  const [error, setError] = React.useState(false);
   const [title, setTitle] = React.useState('');
   const [content, setContent] = React.useState('');
   const [status, setStatus] = React.useState(TaskStatus.todo);
@@ -88,14 +89,16 @@ export const CreateTaskDialog = ({ open, onClose, onAddNewTask }: Props) => {
   const handleChangeLabels = React.useCallback((e: React.ChangeEvent<{ value: unknown }>) => {
     setLabels(e.target.value as string[]);
   }, []);
+  const titleError = error && !title.trim();
+  const contentError = error && !content.trim();
+  const errorCondition = !title.trim() || !content.trim();
   const handleClickAddButton = () => {
-    const newTask = {
-      title,
-      content,
-      status,
-      labels,
-    };
-    onAddNewTask({ taskAttributeWithoutId: newTask });
+    setError(errorCondition);
+    if (errorCondition) return;
+    onAddNewTask({
+      taskAttributeWithoutId: { title, content, status, labels },
+    });
+    setError(false);
     setTitle('');
     setContent('');
     setStatus(TaskStatus.todo);
@@ -118,8 +121,9 @@ export const CreateTaskDialog = ({ open, onClose, onAddNewTask }: Props) => {
               <TextField
                 className={titleTextFieldStyle}
                 required
-                label="タイトル"
+                label={titleError ? '入力必須項目です' : 'タイトル'}
                 value={title}
+                error={titleError}
                 onChange={handleChangeTitle}
               />
             </div>
@@ -129,9 +133,10 @@ export const CreateTaskDialog = ({ open, onClose, onAddNewTask }: Props) => {
                 required
                 multiline
                 rows={8}
-                label="内容"
+                label={contentError ? '入力必須項目です' : '内容'}
                 variant="outlined"
                 value={content}
+                error={contentError}
                 onChange={handleChangeContent}
               />
             </div>
