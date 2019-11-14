@@ -40,9 +40,7 @@ export const addTask = async ({
 }: {
   taskAttribute: Pick<Task, 'id' | 'title' | 'content' | 'labels' | 'status'>;
 }) => {
-  const db = firestore();
-  if (!db) throw new Error('Firestore is not initialized');
-  const query = db.collection(collectionName.tasks);
+  const query = firestore().collection(collectionName.tasks);
   await query.doc(taskAttribute.id.toString()).set({
     ...taskAttribute,
     createdAt: firestore.FieldValue.serverTimestamp(),
