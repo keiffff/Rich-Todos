@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { TaskIndex } from '../components/TaskIndex';
 import { Task, TaskStatus } from '../models/models';
-import { useFetchTasks, addTask } from '../api/Task';
+import { fetchTasks, addTask } from '../api/Task';
 import { TasksContext } from '../contexts';
 
 export const TaskIndexContainer = () => {
-  const { tasks } = useFetchTasks();
   const { tasksState, setTasksState } = React.useContext(TasksContext);
   const handleEditTaskStatus = ({ status, targetId }: { status: TaskStatus; targetId: number }) => {
     setTasksState((prevState: Task[]) => {
@@ -23,7 +22,14 @@ export const TaskIndexContainer = () => {
     const newTaskId = tasksState.reduce((maxId, item) => (maxId < item.id ? item.id : maxId), 0) + 1;
     addTask({ taskAttribute: { ...taskAttributeWithoutId, id: newTaskId } });
   };
-  React.useEffect(() => setTasksState(tasks as Task[]), [tasks]);
+  React.useEffect(() => {
+    const load = async () => {
+      const tasksData = await fetchTasks();
+      setTasksState(tasksData);
+    };
+
+    load();
+  }, []);
 
   return <TaskIndex tasks={tasksState} onEditTaskStatus={handleEditTaskStatus} onAddNewTask={handleAddNewTask} />;
 };
