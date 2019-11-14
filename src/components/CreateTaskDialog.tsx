@@ -75,8 +75,15 @@ export const CreateTaskDialog = ({ open, onClose, onAddNewTask }: Props) => {
   const [content, setContent] = React.useState('');
   const [status, setStatus] = React.useState(TaskStatus.todo);
   const [labels, setLabels] = React.useState<string[]>([]);
-  const handleClose = React.useCallback(() => {
+  const resetState = () => {
     setError(false);
+    setTitle('');
+    setContent('');
+    setStatus(TaskStatus.todo);
+    setLabels([]);
+  };
+  const handleCloseDialog = React.useCallback(() => {
+    resetState();
     onClose();
   }, []);
   const handleChangeTitle = React.useCallback(
@@ -102,16 +109,12 @@ export const CreateTaskDialog = ({ open, onClose, onAddNewTask }: Props) => {
     onAddNewTask({
       taskAttributeWithoutId: { title, content, status, labels },
     });
-    setError(false);
-    setTitle('');
-    setContent('');
-    setStatus(TaskStatus.todo);
-    setLabels([]);
+    resetState();
     onClose();
   };
 
   return (
-    <Dialog className={dialogStyle} open={open} onClose={handleClose} maxWidth="lg">
+    <Dialog className={dialogStyle} open={open} onClose={handleCloseDialog} maxWidth="lg">
       <DialogContent>
         <header>
           <span className={openAsNewPageLinkStyle}>
