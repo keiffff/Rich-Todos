@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { TaskIndex } from '../components/TaskIndex';
-import { Task, TaskStatus } from '../models/models';
-import { fetchTasks, addTask, updateTask } from '../api/Task';
+import { TaskIndex } from '../../components/TaskIndex';
+import { Task, TaskStatus } from '../../models/models';
+import { fetchTasks, addTask, updateTask } from '../../api/Task';
 
 export const TaskIndexContainer = () => {
   const [tasks, setTasks] = React.useState<Task[]>([]);
