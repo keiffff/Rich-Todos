@@ -2,9 +2,10 @@ import * as React from 'react';
 import { TaskIndex } from '../../components/TaskIndex';
 import { Task, TaskStatus } from '../../models/models';
 import { fetchTasks, addTask, updateTask } from '../../api/Task';
+import { TaskContext } from '../../contexts/task';
 
 export const TaskIndexContainer = () => {
-  const [tasks, setTasks] = React.useState<Task[]>([]);
+  const { tasks, setTasks } = React.useContext(TaskContext);
   const [loading, setLoading] = React.useState(false);
   const load = async () => {
     setLoading(true);
