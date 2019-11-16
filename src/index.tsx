@@ -5,14 +5,14 @@ import 'firebase/firestore';
 import { FirebaseApp } from './FirebaseApp';
 import { makeGlobalStyles } from './globalStyles';
 import { firebaseConfig } from './FirebaseConfig';
-import { Task } from './containers/Task/index';
+import { Tasks } from './containers/Task/index';
 
 makeGlobalStyles();
 firebase.initializeApp(firebaseConfig);
 
 ReactDOM.render(
   <FirebaseApp>
-    <Task />
+    <Tasks />
   </FirebaseApp>,
   document.getElementById('app'),
 );
