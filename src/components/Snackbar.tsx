@@ -44,6 +44,7 @@ export const Snackbar = ({ children }: Props) => {
         }}
         onClose={handleClose}
         autoHideDuration={5000}
+        transitionDuration={{ enter: 1000 }}
         message={message}
         open={open}
         action={
