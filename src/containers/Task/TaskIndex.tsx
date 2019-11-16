@@ -3,19 +3,39 @@ import { TaskIndex } from '../../components/TaskIndex';
 import { Task, TaskStatus } from '../../models/models';
 import { fetchTasks, addTask, updateTask } from '../../api/Task';
 import { TaskContext } from '../../contexts/task';
+import { SnackbarContext } from '../../contexts/snackbar';
+import { SnackbarTheme } from '../../constants/constants';
 
 export const TaskIndexContainer = () => {
   const { tasks, setTasks } = React.useContext(TaskContext);
+  const { setOpen, setMessage, setTheme } = React.useContext(SnackbarContext);
   const [loading, setLoading] = React.useState(false);
   const load = async () => {
     setLoading(true);
-    const tasksData = await fetchTasks();
-    setTasks(tasksData);
+    try {
+      const tasksData = await fetchTasks();
+      setTasks(tasksData);
+    } catch (e) {
+      setTheme(SnackbarTheme.danger);
+      setOpen(true);
+      setMessage('タスク一覧の取得に失敗しました。');
+    }
     setLoading(false);
   };
 
   const handleUpdateTaskStatus = ({ status, targetId }: { status: TaskStatus; targetId: number }) => {
-    updateTask({ updateTaskAttribute: { status }, targetId, callback: load });
+    setLoading(true);
+    try {
+      updateTask({ updateTaskAttribute: { status }, targetId, callback: load });
+      setTheme(SnackbarTheme.success);
+      setOpen(true);
+      setMessage('ステータスを更新しました。');
+    } catch (e) {
+      setTheme(SnackbarTheme.danger);
+      setOpen(true);
+      setMessage('ステータスの更新に失敗しました。ページをリロードしてやり直してください。');
+      throw e;
+    }
   };
   const handleAddNewTask = ({
     taskAttributeWithoutId,
@@ -23,10 +43,20 @@ export const TaskIndexContainer = () => {
     taskAttributeWithoutId: Pick<Task, 'title' | 'content' | 'labels' | 'status'>;
   }) => {
     const newTaskId = tasks.reduce((maxId, item) => (maxId < item.id ? item.id : maxId), 0) + 1;
-    addTask({
-      taskAttribute: { ...taskAttributeWithoutId, id: newTaskId },
-      callback: load,
-    });
+    try {
+      addTask({
+        taskAttribute: { ...taskAttributeWithoutId, id: newTaskId },
+        callback: load,
+      });
+      setTheme(SnackbarTheme.success);
+      setOpen(true);
+      setMessage('タスクを追加しました。');
+    } catch (e) {
+      setTheme(SnackbarTheme.danger);
+      setOpen(true);
+      setMessage('ステータスの追加に失敗しました。ページをリロードしてやり直してください。');
+      throw e;
+    }
   };
   React.useEffect(() => {
     load();

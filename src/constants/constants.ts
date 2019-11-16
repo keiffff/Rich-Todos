@@ -7,3 +7,22 @@ export const taskStatusText: { [K in TaskStatus]: string } = {
 };
 
 export const statusLists = [TaskStatus.todo, TaskStatus.inProgress, TaskStatus.done];
+
+export enum SnackbarTheme {
+  default = 'default',
+  success = 'succeess',
+  danger = 'danger',
+}
+
+export const snackbarThemeToColorCode = (theme: SnackbarTheme) => {
+  switch (theme) {
+    case SnackbarTheme.default:
+      return '#3f51b5';
+    case SnackbarTheme.success:
+      return '#43a048';
+    case SnackbarTheme.danger:
+      return '#d32f2f';
+    default:
+      return '#3f51b5';
+  }
+};
