@@ -9,10 +9,11 @@ module.exports = {
   },
   devServer: {
     open: true,
-    openPage:"index.html",
-    contentBase: path.join(__dirname, 'dist'),
+    openPage: "index.html",
+    contentBase: path.join(__dirname, "dist"),
+    historyApiFallback: true,
     watchContentBase: true,
-    port: 3000,
+    port: 3000
   },
   module: {
     rules: [
@@ -35,6 +36,6 @@ module.exports = {
   output: {
     filename: "index.js",
     path: path.join(__dirname, "dist"),
-    libraryTarget: "this",
+    libraryTarget: "this"
   }
 };
