@@ -32,14 +32,16 @@ export const Snackbar = ({ children }: Props) => {
     },
     [snackbarMessage, snackbarTheme, snackbarOpen],
   );
-
   const handleClose = React.useCallback(() => setSnackbarOpen(false), []);
-
-  const snackbarWithThemeStyle = css(snackbarStyle, {
-    '> .MuiSnackbarContent-root': {
-      background: snackbarThemeToColorCode(snackbarTheme),
-    },
-  });
+  const snackbarWithThemeStyle = React.useMemo(
+    () =>
+      css(snackbarStyle, {
+        '> .MuiSnackbarContent-root': {
+          background: snackbarThemeToColorCode(snackbarTheme),
+        },
+      }),
+    [snackbarTheme],
+  );
 
   return (
     <SnackbarContext.Provider value={{ snackbarStore: { setSnackbarOptions } }}>
