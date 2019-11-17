@@ -1,9 +1,13 @@
 import * as React from 'react';
 
-type FirebaseContextValue = {
-  db: firebase.firestore.Firestore | null;
+type FirebaseStore = {
+  firebaseStore: {
+    db: firebase.firestore.Firestore | null;
+  };
 };
 
-export const FirebaseContext = React.createContext<FirebaseContextValue>({
-  db: null,
+export const FirebaseContext = React.createContext<FirebaseStore>({
+  firebaseStore: {
+    db: null,
+  },
 });

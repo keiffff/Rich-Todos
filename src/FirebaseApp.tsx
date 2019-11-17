@@ -11,5 +11,5 @@ type Props = {
 export const FirebaseApp = ({ children }: Props) => {
   const db = firebase.firestore();
 
-  return <FirebaseContext.Provider value={{ db }}>{children}</FirebaseContext.Provider>;
+  return <FirebaseContext.Provider value={{ firebaseStore: { db } }}>{children}</FirebaseContext.Provider>;
 };

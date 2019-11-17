@@ -7,18 +7,18 @@ import { SnackbarContext } from '../../contexts/snackbar';
 import { SnackbarTheme } from '../../constants/constants';
 
 export const TaskIndexContainer = () => {
-  const { tasks, setTasks } = React.useContext(TaskContext);
-  const { setOpen, setMessage, setTheme } = React.useContext(SnackbarContext);
+  const { taskStore } = React.useContext(TaskContext);
+  const { snackbarStore } = React.useContext(SnackbarContext);
   const [loading, setLoading] = React.useState(false);
   const load = async () => {
     setLoading(true);
     try {
       const tasksData = await fetchTasks();
-      setTasks(tasksData);
+      taskStore.setTasks(tasksData);
     } catch (e) {
-      setTheme(SnackbarTheme.danger);
-      setOpen(true);
-      setMessage('タスク一覧の取得に失敗しました。');
+      snackbarStore.setTheme(SnackbarTheme.danger);
+      snackbarStore.setOpen(true);
+      snackbarStore.setMessage('タスク一覧の取得に失敗しました。');
     }
     setLoading(false);
   };
@@ -27,13 +27,13 @@ export const TaskIndexContainer = () => {
     setLoading(true);
     try {
       updateTask({ updateTaskAttribute: { status }, targetId, callback: load });
-      setTheme(SnackbarTheme.success);
-      setOpen(true);
-      setMessage('ステータスを更新しました。');
+      snackbarStore.setTheme(SnackbarTheme.success);
+      snackbarStore.setOpen(true);
+      snackbarStore.setMessage('ステータスを更新しました。');
     } catch (e) {
-      setTheme(SnackbarTheme.danger);
-      setOpen(true);
-      setMessage('ステータスの更新に失敗しました。ページをリロードしてやり直してください。');
+      snackbarStore.setTheme(SnackbarTheme.danger);
+      snackbarStore.setOpen(true);
+      snackbarStore.setMessage('ステータスの更新に失敗しました。ページをリロードしてやり直してください。');
       throw e;
     }
   };
@@ -42,19 +42,19 @@ export const TaskIndexContainer = () => {
   }: {
     taskAttributeWithoutId: Pick<Task, 'title' | 'content' | 'labels' | 'status'>;
   }) => {
-    const newTaskId = tasks.reduce((maxId, item) => (maxId < item.id ? item.id : maxId), 0) + 1;
+    const newTaskId = taskStore.tasks.reduce((maxId, item) => (maxId < item.id ? item.id : maxId), 0) + 1;
     try {
       addTask({
         taskAttribute: { ...taskAttributeWithoutId, id: newTaskId },
         callback: load,
       });
-      setTheme(SnackbarTheme.success);
-      setOpen(true);
-      setMessage('タスクを追加しました。');
+      snackbarStore.setTheme(SnackbarTheme.success);
+      snackbarStore.setOpen(true);
+      snackbarStore.setMessage('タスクを追加しました。');
     } catch (e) {
-      setTheme(SnackbarTheme.danger);
-      setOpen(true);
-      setMessage('ステータスの追加に失敗しました。ページをリロードしてやり直してください。');
+      snackbarStore.setTheme(SnackbarTheme.danger);
+      snackbarStore.setOpen(true);
+      snackbarStore.setMessage('ステータスの追加に失敗しました。ページをリロードしてやり直してください。');
       throw e;
     }
   };
@@ -64,7 +64,7 @@ export const TaskIndexContainer = () => {
 
   return (
     <TaskIndex
-      tasks={tasks}
+      tasks={taskStore.tasks}
       onUpdateTaskStatus={handleUpdateTaskStatus}
       onAddNewTask={handleAddNewTask}
       loading={loading}

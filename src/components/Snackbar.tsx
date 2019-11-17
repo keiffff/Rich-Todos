@@ -34,7 +34,7 @@ export const Snackbar = ({ children }: Props) => {
   });
 
   return (
-    <SnackbarContext.Provider value={{ setOpen, setMessage, setTheme }}>
+    <SnackbarContext.Provider value={{ snackbarStore: { setOpen, setMessage, setTheme } }}>
       {children}
       <SnackbarOrigin
         className={snackbarWithThemeStyle}

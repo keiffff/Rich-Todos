@@ -7,7 +7,7 @@ export const Tasks = () => {
   const [tasks, setTasks] = React.useState<Task[]>([]);
 
   return (
-    <TaskContext.Provider value={{ tasks, setTasks }}>
+    <TaskContext.Provider value={{ taskStore: { tasks, setTasks } }}>
       <TaskIndex />
     </TaskContext.Provider>
   );
