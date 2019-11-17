@@ -9,7 +9,6 @@ module.exports = {
   },
   devServer: {
     open: true,
-    openPage: "index.html",
     contentBase: path.join(__dirname, "dist"),
     historyApiFallback: true,
     watchContentBase: true,

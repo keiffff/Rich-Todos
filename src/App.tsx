@@ -6,6 +6,8 @@ import { paths } from './constants/paths';
 
 export const App = () => (
   <Switch>
-    <Route path={[paths.basePath, paths.tasks.show]} component={Tasks} exact />
+    <Route path={[paths.basePath, paths.tasks.show]} exact>
+      <Tasks />
+    </Route>
   </Switch>
 );

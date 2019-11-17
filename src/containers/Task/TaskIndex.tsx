@@ -14,7 +14,7 @@ export const TaskIndexContainer = () => {
   const { snackbarStore } = React.useContext(SnackbarContext);
   const [loading, setLoading] = React.useState(false);
   const handleClickTask = React.useCallback((id: number) => {
-    history.push(`${paths.basePath}task/${id}`);
+    history.replace(`${paths.basePath}task/${id}`);
   }, []);
   const load = async () => {
     setLoading(true);
