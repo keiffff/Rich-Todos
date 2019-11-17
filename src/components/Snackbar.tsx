@@ -24,15 +24,6 @@ export const Snackbar = ({ children }: Props) => {
   const [snackbarMessage, setSnackbarMessage] = React.useState('');
   const [snackbarTheme, setSnackbarTheme] = React.useState(SnackbarTheme.default);
   const [snackbarOpen, setSnackbarOpen] = React.useState(false);
-  const setSnackbarOptions = React.useCallback(
-    ({ message, theme }: { message: string; theme: SnackbarTheme }) => {
-      setSnackbarTheme(theme);
-      setSnackbarOpen(true);
-      setSnackbarMessage(message);
-    },
-    [snackbarMessage, snackbarTheme, snackbarOpen],
-  );
-  const handleClose = React.useCallback(() => setSnackbarOpen(false), []);
   const snackbarWithThemeStyle = React.useMemo(
     () =>
       css(snackbarStyle, {
@@ -42,6 +33,15 @@ export const Snackbar = ({ children }: Props) => {
       }),
     [snackbarTheme],
   );
+  const setSnackbarOptions = React.useCallback(
+    ({ message, theme }: { message: string; theme: SnackbarTheme }) => {
+      setSnackbarTheme(theme);
+      setSnackbarOpen(true);
+      setSnackbarMessage(message);
+    },
+    [snackbarMessage, snackbarTheme, snackbarOpen],
+  );
+  const handleClose = React.useCallback(() => setSnackbarOpen(false), []);
 
   return (
     <SnackbarContext.Provider value={{ snackbarStore: { setSnackbarOptions } }}>

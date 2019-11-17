@@ -75,6 +75,9 @@ export const CreateTaskDialog = ({ open, onClose, onAddNewTask }: Props) => {
   const [content, setContent] = React.useState('');
   const [status, setStatus] = React.useState(TaskStatus.todo);
   const [labels, setLabels] = React.useState<string[]>([]);
+  const titleError = React.useMemo(() => error && !title.trim(), [error, title]);
+  const contentError = React.useMemo(() => error && !content.trim(), [error, content]);
+  const errorCondition = React.useMemo(() => !title.trim() || !content.trim(), [title, content]);
   const resetState = React.useCallback(() => {
     setError(false);
     setTitle('');
@@ -100,9 +103,6 @@ export const CreateTaskDialog = ({ open, onClose, onAddNewTask }: Props) => {
   const handleChangeLabels = React.useCallback((e: React.ChangeEvent<{ value: unknown }>) => {
     setLabels(e.target.value as string[]);
   }, []);
-  const titleError = error && !title.trim();
-  const contentError = error && !content.trim();
-  const errorCondition = !title.trim() || !content.trim();
   const handleClickAddButton = React.useCallback(() => {
     setError(errorCondition);
     if (errorCondition) return;
