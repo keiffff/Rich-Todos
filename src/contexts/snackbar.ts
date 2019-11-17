@@ -3,16 +3,12 @@ import { SnackbarTheme } from '../constants/constants';
 
 type SnackbarStore = {
   snackbarStore: {
-    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    setMessage: React.Dispatch<React.SetStateAction<string>>;
-    setTheme: React.Dispatch<React.SetStateAction<SnackbarTheme>>;
+    setSnackbarOptions: ({ message, theme }: { message: string; theme: SnackbarTheme }) => void;
   };
 };
 
 export const SnackbarContext = React.createContext<SnackbarStore>({
   snackbarStore: {
-    setOpen: () => {},
-    setMessage: () => {},
-    setTheme: () => {},
+    setSnackbarOptions: () => {},
   },
 });

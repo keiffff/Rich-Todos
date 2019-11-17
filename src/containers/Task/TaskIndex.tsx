@@ -16,9 +16,10 @@ export const TaskIndexContainer = () => {
       const tasksData = await fetchTasks();
       taskStore.setTasks(tasksData);
     } catch (e) {
-      snackbarStore.setTheme(SnackbarTheme.danger);
-      snackbarStore.setOpen(true);
-      snackbarStore.setMessage('タスク一覧の取得に失敗しました。');
+      snackbarStore.setSnackbarOptions({
+        theme: SnackbarTheme.danger,
+        message: 'タスク一覧の取得に失敗しました。',
+      });
     }
     setLoading(false);
   };
@@ -27,13 +28,15 @@ export const TaskIndexContainer = () => {
     setLoading(true);
     try {
       updateTask({ updateTaskAttribute: { status }, targetId, callback: load });
-      snackbarStore.setTheme(SnackbarTheme.success);
-      snackbarStore.setOpen(true);
-      snackbarStore.setMessage('ステータスを更新しました。');
+      snackbarStore.setSnackbarOptions({
+        theme: SnackbarTheme.success,
+        message: 'ステータスを更新しました。',
+      });
     } catch (e) {
-      snackbarStore.setTheme(SnackbarTheme.danger);
-      snackbarStore.setOpen(true);
-      snackbarStore.setMessage('ステータスの更新に失敗しました。ページをリロードしてやり直してください。');
+      snackbarStore.setSnackbarOptions({
+        theme: SnackbarTheme.danger,
+        message: 'ステータスの更新に失敗しました。ページをリロードしてやり直してください。',
+      });
       throw e;
     }
   };
@@ -48,13 +51,15 @@ export const TaskIndexContainer = () => {
         taskAttribute: { ...taskAttributeWithoutId, id: newTaskId },
         callback: load,
       });
-      snackbarStore.setTheme(SnackbarTheme.success);
-      snackbarStore.setOpen(true);
-      snackbarStore.setMessage('タスクを追加しました。');
+      snackbarStore.setSnackbarOptions({
+        theme: SnackbarTheme.success,
+        message: 'タスクを追加しました。',
+      });
     } catch (e) {
-      snackbarStore.setTheme(SnackbarTheme.danger);
-      snackbarStore.setOpen(true);
-      snackbarStore.setMessage('ステータスの追加に失敗しました。ページをリロードしてやり直してください。');
+      snackbarStore.setSnackbarOptions({
+        theme: SnackbarTheme.danger,
+        message: 'ステータスの追加に失敗しました。ページをリロードしてやり直してください。',
+      });
       throw e;
     }
   };

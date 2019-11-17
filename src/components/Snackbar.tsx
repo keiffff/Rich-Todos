@@ -21,20 +21,28 @@ const snackbarStyle = css({
 });
 
 export const Snackbar = ({ children }: Props) => {
-  const [message, setMessage] = React.useState('');
-  const [theme, setTheme] = React.useState(SnackbarTheme.default);
-  const [open, setOpen] = React.useState(false);
+  const [snackbarMessage, setSnackbarMessage] = React.useState('');
+  const [snackbarTheme, setSnackbarTheme] = React.useState(SnackbarTheme.default);
+  const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+  const setSnackbarOptions = React.useCallback(
+    ({ message, theme }: { message: string; theme: SnackbarTheme }) => {
+      setSnackbarTheme(theme);
+      setSnackbarOpen(true);
+      setSnackbarMessage(message);
+    },
+    [snackbarMessage, snackbarTheme, snackbarOpen],
+  );
 
-  const handleClose = React.useCallback(() => setOpen(false), []);
+  const handleClose = React.useCallback(() => setSnackbarOpen(false), []);
 
   const snackbarWithThemeStyle = css(snackbarStyle, {
     '> .MuiSnackbarContent-root': {
-      background: snackbarThemeToColorCode(theme),
+      background: snackbarThemeToColorCode(snackbarTheme),
     },
   });
 
   return (
-    <SnackbarContext.Provider value={{ snackbarStore: { setOpen, setMessage, setTheme } }}>
+    <SnackbarContext.Provider value={{ snackbarStore: { setSnackbarOptions } }}>
       {children}
       <SnackbarOrigin
         className={snackbarWithThemeStyle}
@@ -45,8 +53,8 @@ export const Snackbar = ({ children }: Props) => {
         onClose={handleClose}
         autoHideDuration={5000}
         transitionDuration={{ enter: 1000 }}
-        message={message}
-        open={open}
+        message={snackbarMessage}
+        open={snackbarOpen}
         action={
           <IconButton onClick={handleClose}>
             <Close />
