@@ -7,7 +7,7 @@ import { FirebaseApp } from './FirebaseApp';
 import { Snackbar } from './components/Snackbar';
 import { makeGlobalStyles } from './globalStyles';
 import { firebaseConfig } from './FirebaseConfig';
-import { Tasks } from './containers/Task/index';
+import { App } from './App';
 
 makeGlobalStyles();
 firebase.initializeApp(firebaseConfig);
@@ -16,7 +16,7 @@ ReactDOM.render(
   <Router>
     <FirebaseApp>
       <Snackbar>
-        <Tasks />
+        <App />
       </Snackbar>
     </FirebaseApp>
   </Router>,
