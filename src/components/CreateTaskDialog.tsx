@@ -75,13 +75,13 @@ export const CreateTaskDialog = ({ open, onClose, onAddNewTask }: Props) => {
   const [content, setContent] = React.useState('');
   const [status, setStatus] = React.useState(TaskStatus.todo);
   const [labels, setLabels] = React.useState<string[]>([]);
-  const resetState = () => {
+  const resetState = React.useCallback(() => {
     setError(false);
     setTitle('');
     setContent('');
     setStatus(TaskStatus.todo);
     setLabels([]);
-  };
+  }, []);
   const handleCloseDialog = React.useCallback(() => {
     resetState();
     onClose();
@@ -103,7 +103,7 @@ export const CreateTaskDialog = ({ open, onClose, onAddNewTask }: Props) => {
   const titleError = error && !title.trim();
   const contentError = error && !content.trim();
   const errorCondition = !title.trim() || !content.trim();
-  const handleClickAddButton = () => {
+  const handleClickAddButton = React.useCallback(() => {
     setError(errorCondition);
     if (errorCondition) return;
     onAddNewTask({
@@ -111,7 +111,7 @@ export const CreateTaskDialog = ({ open, onClose, onAddNewTask }: Props) => {
     });
     resetState();
     onClose();
-  };
+  }, [errorCondition, title, content, status, labels]);
 
   return (
     <Dialog className={dialogStyle} open={open} onClose={handleCloseDialog} maxWidth="lg">
