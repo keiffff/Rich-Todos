@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import { FirebaseApp } from './FirebaseApp';
@@ -12,10 +13,12 @@ makeGlobalStyles();
 firebase.initializeApp(firebaseConfig);
 
 ReactDOM.render(
-  <FirebaseApp>
-    <Snackbar>
-      <Tasks />
-    </Snackbar>
-  </FirebaseApp>,
+  <Router>
+    <FirebaseApp>
+      <Snackbar>
+        <Tasks />
+      </Snackbar>
+    </FirebaseApp>
+  </Router>,
   document.getElementById('app'),
 );
