@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useHistory } from 'react-router-dom';
+import { paths } from '../../constants/paths';
 import { TaskIndex } from '../../components/TaskIndex';
 import { Task, TaskStatus } from '../../models/models';
 import { fetchTasks, addTask, updateTask } from '../../api/Task';
@@ -7,9 +9,13 @@ import { SnackbarContext } from '../../contexts/snackbar';
 import { SnackbarTheme } from '../../constants/constants';
 
 export const TaskIndexContainer = () => {
+  const history = useHistory();
   const { taskStore } = React.useContext(TaskContext);
   const { snackbarStore } = React.useContext(SnackbarContext);
   const [loading, setLoading] = React.useState(false);
+  const handleClickTask = React.useCallback((id: number) => {
+    history.push(`${paths.basePath}task/${id}`);
+  }, []);
   const load = async () => {
     setLoading(true);
     try {
@@ -23,7 +29,6 @@ export const TaskIndexContainer = () => {
     }
     setLoading(false);
   };
-
   const handleUpdateTaskStatus = ({ status, targetId }: { status: TaskStatus; targetId: number }) => {
     setLoading(true);
     try {
@@ -72,6 +77,7 @@ export const TaskIndexContainer = () => {
       tasks={taskStore.tasks}
       onUpdateTaskStatus={handleUpdateTaskStatus}
       onAddNewTask={handleAddNewTask}
+      onClickTask={handleClickTask}
       loading={loading}
     />
   );

@@ -16,6 +16,7 @@ type Props = {
   }: {
     taskAttributeWithoutId: Pick<Task, 'title' | 'content' | 'labels' | 'status'>;
   }) => void;
+  onClickTask: (id: number) => void;
   loading: boolean;
 };
 
@@ -63,13 +64,13 @@ const circularProgressStyle = css({
   outline: 'none',
 });
 
-export const TaskIndex = ({ tasks, onUpdateTaskStatus, onAddNewTask, loading }: Props) => {
+export const TaskIndex = ({ tasks, onUpdateTaskStatus, onAddNewTask, onClickTask, loading }: Props) => {
   const [draggedId, setDraggedId] = React.useState(-1);
   const [dialogVisible, setDialogVisible] = React.useState(false);
   const handleChangeDraggedId = React.useCallback((id: number) => setDraggedId(id), []);
   const handleClickAddButton = React.useCallback(() => setDialogVisible(true), []);
   const handleCloseDialog = React.useCallback(() => setDialogVisible(false), []);
-  const handleEditTaskStatus = React.useCallback(
+  const handleUpdateTaskStatus = React.useCallback(
     (status: TaskStatus) => {
       onUpdateTaskStatus({ status, targetId: draggedId });
     },
@@ -91,7 +92,8 @@ export const TaskIndex = ({ tasks, onUpdateTaskStatus, onAddNewTask, loading }: 
               status={status}
               tasks={tasks.filter(task => task.status === status)}
               onChangeDraggedId={handleChangeDraggedId}
-              onEditTaskStatus={handleEditTaskStatus}
+              onUpdateTaskStatus={handleUpdateTaskStatus}
+              onClickTask={onClickTask}
             />
           ))}
         </section>

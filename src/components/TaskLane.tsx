@@ -8,7 +8,8 @@ type Props = {
   status: TaskStatus;
   tasks: Task[];
   onChangeDraggedId: (id: number) => void;
-  onEditTaskStatus: (status: TaskStatus) => void;
+  onUpdateTaskStatus: (status: TaskStatus) => void;
+  onClickTask: (id: number) => void;
 };
 
 const baseStyle = css({
@@ -41,7 +42,7 @@ const taskListStyle = css({
   },
 });
 
-export const TaskLane = ({ status, tasks, onChangeDraggedId, onEditTaskStatus }: Props) => {
+export const TaskLane = ({ status, tasks, onChangeDraggedId, onUpdateTaskStatus, onClickTask }: Props) => {
   const baseRef = React.useRef<HTMLDivElement>(null);
   const handleDrag = (e: React.DragEvent<HTMLElement>) => {
     e.preventDefault();
@@ -61,9 +62,12 @@ export const TaskLane = ({ status, tasks, onChangeDraggedId, onEditTaskStatus }:
     e.preventDefault();
     if (!baseRef.current) return;
     baseRef.current.classList.remove(baseDragOverStyle);
-    onEditTaskStatus(status);
+    onUpdateTaskStatus(status);
     onChangeDraggedId(-1);
   };
+  const handleClickTask = React.useCallback((e: React.MouseEvent<HTMLElement>) => {
+    onClickTask(Number(e.currentTarget.dataset.id));
+  }, []);
 
   return (
     <div
@@ -80,7 +84,7 @@ export const TaskLane = ({ status, tasks, onChangeDraggedId, onEditTaskStatus }:
       </header>
       <ul className={taskListStyle}>
         {[...tasks].reverse().map(task => (
-          <li key={task.id} draggable data-id={task.id} onDrag={handleDrag}>
+          <li key={task.id} draggable data-id={task.id} onDrag={handleDrag} onClick={handleClickTask}>
             <TaskCard task={task} />
           </li>
         ))}
