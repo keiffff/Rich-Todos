@@ -5,9 +5,15 @@ import { Task } from '../models/models';
 export const fetchTasks = async () => {
   const collection = firestore().collection(collectionName.tasks);
   const snapShot = await collection.get();
-  const tasksData = snapShot.docs.map(doc => doc.data() as Task);
 
-  return tasksData;
+  return snapShot.docs.map(doc => doc.data() as Task);
+};
+
+export const showTask = async ({ targetId }: { targetId: number }) => {
+  const collection = firestore().collection(collectionName.tasks);
+  const snapShot = await collection.doc(targetId.toString()).get();
+
+  return snapShot.data() as Task;
 };
 
 export const addTask = async ({
