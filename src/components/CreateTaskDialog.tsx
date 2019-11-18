@@ -13,6 +13,15 @@ type Props = {
   }: {
     taskAttributeWithoutId: Pick<Task, 'title' | 'content' | 'labels' | 'status'>;
   }) => void;
+  title: string;
+  content: string;
+  status: TaskStatus;
+  labels: string[];
+  onChangeTitle: (value: string) => void;
+  onChangeContent: (value: string) => void;
+  onChangeStatus: (value: TaskStatus) => void;
+  onChangeLabels: (value: string[]) => void;
+  onReset: () => void;
 };
 
 const dialogStyle = css({
@@ -69,47 +78,52 @@ const addButtonStyle = css({
 
 const labelTexts = ['front', 'server', 'infra', 'feat', 'bugfix', 'hotfix'];
 
-export const CreateTaskDialog = ({ open, onClose, onAddNewTask }: Props) => {
+export const CreateTaskDialog = ({
+  open,
+  onClose,
+  onAddNewTask,
+  title,
+  content,
+  status,
+  labels,
+  onChangeTitle,
+  onChangeContent,
+  onChangeStatus,
+  onChangeLabels,
+  onReset,
+}: Props) => {
   const [error, setError] = React.useState(false);
-  const [title, setTitle] = React.useState('');
-  const [content, setContent] = React.useState('');
-  const [status, setStatus] = React.useState(TaskStatus.todo);
-  const [labels, setLabels] = React.useState<string[]>([]);
   const titleError = React.useMemo(() => error && !title.trim(), [error, title]);
   const contentError = React.useMemo(() => error && !content.trim(), [error, content]);
   const errorCondition = React.useMemo(() => !title.trim() || !content.trim(), [title, content]);
-  const resetState = React.useCallback(() => {
-    setError(false);
-    setTitle('');
-    setContent('');
-    setStatus(TaskStatus.todo);
-    setLabels([]);
-  }, []);
   const handleCloseDialog = React.useCallback(() => {
-    resetState();
+    onReset();
     onClose();
   }, []);
   const handleChangeTitle = React.useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value),
+    (e: React.ChangeEvent<HTMLInputElement>) => onChangeTitle(e.currentTarget.value),
     [],
   );
   const handleChangeContent = React.useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => setContent(e.currentTarget.value),
+    (e: React.ChangeEvent<HTMLInputElement>) => onChangeContent(e.currentTarget.value),
     [],
   );
-  const handleChangeStatus = React.useCallback((e: React.ChangeEvent<{ value: unknown }>) => {
-    setStatus(e.target.value as TaskStatus);
-  }, []);
-  const handleChangeLabels = React.useCallback((e: React.ChangeEvent<{ value: unknown }>) => {
-    setLabels(e.target.value as string[]);
-  }, []);
+  const handleChangeStatus = React.useCallback(
+    (e: React.ChangeEvent<{ value: unknown }>) => onChangeStatus(e.target.value as TaskStatus),
+    [],
+  );
+  const handleChangeLabels = React.useCallback(
+    (e: React.ChangeEvent<{ value: unknown }>) => onChangeLabels(e.target.value as string[]),
+    [],
+  );
   const handleClickAddButton = React.useCallback(() => {
     setError(errorCondition);
     if (errorCondition) return;
     onAddNewTask({
       taskAttributeWithoutId: { title, content, status, labels },
     });
-    resetState();
+    setError(false);
+    onReset();
     onClose();
   }, [errorCondition, title, content, status, labels]);
 

@@ -4,13 +4,38 @@ import { paths } from '../../constants/paths';
 import { TaskIndexContainer as TaskIndex } from './TaskIndex';
 import { TaskShowContainer as TaskShow } from './TaskShow';
 import { TaskContext } from '../../contexts/task';
-import { Task } from '../../models/models';
+import { Task, TaskStatus } from '../../models/models';
 
 export const Tasks = () => {
   const [tasks, setTasks] = React.useState<Task[]>([]);
+  const [title, setTitle] = React.useState('');
+  const [content, setContent] = React.useState('');
+  const [status, setStatus] = React.useState(TaskStatus.todo);
+  const [labels, setLabels] = React.useState<string[]>([]);
+  const resetState = React.useCallback(() => {
+    setTitle('');
+    setContent('');
+    setStatus(TaskStatus.todo);
+    setLabels([]);
+  }, []);
 
   return (
-    <TaskContext.Provider value={{ taskStore: { tasks, setTasks } }}>
+    <TaskContext.Provider
+      value={{
+        taskStore: { tasks, setTasks },
+        taskFormStore: {
+          title,
+          content,
+          status,
+          labels,
+          setTitle,
+          setContent,
+          setStatus,
+          setLabels,
+          resetState,
+        },
+      }}
+    >
       <Switch>
         <Route path={paths.tasks.show}>
           <TaskShow />

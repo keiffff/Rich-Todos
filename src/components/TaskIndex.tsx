@@ -4,7 +4,7 @@ import { css } from 'emotion';
 import { AppBar, CircularProgress, Fab, Modal } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import { TaskLane } from './TaskLane';
-import { CreateTaskDialog } from './CreateTaskDialog';
+import { CreateTaskDialogContainer as CreateTaskDialog } from '../containers/Task/CreateTaskDialog';
 import { Task, TaskStatus } from '../models/models';
 import { statusLists } from '../constants/constants';
 
