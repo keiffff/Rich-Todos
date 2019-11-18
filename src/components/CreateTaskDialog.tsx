@@ -97,6 +97,7 @@ export const CreateTaskDialog = ({
   const contentError = React.useMemo(() => error && !content.trim(), [error, content]);
   const errorCondition = React.useMemo(() => !title.trim() || !content.trim(), [title, content]);
   const handleCloseDialog = React.useCallback(() => {
+    setError(false);
     onReset();
     onClose();
   }, []);
