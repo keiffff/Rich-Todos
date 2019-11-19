@@ -25,7 +25,7 @@ const headerTitleStyle = css({
 });
 
 export const PageHeader = ({ children }: Props) => {
-  const [title, setTitle] = React.useState('Rich Todos');
+  const [title, setTitle] = React.useState('');
 
   return (
     <PageHeaderContext.Provider value={{ pageHeaderStore: { title, setTitle } }}>

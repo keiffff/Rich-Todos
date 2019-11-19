@@ -7,7 +7,7 @@ import { PageHeader } from './components/PageHeader';
 export const App = () => (
   <PageHeader>
     <Switch>
-      <Route path={[paths.basePath, paths.tasks.show]} exact>
+      <Route path={[paths.basePath, paths.tasks.show, paths.tasks.new]} exact>
         <Tasks />
       </Route>
     </Switch>

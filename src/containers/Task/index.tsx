@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { paths } from '../../constants/paths';
 import { TaskIndexContainer as TaskIndex } from './TaskIndex';
 import { TaskShowContainer as TaskShow } from './TaskShow';
+import { TaskNewContainer as TaskNew } from './TaskNew';
 import { TaskContext } from '../../contexts/task';
 import { Task, TaskStatus } from '../../models/models';
 
@@ -37,6 +38,9 @@ export const Tasks = () => {
       }}
     >
       <Switch>
+        <Route path={paths.tasks.new}>
+          <TaskNew />
+        </Route>
         <Route path={paths.tasks.show}>
           <TaskShow />
         </Route>

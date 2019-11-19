@@ -6,12 +6,14 @@ import { Task, TaskStatus } from '../../models/models';
 import { fetchTasks, addTask, updateTask } from '../../api/Task';
 import { TaskContext } from '../../contexts/task';
 import { SnackbarContext } from '../../contexts/snackbar';
+import { PageHeaderContext } from '../../contexts/pageHeader';
 import { SnackbarTheme } from '../../constants/constants';
 
 export const TaskIndexContainer = () => {
   const history = useHistory();
   const { taskStore } = React.useContext(TaskContext);
   const { snackbarStore } = React.useContext(SnackbarContext);
+  const { pageHeaderStore } = React.useContext(PageHeaderContext);
   const [loading, setLoading] = React.useState(false);
   const handleClickTask = React.useCallback((id: number) => {
     history.replace(`${paths.basePath}task/${id}`);
@@ -69,6 +71,7 @@ export const TaskIndexContainer = () => {
     }
   };
   React.useEffect(() => {
+    pageHeaderStore.setTitle('Rich Todos');
     load();
   }, []);
 
