@@ -12,8 +12,9 @@
     "build": "yarn remake; webpack --config webpack.config.js",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
     "db:reset": "firebase firestore:delete --all-collections",
-    "db:seed:tasks": "node src/scripts/dbseed.js tasks",
-    "deploy": "yarn build; firebase deploy --only hosting"
+    "db:seed": "node src/scripts/dbseed.js",
+    "deploy:hosting": "yarn build; firebase deploy --only hosting",
+    "deploy:firestore:rules": "firebase deploy --only firestore:rules"
   },
   "devDependencies": {
     "@types/node": "^12.12.7",
