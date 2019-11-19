@@ -2,6 +2,8 @@ import * as React from 'react';
 import { css } from 'emotion';
 import { Chip, Dialog, DialogContent, Button, Input, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
 import { Navigation, OpenWith } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
+import { paths } from '../constants/paths';
 import { Task, TaskStatus } from '../models/models';
 import { taskStatusText, statusLists } from '../constants/constants';
 
@@ -31,11 +33,16 @@ const dialogStyle = css({
   },
 });
 
+const linkStyle = css({
+  textDecoration: 'none',
+});
+
 const openAsNewPageLinkStyle = css({
   display: 'inline-flex',
   alignItems: 'center',
   color: '#808080',
   cursor: 'pointer',
+  textDecoration: 'none',
   '> svg': {
     marginRight: 4,
   },
@@ -132,10 +139,12 @@ export const CreateTaskDialog = ({
     <Dialog className={dialogStyle} open={open} onClose={handleCloseDialog} maxWidth="lg">
       <DialogContent>
         <header>
-          <span className={openAsNewPageLinkStyle}>
-            <OpenWith />
-            ページとして開く
-          </span>
+          <Link to={paths.tasks.new} className={linkStyle}>
+            <span className={openAsNewPageLinkStyle}>
+              <OpenWith />
+              ページとして開く
+            </span>
+          </Link>
         </header>
         <div className={formContainerStyle}>
           <form>
