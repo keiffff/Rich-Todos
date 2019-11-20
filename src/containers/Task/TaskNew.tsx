@@ -7,6 +7,13 @@ const offsetStyle = css({
   paddingTop: 72,
 });
 
+const formContainerStyle = css({
+  width: '70%',
+  marginLeft: 20,
+  border: '1px solid #d3d3d3',
+  borderRadius: 8,
+});
+
 export const TaskNewContainer = () => {
   const { taskFormStore } = React.useContext(TaskContext);
   const { pageHeaderStore } = React.useContext(PageHeaderContext);
@@ -15,8 +22,9 @@ export const TaskNewContainer = () => {
 
   return (
     <div className={offsetStyle}>
-      <p>{taskFormStore.title}</p>
-      <p>新しいタスクを追加</p>
+      <div className={formContainerStyle}>
+        <p>{taskFormStore.title}</p>
+      </div>
     </div>
   );
 };
