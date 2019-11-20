@@ -5,6 +5,7 @@ import { OpenWith } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import { paths } from '../constants/paths';
 import { Task, TaskStatus } from '../models/models';
+import { taskLabelTexts } from '../constants/constants';
 import { TaskForm } from './TaskForm';
 
 type Props = {
@@ -55,8 +56,6 @@ const openAsNewPageLinkStyle = css({
 const formContainerStyle = css({
   padding: `40px 64px 64px`,
 });
-
-const labelTexts = ['front', 'server', 'infra', 'feat', 'bugfix', 'hotfix'];
 
 export const CreateTaskDialog = ({
   open,
@@ -109,7 +108,7 @@ export const CreateTaskDialog = ({
             content={content}
             status={status}
             labels={labels}
-            labelTexts={labelTexts}
+            labelTexts={taskLabelTexts}
             onChangeTitle={onChangeTitle}
             onChangeContent={onChangeContent}
             onChangeStatus={onChangeStatus}

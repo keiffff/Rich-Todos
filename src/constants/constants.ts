@@ -6,6 +6,8 @@ export const taskStatusText: { [K in TaskStatus]: string } = {
   [TaskStatus.done]: 'Done',
 };
 
+export const taskLabelTexts = ['front', 'server', 'infra', 'feat', 'bugfix', 'hotfix'];
+
 export const statusLists = [TaskStatus.todo, TaskStatus.inProgress, TaskStatus.done];
 
 export enum SnackbarTheme {

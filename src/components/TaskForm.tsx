@@ -5,7 +5,7 @@ import { Navigation } from '@material-ui/icons';
 import { TaskStatus } from '../models/models';
 import { taskStatusText, statusLists } from '../constants/constants';
 
-type Props = {
+type Props = Partial<{
   title: string;
   content: string;
   status: TaskStatus;
@@ -16,9 +16,9 @@ type Props = {
   onChangeStatus: (value: TaskStatus) => void;
   onChangeLabels: (value: string[]) => void;
   onClickSubmit: () => void;
-  titleError?: boolean;
-  contentError?: boolean;
-};
+  titleError: boolean;
+  contentError: boolean;
+}>;
 
 const controlStyle = css({
   margin: '0 auto',
@@ -62,19 +62,19 @@ export const TaskForm = ({
   onClickSubmit,
 }: Props) => {
   const handleChangeTitle = React.useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => onChangeTitle(e.currentTarget.value),
+    (e: React.ChangeEvent<HTMLInputElement>) => onChangeTitle && onChangeTitle(e.currentTarget.value),
     [],
   );
   const handleChangeContent = React.useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => onChangeContent(e.currentTarget.value),
+    (e: React.ChangeEvent<HTMLInputElement>) => onChangeContent && onChangeContent(e.currentTarget.value),
     [],
   );
   const handleChangeStatus = React.useCallback(
-    (e: React.ChangeEvent<{ value: unknown }>) => onChangeStatus(e.target.value as TaskStatus),
+    (e: React.ChangeEvent<{ value: unknown }>) => onChangeStatus && onChangeStatus(e.target.value as TaskStatus),
     [],
   );
   const handleChangeLabels = React.useCallback(
-    (e: React.ChangeEvent<{ value: unknown }>) => onChangeLabels(e.target.value as string[]),
+    (e: React.ChangeEvent<{ value: unknown }>) => onChangeLabels && onChangeLabels(e.target.value as string[]),
     [],
   );
 
@@ -123,11 +123,12 @@ export const TaskForm = ({
           renderValue={selected => (selected as string[]).map(v => <Chip key={v} label={v} />)}
           onChange={handleChangeLabels}
         >
-          {labelTexts.map(item => (
-            <MenuItem key={item} value={item}>
-              {item}
-            </MenuItem>
-          ))}
+          {labelTexts &&
+            labelTexts.map(item => (
+              <MenuItem key={item} value={item}>
+                {item}
+              </MenuItem>
+            ))}
         </Select>
       </div>
       <div className={controlStyle}>
