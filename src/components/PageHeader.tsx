@@ -14,14 +14,12 @@ const headerStyle = css({
 const headerTitleContainerStyle = css({
   display: 'inline-block',
   width: 196,
-  background: 'linear-gradient(to right, #ec77ab, #7873f5)',
-  WebkitBackgroundClip: 'text',
   paddingLeft: 16,
 });
 
 const headerTitleStyle = css({
   fontSize: 24,
-  color: 'transparent',
+  color: 'white',
 });
 
 export const PageHeader = ({ children }: Props) => {
@@ -29,7 +27,7 @@ export const PageHeader = ({ children }: Props) => {
 
   return (
     <PageHeaderContext.Provider value={{ pageHeaderStore: { title, setTitle } }}>
-      <AppBar className={headerStyle} color="default">
+      <AppBar className={headerStyle} color="primary">
         <div className={headerTitleContainerStyle}>
           <h1 className={headerTitleStyle}>{title}</h1>
         </div>
