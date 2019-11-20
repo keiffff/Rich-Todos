@@ -65,7 +65,7 @@ export const TaskIndexContainer = () => {
     } catch (e) {
       snackbarStore.setSnackbarOptions({
         theme: SnackbarTheme.danger,
-        message: 'ステータスの追加に失敗しました。ページをリロードしてやり直してください。',
+        message: 'タスクの追加に失敗しました。ページをリロードしてやり直してください。',
       });
       throw e;
     }
