@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { css } from 'emotion';
+import { CircularProgress, Modal } from '@material-ui/core';
 import { TaskForm } from './TaskForm';
 import { taskLabelTexts } from '../constants/constants';
 import { Task, TaskStatus } from '../models/models';
@@ -19,6 +20,7 @@ type Props = {
   onChangeStatus: (value: TaskStatus) => void;
   onChangeLabels: (value: string[]) => void;
   onReset: () => void;
+  loading: boolean;
 };
 
 const offsetStyle = css({
@@ -33,6 +35,17 @@ const formContainerStyle = css({
   borderRadius: 8,
 });
 
+const modalStyle = css({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: 'white',
+});
+
+const circularProgressStyle = css({
+  outline: 'none',
+});
+
 export const TaskNew = ({
   onAddNewTask,
   title,
@@ -44,6 +57,7 @@ export const TaskNew = ({
   onChangeStatus,
   onChangeLabels,
   onReset,
+  loading,
 }: Props) => {
   const [error, setError] = React.useState(false);
   const titleError = React.useMemo(() => error && !title.trim(), [error, title]);
@@ -77,6 +91,9 @@ export const TaskNew = ({
           contentError={contentError}
         />
       </div>
+      <Modal className={modalStyle} open={loading}>
+        <CircularProgress className={circularProgressStyle} size={60} />
+      </Modal>
     </div>
   );
 };

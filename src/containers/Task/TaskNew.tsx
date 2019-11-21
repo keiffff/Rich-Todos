@@ -19,6 +19,7 @@ export const TaskNewContainer = () => {
   const { taskStore, taskFormStore } = React.useContext(TaskContext);
   const { snackbarStore } = React.useContext(SnackbarContext);
   const { pageHeaderStore } = React.useContext(PageHeaderContext);
+  const [loading, setLoading] = React.useState(false);
   const handleChangeTitle = React.useCallback((value: string) => taskFormStore.setTitle(value), []);
   const handleChangeContent = React.useCallback((value: string) => taskFormStore.setContent(value), []);
   const handleChangeStatus = React.useCallback((value: TaskStatus) => {
@@ -34,6 +35,7 @@ export const TaskNewContainer = () => {
     taskFormStore.setLabels([]);
   }, []);
   const load = async () => {
+    setLoading(true);
     try {
       const tasksData = await fetchTasks();
       taskStore.setTasks(tasksData);
@@ -43,6 +45,7 @@ export const TaskNewContainer = () => {
         message: 'タスク一覧の取得に失敗しました。',
       });
     }
+    setLoading(false);
   };
   const handleAddNewTask = ({
     taskAttributeWithoutId,
@@ -87,6 +90,7 @@ export const TaskNewContainer = () => {
         onChangeLabels={handleChangeLabels}
         onReset={handleReset}
         onAddNewTask={handleAddNewTask}
+        loading={loading}
       />
     </div>
   );
