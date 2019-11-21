@@ -46,7 +46,7 @@ export const TaskIndex = ({ tasks, onUpdateTaskStatus, onAddNewTask, onClickTask
   const handleUpdateTaskStatus = React.useCallback(
     (status: TaskStatus) => {
       const draggedTask = tasks.find(task => task.id === draggedId);
-      if (!!draggedTask && draggedTask.status === status) return;
+      if (!draggedTask || (!!draggedTask && draggedTask.status === status)) return;
       onUpdateTaskStatus({ status, targetId: draggedId });
     },
     [draggedId, tasks],
