@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Task } from '../models/models';
+import { Task } from '../../models/models';
 
 type Props = {
   task: Task;

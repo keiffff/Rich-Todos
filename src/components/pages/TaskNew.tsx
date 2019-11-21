@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { css } from 'emotion';
-import { TaskForm } from './TaskForm';
-import { LoadingScreen } from './LoadingScreen';
-import { taskLabelTexts } from '../constants/constants';
-import { Task, TaskStatus } from '../models/models';
+import { TaskForm } from '../TaskForm';
+import { LoadingScreen } from '../LoadingScreen';
+import { taskLabelTexts } from '../../constants/constants';
+import { Task, TaskStatus } from '../../models/models';
 
 type Props = {
   onAddNewTask: ({

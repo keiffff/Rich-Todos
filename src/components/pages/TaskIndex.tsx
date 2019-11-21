@@ -3,11 +3,11 @@ import ClassNames from 'classnames';
 import { css } from 'emotion';
 import { Fab } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
-import { LoadingScreen } from './LoadingScreen';
-import { TaskLane } from './TaskLane';
-import { CreateTaskDialogContainer as CreateTaskDialog } from '../containers/Task/CreateTaskDialog';
-import { Task, TaskStatus } from '../models/models';
-import { statusLists } from '../constants/constants';
+import { LoadingScreen } from '../LoadingScreen';
+import { TaskLane } from '../TaskLane';
+import { CreateTaskDialogContainer as CreateTaskDialog } from '../../containers/Task/CreateTaskDialog';
+import { Task, TaskStatus } from '../../models/models';
+import { statusLists } from '../../constants/constants';
 
 type Props = {
   tasks: Task[];

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { paths } from '../../constants/paths';
-import { TaskIndex } from '../../components/TaskIndex';
+import { TaskIndex } from '../../components/pages/TaskIndex';
 import { Task, TaskStatus } from '../../models/models';
 import { fetchTasks, addTask, updateTask } from '../../api/Task';
 import { TaskContext } from '../../contexts/task';

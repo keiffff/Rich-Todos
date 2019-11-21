@@ -5,7 +5,7 @@ import { paths } from '../../constants/paths';
 import { SnackbarContext } from '../../contexts/snackbar';
 import { TaskContext } from '../../contexts/task';
 import { PageHeaderContext } from '../../contexts/pageHeader';
-import { TaskNew } from '../../components/TaskNew';
+import { TaskNew } from '../../components/pages/TaskNew';
 import { Task, TaskStatus } from '../../models/models';
 import { fetchTasks, addTask } from '../../api/Task';
 import { SnackbarTheme } from '../../constants/constants';

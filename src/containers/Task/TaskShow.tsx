@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
-import { TaskShow } from '../../components/TaskShow';
+import { TaskShow } from '../../components/pages/TaskShow';
 import { showTask } from '../../api/Task';
 import { Task, TaskStatus } from '../../models/models';
 import { TaskContext } from '../../contexts/task';
