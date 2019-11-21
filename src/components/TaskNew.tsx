@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { css } from 'emotion';
-import { CircularProgress, Modal } from '@material-ui/core';
 import { TaskForm } from './TaskForm';
+import { LoadingScreen } from './LoadingScreen';
 import { taskLabelTexts } from '../constants/constants';
 import { Task, TaskStatus } from '../models/models';
 
@@ -33,17 +33,6 @@ const formContainerStyle = css({
   marginLeft: 20,
   border: '1px solid #d3d3d3',
   borderRadius: 8,
-});
-
-const modalStyle = css({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  backgroundColor: 'white',
-});
-
-const circularProgressStyle = css({
-  outline: 'none',
 });
 
 export const TaskNew = ({
@@ -91,9 +80,7 @@ export const TaskNew = ({
           contentError={contentError}
         />
       </div>
-      <Modal className={modalStyle} open={loading}>
-        <CircularProgress className={circularProgressStyle} size={60} />
-      </Modal>
+      <LoadingScreen loading={loading} />
     </div>
   );
 };

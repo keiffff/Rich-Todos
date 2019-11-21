@@ -1,8 +1,9 @@
 import * as React from 'react';
 import ClassNames from 'classnames';
 import { css } from 'emotion';
-import { CircularProgress, Fab, Modal } from '@material-ui/core';
+import { Fab } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
+import { LoadingScreen } from './LoadingScreen';
 import { TaskLane } from './TaskLane';
 import { CreateTaskDialogContainer as CreateTaskDialog } from '../containers/Task/CreateTaskDialog';
 import { Task, TaskStatus } from '../models/models';
@@ -34,17 +35,6 @@ const addButtonContainerStyle = css({
   position: 'fixed',
   bottom: 20,
   right: 20,
-});
-
-const modalStyle = css({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  backgroundColor: 'white',
-});
-
-const circularProgressStyle = css({
-  outline: 'none',
 });
 
 export const TaskIndex = ({ tasks, onUpdateTaskStatus, onAddNewTask, onClickTask, loading }: Props) => {
@@ -82,9 +72,7 @@ export const TaskIndex = ({ tasks, onUpdateTaskStatus, onAddNewTask, onClickTask
         </div>
       </div>
       <CreateTaskDialog open={dialogVisible} onClose={handleCloseDialog} onAddNewTask={onAddNewTask} />
-      <Modal className={modalStyle} open={loading}>
-        <CircularProgress className={circularProgressStyle} size={60} />
-      </Modal>
+      <LoadingScreen loading={loading} />
     </>
   );
 };
