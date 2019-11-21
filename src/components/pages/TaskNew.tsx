@@ -3,7 +3,9 @@ import { css } from 'emotion';
 import ClassNames from 'classnames';
 import { TaskForm } from '../TaskForm';
 import { LoadingScreen } from '../LoadingScreen';
+import { Breadcrumbs } from '../Breadcrumbs';
 import { taskLabelTexts } from '../../constants/constants';
+import { paths } from '../../constants/paths';
 import { Task, TaskStatus } from '../../models/models';
 
 type Props = {
@@ -27,10 +29,15 @@ type Props = {
 const baseStyle = css({
   display: 'flex',
   justifyContent: 'center',
+  marginTop: 40,
 });
 
 const offsetStyle = css({
-  paddingTop: 136,
+  paddingTop: 72,
+});
+
+const breadcrumbsContainerStyle = css({
+  margin: '16px 0 0 32px',
 });
 
 const formContainerStyle = css({
@@ -40,6 +47,8 @@ const formContainerStyle = css({
   border: '1px solid #d3d3d3',
   borderRadius: 8,
 });
+
+const linkItems = [{ name: 'Home', to: paths.basePath }];
 
 export const TaskNew = ({
   onAddNewTask,
@@ -69,24 +78,31 @@ export const TaskNew = ({
   }, [errorCondition, title, content, status, labels]);
 
   return (
-    <div className={ClassNames(offsetStyle, baseStyle)}>
-      <div className={formContainerStyle}>
-        <TaskForm
-          title={title}
-          content={content}
-          status={status}
-          labels={labels}
-          labelTexts={taskLabelTexts}
-          onChangeTitle={onChangeTitle}
-          onChangeContent={onChangeContent}
-          onChangeStatus={onChangeStatus}
-          onChangeLabels={onChangeLabels}
-          onClickSubmit={handleClickSubmit}
-          titleError={titleError}
-          contentError={contentError}
-        />
+    <>
+      <div className={ClassNames(offsetStyle)}>
+        <div className={breadcrumbsContainerStyle}>
+          <Breadcrumbs linkItems={linkItems} current="新規タスク追加" />
+        </div>
+        <div className={baseStyle}>
+          <div className={formContainerStyle}>
+            <TaskForm
+              title={title}
+              content={content}
+              status={status}
+              labels={labels}
+              labelTexts={taskLabelTexts}
+              onChangeTitle={onChangeTitle}
+              onChangeContent={onChangeContent}
+              onChangeStatus={onChangeStatus}
+              onChangeLabels={onChangeLabels}
+              onClickSubmit={handleClickSubmit}
+              titleError={titleError}
+              contentError={contentError}
+            />
+          </div>
+        </div>
       </div>
       <LoadingScreen loading={loading} />
-    </div>
+    </>
   );
 };
