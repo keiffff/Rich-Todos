@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
-import { css } from 'emotion';
 import { paths } from '../../constants/paths';
 import { SnackbarContext } from '../../contexts/snackbar';
 import { TaskContext } from '../../contexts/task';
@@ -9,10 +8,6 @@ import { TaskNew } from '../../components/pages/TaskNew';
 import { Task, TaskStatus } from '../../models/models';
 import { fetchTasks, addTask } from '../../api/Task';
 import { SnackbarTheme } from '../../constants/constants';
-
-const offsetStyle = css({
-  paddingTop: 72,
-});
 
 export const TaskNewContainer = () => {
   const history = useHistory();
@@ -72,26 +67,24 @@ export const TaskNewContainer = () => {
   };
 
   React.useEffect(() => {
-    pageHeaderStore.setTitle('Add New Task');
+    pageHeaderStore.setTitle('新規タスク追加');
     if (taskStore.tasks.length) return;
     load();
   }, []);
 
   return (
-    <div className={offsetStyle}>
-      <TaskNew
-        title={taskFormStore.title}
-        content={taskFormStore.content}
-        status={taskFormStore.status}
-        labels={taskFormStore.labels}
-        onChangeTitle={handleChangeTitle}
-        onChangeContent={handleChangeContent}
-        onChangeStatus={handleChangeStatus}
-        onChangeLabels={handleChangeLabels}
-        onReset={handleReset}
-        onAddNewTask={handleAddNewTask}
-        loading={loading}
-      />
-    </div>
+    <TaskNew
+      title={taskFormStore.title}
+      content={taskFormStore.content}
+      status={taskFormStore.status}
+      labels={taskFormStore.labels}
+      onChangeTitle={handleChangeTitle}
+      onChangeContent={handleChangeContent}
+      onChangeStatus={handleChangeStatus}
+      onChangeLabels={handleChangeLabels}
+      onReset={handleReset}
+      onAddNewTask={handleAddNewTask}
+      loading={loading}
+    />
   );
 };

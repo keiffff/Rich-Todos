@@ -71,7 +71,7 @@ export const TaskIndexContainer = () => {
     }
   };
   React.useEffect(() => {
-    pageHeaderStore.setTitle('Rich Todos');
+    pageHeaderStore.setTitle('Rich Todo App');
     load();
   }, []);
 

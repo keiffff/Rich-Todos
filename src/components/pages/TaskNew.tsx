@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { css } from 'emotion';
+import ClassNames from 'classnames';
 import { TaskForm } from '../TaskForm';
 import { LoadingScreen } from '../LoadingScreen';
 import { taskLabelTexts } from '../../constants/constants';
@@ -23,8 +24,13 @@ type Props = {
   loading: boolean;
 };
 
+const baseStyle = css({
+  display: 'flex',
+  justifyContent: 'center',
+});
+
 const offsetStyle = css({
-  paddingTop: 72,
+  paddingTop: 136,
 });
 
 const formContainerStyle = css({
@@ -63,7 +69,7 @@ export const TaskNew = ({
   }, [errorCondition, title, content, status, labels]);
 
   return (
-    <div className={offsetStyle}>
+    <div className={ClassNames(offsetStyle, baseStyle)}>
       <div className={formContainerStyle}>
         <TaskForm
           title={title}
