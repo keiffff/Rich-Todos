@@ -45,9 +45,11 @@ export const TaskIndex = ({ tasks, onUpdateTaskStatus, onAddNewTask, onClickTask
   const handleCloseDialog = React.useCallback(() => setDialogVisible(false), []);
   const handleUpdateTaskStatus = React.useCallback(
     (status: TaskStatus) => {
+      const draggedTask = tasks.find(task => task.id === draggedId);
+      if (!!draggedTask && draggedTask.status === status) return;
       onUpdateTaskStatus({ status, targetId: draggedId });
     },
-    [draggedId],
+    [draggedId, tasks],
   );
 
   return (
