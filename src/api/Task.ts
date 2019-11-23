@@ -52,3 +52,10 @@ export const updateTask = async ({
   });
   doc.onSnapshot(() => callback && callback());
 };
+
+export const deleteTasks = async ({ targetIds }: { targetIds: number[] }) => {
+  const collection = firestore().collection(collectionName.tasks);
+  for await (const id of targetIds) {
+    collection.doc(id.toString()).delete();
+  }
+};
