@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { TaskShow } from '../../components/pages/TaskShow';
 import { showTask } from '../../api/Task';
-import { Task } from '../../models/models';
+import { Task, TaskStatus } from '../../models/models';
 import { TaskContext } from '../../contexts/task';
 import { SnackbarContext } from '../../contexts/snackbar';
 import { PageHeaderContext } from '../../contexts/pageHeader';
@@ -13,7 +13,15 @@ export const TaskShowContainer = () => {
   const { taskStore } = React.useContext(TaskContext);
   const { snackbarStore } = React.useContext(SnackbarContext);
   const { pageHeaderStore } = React.useContext(PageHeaderContext);
-  const [task, setTask] = React.useState<Task>();
+  const [task, setTask] = React.useState<Task>({
+    id: -1,
+    title: '',
+    content: '',
+    status: TaskStatus.todo,
+    labels: [],
+    createdAt: null,
+    updatedAt: null,
+  });
   const [loading, setLoading] = React.useState(false);
   const load = async () => {
     setLoading(true);
@@ -42,5 +50,5 @@ export const TaskShowContainer = () => {
     load();
   }, []);
 
-  return !loading && task ? <TaskShow task={task} /> : null;
+  return <TaskShow task={task} loading={loading} />;
 };

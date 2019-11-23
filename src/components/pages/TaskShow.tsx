@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { css } from 'emotion';
 import ClassNames from 'classnames';
+import { LoadingScreen } from '../LoadingScreen';
 import { Task } from '../../models/models';
 import { TaskForm } from '../TaskForm';
 import { Breadcrumbs } from '../Breadcrumbs';
@@ -13,6 +14,7 @@ type Props = {
   // onChangeContent: (value: string) => void;
   // onChangeStatus: (value: TaskStatus) => void;
   // onChangeLabels: (value: string[]) => void;
+  loading: boolean;
 };
 
 const baseStyle = css({
@@ -39,7 +41,7 @@ const formContainerStyle = css({
 
 const linkItems = [{ name: 'Home', to: paths.basePath }];
 
-export const TaskShow = ({ task }: Props) => {
+export const TaskShow = ({ task, loading }: Props) => {
   return (
     <>
       <div className={ClassNames(offsetStyle)}>
@@ -62,6 +64,7 @@ export const TaskShow = ({ task }: Props) => {
           </div>
         </div>
       </div>
+      <LoadingScreen loading={loading} />
     </>
   );
 };
