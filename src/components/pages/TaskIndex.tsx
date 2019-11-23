@@ -2,7 +2,7 @@ import * as React from 'react';
 import ClassNames from 'classnames';
 import { css } from 'emotion';
 import { Fab, Tooltip } from '@material-ui/core';
-import { Add } from '@material-ui/icons';
+import { Add, Delete } from '@material-ui/icons';
 import { LoadingScreen } from '../LoadingScreen';
 import { TaskLane } from '../TaskLane';
 import { CreateTaskDialogContainer as CreateTaskDialog } from '../../containers/Task/CreateTaskDialog';
@@ -29,6 +29,12 @@ const taskLanesContainerStyle = css({
   display: 'flex',
   flex: 'auto',
   padding: 20,
+});
+
+const deleteButtonContainerStyle = css({
+  position: 'fixed',
+  bottom: 90,
+  right: 20,
 });
 
 const addButtonContainerStyle = css({
@@ -67,6 +73,13 @@ export const TaskIndex = ({ tasks, onUpdateTaskStatus, onAddNewTask, onClickTask
             />
           ))}
         </section>
+        <div className={deleteButtonContainerStyle}>
+          <Tooltip title="タスクを一括削除" placement="top">
+            <Fab>
+              <Delete />
+            </Fab>
+          </Tooltip>
+        </div>
         <div className={addButtonContainerStyle}>
           <Tooltip title="新規タスク追加">
             <Fab color="primary" onClick={handleClickAddButton}>
