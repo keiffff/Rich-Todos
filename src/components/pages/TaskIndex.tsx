@@ -6,7 +6,7 @@ import { Add, Delete } from '@material-ui/icons';
 import { LoadingScreen } from '../LoadingScreen';
 import { TaskLane } from '../TaskLane';
 import { CreateTaskDialogContainer as CreateTaskDialog } from '../../containers/Task/CreateTaskDialog';
-import { DeleteTaskDialogContainer as DeleteTaskDialog } from '../../containers/Task/DeleteTaskDialog';
+import { DeleteTaskDialog } from '../DeleteTaskDialog';
 import { Task, TaskStatus } from '../../models/models';
 import { statusLists } from '../../constants/constants';
 
@@ -92,7 +92,12 @@ export const TaskIndex = ({ tasks, onUpdateTaskStatus, onAddNewTask, onClickTask
           </Tooltip>
         </div>
       </div>
-      <DeleteTaskDialog open={deleteTaskDialogVisible} onClose={handleCloseDeleteTaskDialog} statuses={statusLists} />
+      <DeleteTaskDialog
+        open={deleteTaskDialogVisible}
+        onClose={handleCloseDeleteTaskDialog}
+        tasks={tasks}
+        statuses={statusLists}
+      />
       <CreateTaskDialog
         open={createTaskDialogVisible}
         onClose={handleCloseCreateTaskDialog}

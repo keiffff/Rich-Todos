@@ -11,13 +11,13 @@ import {
   FormLabel,
 } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
-import { TaskContext } from '../../contexts/task';
-import { TaskStatus } from '../../models/models';
-import { taskStatusText } from '../../constants/constants';
+import { Task, TaskStatus } from '../models/models';
+import { taskStatusText } from '../constants/constants';
 
 type Props = {
   open: boolean;
   onClose: () => void;
+  tasks: Task[];
   statuses: TaskStatus[];
 };
 
@@ -47,8 +47,7 @@ const controlStyle = css({
   margin: `24px 0 40px`,
 });
 
-export const DeleteTaskDialogContainer = ({ open, onClose, statuses }: Props) => {
-  const { taskStore } = React.useContext(TaskContext);
+export const DeleteTaskDialog = ({ open, onClose, tasks, statuses }: Props) => {
   const [selectedIds, setSelectedIds] = React.useState<number[]>([]);
   const isSelected = React.useCallback((id: number) => selectedIds.includes(id), [selectedIds]);
   const handleChangeSelectedIds = React.useCallback(
@@ -62,12 +61,10 @@ export const DeleteTaskDialogContainer = ({ open, onClose, statuses }: Props) =>
   );
   const handleChangeSelectedAllByStatus = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      const taskIds = taskStore.tasks
-        .filter(task => task.status === (e.target.value as TaskStatus))
-        .map(task => task.id);
+      const taskIds = tasks.filter(task => task.status === (e.target.value as TaskStatus)).map(task => task.id);
       setSelectedIds(e.target.checked ? [...selectedIds, ...taskIds] : selectedIds.filter(id => !taskIds.includes(id)));
     },
-    [selectedIds, taskStore.tasks],
+    [selectedIds, tasks],
   );
 
   return (
@@ -84,7 +81,7 @@ export const DeleteTaskDialogContainer = ({ open, onClose, statuses }: Props) =>
                 />
               </nav>
               <FormGroup>
-                {taskStore.tasks
+                {tasks
                   .filter(task => task.status === status)
                   .map(task => (
                     <FormControlLabel
