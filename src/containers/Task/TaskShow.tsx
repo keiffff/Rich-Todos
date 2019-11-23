@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
+import { paths } from '../../constants/paths';
 import { TaskShow } from '../../components/pages/TaskShow';
-import { showTask } from '../../api/Task';
+import { showTask, updateTask } from '../../api/Task';
 import { Task, TaskStatus } from '../../models/models';
 import { TaskContext } from '../../contexts/task';
 import { SnackbarContext } from '../../contexts/snackbar';
@@ -9,6 +10,7 @@ import { PageHeaderContext } from '../../contexts/pageHeader';
 import { SnackbarTheme } from '../../constants/constants';
 
 export const TaskShowContainer = () => {
+  const history = useHistory();
   const { id } = useParams();
   const { taskStore, taskFormStore } = React.useContext(TaskContext);
   const { snackbarStore } = React.useContext(SnackbarContext);
@@ -21,6 +23,12 @@ export const TaskShowContainer = () => {
   }, []);
   const handleChangeLabels = React.useCallback((value: string[]) => {
     taskFormStore.setLabels(value);
+  }, []);
+  const handleReset = React.useCallback(() => {
+    taskFormStore.setTitle('');
+    taskFormStore.setContent('');
+    taskFormStore.setStatus(TaskStatus.todo);
+    taskFormStore.setLabels([]);
   }, []);
   const setTaskFormValues = (task: Task) => {
     taskFormStore.setTitle(task.title);
@@ -43,7 +51,29 @@ export const TaskShowContainer = () => {
     setLoading(false);
   };
   const foundTask = React.useMemo(() => taskStore.tasks.find(t => t.id === Number(id)), [id]);
-
+  const handleUpdateTask = ({
+    taskAttributeWithoutId,
+  }: {
+    taskAttributeWithoutId: Pick<Task, 'title' | 'content' | 'labels' | 'status'>;
+  }) => {
+    try {
+      updateTask({
+        updateTaskAttribute: taskAttributeWithoutId,
+        targetId: Number(id),
+      });
+      snackbarStore.setSnackbarOptions({
+        theme: SnackbarTheme.success,
+        message: 'タスクを更新しました。',
+      });
+      history.push(paths.tasks.index);
+    } catch (e) {
+      snackbarStore.setSnackbarOptions({
+        theme: SnackbarTheme.danger,
+        message: 'タスクの更新に失敗しました。再度やり直してください。',
+      });
+      throw e;
+    }
+  };
   React.useEffect(() => {
     pageHeaderStore.setTitle('タスクを編集');
     if (foundTask) {
@@ -57,6 +87,7 @@ export const TaskShowContainer = () => {
 
   return (
     <TaskShow
+      onUpdateTask={handleUpdateTask}
       title={taskFormStore.title}
       content={taskFormStore.content}
       status={taskFormStore.status}
@@ -65,6 +96,7 @@ export const TaskShowContainer = () => {
       onChangeContent={handleChangeContent}
       onChangeStatus={handleChangeStatus}
       onChangeLabels={handleChangeLabels}
+      onReset={handleReset}
       loading={loading}
     />
   );

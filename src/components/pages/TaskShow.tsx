@@ -2,13 +2,18 @@ import * as React from 'react';
 import { css } from 'emotion';
 import ClassNames from 'classnames';
 import { LoadingScreen } from '../LoadingScreen';
-import { TaskStatus } from '../../models/models';
+import { Task, TaskStatus } from '../../models/models';
 import { TaskForm } from '../TaskForm';
 import { Breadcrumbs } from '../Breadcrumbs';
 import { taskLabelTexts } from '../../constants/constants';
 import { paths } from '../../constants/paths';
 
 type Props = {
+  onUpdateTask: ({
+    taskAttributeWithoutId,
+  }: {
+    taskAttributeWithoutId: Pick<Task, 'title' | 'content' | 'labels' | 'status'>;
+  }) => void;
   title: string;
   content: string;
   status: TaskStatus;
@@ -17,6 +22,7 @@ type Props = {
   onChangeContent: (value: string) => void;
   onChangeStatus: (value: TaskStatus) => void;
   onChangeLabels: (value: string[]) => void;
+  onReset: () => void;
   loading: boolean;
 };
 
@@ -45,7 +51,7 @@ const formContainerStyle = css({
 const linkItems = [{ name: 'Home', to: paths.basePath }];
 
 export const TaskShow = ({
-  loading,
+  onUpdateTask,
   title,
   content,
   status,
@@ -54,7 +60,23 @@ export const TaskShow = ({
   onChangeContent,
   onChangeStatus,
   onChangeLabels,
+  onReset,
+  loading,
 }: Props) => {
+  const [error, setError] = React.useState(false);
+  const titleError = React.useMemo(() => error && !title.trim(), [error, title]);
+  const contentError = React.useMemo(() => error && !content.trim(), [error, content]);
+  const errorCondition = React.useMemo(() => !title.trim() || !content.trim(), [title, content]);
+  const handleClickSubmit = React.useCallback(() => {
+    setError(errorCondition);
+    if (errorCondition) return;
+    onUpdateTask({
+      taskAttributeWithoutId: { title, content, status, labels },
+    });
+    setError(false);
+    onReset();
+  }, [errorCondition, title, content, status, labels]);
+
   return (
     <>
       <div className={ClassNames(offsetStyle)}>
@@ -73,6 +95,9 @@ export const TaskShow = ({
               onChangeContent={onChangeContent}
               onChangeStatus={onChangeStatus}
               onChangeLabels={onChangeLabels}
+              onClickSubmit={handleClickSubmit}
+              titleError={titleError}
+              contentError={contentError}
             />
           </div>
         </div>

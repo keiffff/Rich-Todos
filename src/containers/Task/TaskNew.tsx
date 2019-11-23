@@ -56,11 +56,11 @@ export const TaskNewContainer = () => {
         theme: SnackbarTheme.success,
         message: 'タスクを追加しました。',
       });
-      history.replace(paths.tasks.index);
+      history.push(paths.tasks.index);
     } catch (e) {
       snackbarStore.setSnackbarOptions({
         theme: SnackbarTheme.danger,
-        message: 'タスクの追加に失敗しました。ページをリロードしてやり直してください。',
+        message: 'タスクの追加に失敗しました。再度やり直してください。',
       });
       throw e;
     }
