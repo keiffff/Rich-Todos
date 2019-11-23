@@ -18,10 +18,8 @@ export const showTask = async ({ targetId }: { targetId: number }) => {
 
 export const addTask = async ({
   taskAttribute,
-  callback,
 }: {
   taskAttribute: Pick<Task, 'id' | 'title' | 'content' | 'labels' | 'status'>;
-  callback?: () => void;
 }) => {
   const doc = firestore()
     .collection(collectionName.tasks)
@@ -31,17 +29,14 @@ export const addTask = async ({
     createdAt: firestore.FieldValue.serverTimestamp(),
     updatedAt: firestore.FieldValue.serverTimestamp(),
   });
-  doc.onSnapshot(() => callback && callback());
 };
 
 export const updateTask = async ({
   updateTaskAttribute,
   targetId,
-  callback,
 }: {
   updateTaskAttribute: Partial<Pick<Task, 'title' | 'content' | 'labels' | 'status'>>;
   targetId: number;
-  callback?: () => void;
 }) => {
   const doc = firestore()
     .collection(collectionName.tasks)
@@ -50,7 +45,6 @@ export const updateTask = async ({
     ...updateTaskAttribute,
     updatedAt: firestore.FieldValue.serverTimestamp(),
   });
-  doc.onSnapshot(() => callback && callback());
 };
 
 export const deleteTasks = async ({ targetIds }: { targetIds: number[] }) => {

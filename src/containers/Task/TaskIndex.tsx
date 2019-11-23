@@ -35,11 +35,12 @@ export const TaskIndexContainer = () => {
   const handleUpdateTaskStatus = ({ status, targetId }: { status: TaskStatus; targetId: number }) => {
     setLoading(true);
     try {
-      updateTask({ updateTaskAttribute: { status }, targetId, callback: load });
+      updateTask({ updateTaskAttribute: { status }, targetId });
       snackbarStore.setSnackbarOptions({
         theme: SnackbarTheme.success,
         message: 'ステータスを更新しました。',
       });
+      load();
     } catch (e) {
       snackbarStore.setSnackbarOptions({
         theme: SnackbarTheme.danger,
@@ -57,12 +58,12 @@ export const TaskIndexContainer = () => {
     try {
       addTask({
         taskAttribute: { ...taskAttributeWithoutId, id: newTaskId },
-        callback: load,
       });
       snackbarStore.setSnackbarOptions({
         theme: SnackbarTheme.success,
         message: 'タスクを追加しました。',
       });
+      load();
     } catch (e) {
       snackbarStore.setSnackbarOptions({
         theme: SnackbarTheme.danger,
