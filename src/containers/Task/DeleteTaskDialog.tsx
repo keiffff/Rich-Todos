@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { css } from 'emotion';
 import {
+  Button,
+  Checkbox,
   Dialog,
   DialogContent,
-  Checkbox,
-  Input,
-  InputLabel,
-  ListItemText,
-  MenuItem,
-  Select,
-  ListSubheader,
+  FormGroup,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
 } from '@material-ui/core';
+import { Delete } from '@material-ui/icons';
 import { TaskContext } from '../../contexts/task';
 import { TaskStatus } from '../../models/models';
 import { taskStatusText } from '../../constants/constants';
@@ -33,43 +33,77 @@ const formContainerStyle = css({
   margin: '0 auto',
 });
 
-const labelsSelectStyle = css({
+const formNavStyle = css({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+});
+
+const deleteButtonStyle = css({
   width: '100%',
+});
+
+const controlStyle = css({
+  margin: `24px 0 40px`,
 });
 
 export const DeleteTaskDialogContainer = ({ open, onClose, statuses }: Props) => {
   const { taskStore } = React.useContext(TaskContext);
+  const [selectedIds, setSelectedIds] = React.useState<number[]>([]);
+  const isSelected = React.useCallback((id: number) => selectedIds.includes(id), [selectedIds]);
+  const handleChangeSelectedIds = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const selectedId = Number(e.target.value);
+      setSelectedIds(
+        isSelected(selectedId) ? selectedIds.filter(id => id !== selectedId) : [...selectedIds, selectedId],
+      );
+    },
+    [selectedIds],
+  );
+  const handleChangeSelectedAllByStatus = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const taskIds = taskStore.tasks
+        .filter(task => task.status === (e.target.value as TaskStatus))
+        .map(task => task.id);
+      setSelectedIds(e.target.checked ? [...selectedIds, ...taskIds] : selectedIds.filter(id => !taskIds.includes(id)));
+    },
+    [selectedIds, taskStore.tasks],
+  );
 
   return (
     <Dialog className={dialogStyle} open={open} onClose={onClose} maxWidth="lg">
       <DialogContent>
         <div className={formContainerStyle}>
-          <form>
-            <InputLabel>一括削除するタスクを選択</InputLabel>
-            <Select
-              multiple
-              input={<Input />}
-              className={labelsSelectStyle}
-              value={[]}
-              renderValue={selected => (selected as string[]).join(',')}
-            >
-              {statuses.map(status => (
-                <div key={status}>
-                  <ListSubheader disableSticky color="primary">
-                    {taskStatusText[status]}
-                  </ListSubheader>
-                  {taskStore.tasks
-                    .filter(task => task.status === status)
-                    .map(task => (
-                      <MenuItem key={task.id} value={task.id}>
-                        <Checkbox />
-                        <ListItemText primary={task.title} />
-                      </MenuItem>
-                    ))}
-                </div>
-              ))}
-            </Select>
-          </form>
+          {statuses.map(status => (
+            <FormControl key={status} fullWidth margin="normal">
+              <nav className={formNavStyle}>
+                <FormLabel>{taskStatusText[status]}</FormLabel>
+                <FormControlLabel
+                  control={<Checkbox value={status} onChange={handleChangeSelectedAllByStatus} />}
+                  label="すべて選択/解除"
+                />
+              </nav>
+              <FormGroup>
+                {taskStore.tasks
+                  .filter(task => task.status === status)
+                  .map(task => (
+                    <FormControlLabel
+                      key={task.id}
+                      control={
+                        <Checkbox value={task.id} checked={isSelected(task.id)} onChange={handleChangeSelectedIds} />
+                      }
+                      label={task.title}
+                    />
+                  ))}
+              </FormGroup>
+            </FormControl>
+          ))}
+          <div className={controlStyle}>
+            <Button className={deleteButtonStyle} disabled={!selectedIds.length} variant="contained" color="secondary">
+              <Delete />
+              {selectedIds.length ? `${selectedIds.length}件のタスクを削除` : '選択してください'}
+            </Button>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
