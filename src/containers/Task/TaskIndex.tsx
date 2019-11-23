@@ -16,7 +16,7 @@ export const TaskIndexContainer = () => {
   const { pageHeaderStore } = React.useContext(PageHeaderContext);
   const [loading, setLoading] = React.useState(false);
   const handleClickTask = React.useCallback((id: number) => {
-    history.replace(`${paths.basePath}task/${id}`);
+    history.push(`${paths.basePath}task/${id}`);
   }, []);
   const load = async () => {
     setLoading(true);
