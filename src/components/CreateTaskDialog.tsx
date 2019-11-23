@@ -54,7 +54,8 @@ const openAsNewPageLinkStyle = css({
 });
 
 const formContainerStyle = css({
-  padding: `40px 64px 64px`,
+  padding: 30,
+  margin: '0 auto',
 });
 
 export const CreateTaskDialog = ({
