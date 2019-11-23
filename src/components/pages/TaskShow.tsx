@@ -2,18 +2,21 @@ import * as React from 'react';
 import { css } from 'emotion';
 import ClassNames from 'classnames';
 import { LoadingScreen } from '../LoadingScreen';
-import { Task } from '../../models/models';
+import { TaskStatus } from '../../models/models';
 import { TaskForm } from '../TaskForm';
 import { Breadcrumbs } from '../Breadcrumbs';
 import { taskLabelTexts } from '../../constants/constants';
 import { paths } from '../../constants/paths';
 
 type Props = {
-  task: Task;
-  // onChangeTitle: (value: string) => void;
-  // onChangeContent: (value: string) => void;
-  // onChangeStatus: (value: TaskStatus) => void;
-  // onChangeLabels: (value: string[]) => void;
+  title: string;
+  content: string;
+  status: TaskStatus;
+  labels: string[];
+  onChangeTitle: (value: string) => void;
+  onChangeContent: (value: string) => void;
+  onChangeStatus: (value: TaskStatus) => void;
+  onChangeLabels: (value: string[]) => void;
   loading: boolean;
 };
 
@@ -41,7 +44,17 @@ const formContainerStyle = css({
 
 const linkItems = [{ name: 'Home', to: paths.basePath }];
 
-export const TaskShow = ({ task, loading }: Props) => {
+export const TaskShow = ({
+  loading,
+  title,
+  content,
+  status,
+  labels,
+  onChangeTitle,
+  onChangeContent,
+  onChangeStatus,
+  onChangeLabels,
+}: Props) => {
   return (
     <>
       <div className={ClassNames(offsetStyle)}>
@@ -51,15 +64,15 @@ export const TaskShow = ({ task, loading }: Props) => {
         <div className={baseStyle}>
           <div className={formContainerStyle}>
             <TaskForm
-              title={task.title}
-              content={task.content}
-              status={task.status}
-              labels={task.labels}
+              title={title}
+              content={content}
+              status={status}
+              labels={labels}
               labelTexts={taskLabelTexts}
-              // onChangeTitle={onChangeTitle}
-              // onChangeContent={onChangeContent}
-              // onChangeStatus={onChangeStatus}
-              // onChangeLabels={onChangeLabels}
+              onChangeTitle={onChangeTitle}
+              onChangeContent={onChangeContent}
+              onChangeStatus={onChangeStatus}
+              onChangeLabels={onChangeLabels}
             />
           </div>
         </div>

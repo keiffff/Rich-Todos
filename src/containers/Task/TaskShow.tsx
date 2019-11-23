@@ -10,24 +10,29 @@ import { SnackbarTheme } from '../../constants/constants';
 
 export const TaskShowContainer = () => {
   const { id } = useParams();
-  const { taskStore } = React.useContext(TaskContext);
+  const { taskStore, taskFormStore } = React.useContext(TaskContext);
   const { snackbarStore } = React.useContext(SnackbarContext);
   const { pageHeaderStore } = React.useContext(PageHeaderContext);
-  const [task, setTask] = React.useState<Task>({
-    id: -1,
-    title: '',
-    content: '',
-    status: TaskStatus.todo,
-    labels: [],
-    createdAt: null,
-    updatedAt: null,
-  });
   const [loading, setLoading] = React.useState(false);
+  const handleChangeTitle = React.useCallback((value: string) => taskFormStore.setTitle(value), []);
+  const handleChangeContent = React.useCallback((value: string) => taskFormStore.setContent(value), []);
+  const handleChangeStatus = React.useCallback((value: TaskStatus) => {
+    taskFormStore.setStatus(value);
+  }, []);
+  const handleChangeLabels = React.useCallback((value: string[]) => {
+    taskFormStore.setLabels(value);
+  }, []);
+  const setTaskFormValues = (task: Task) => {
+    taskFormStore.setTitle(task.title);
+    taskFormStore.setContent(task.content);
+    taskFormStore.setStatus(task.status);
+    taskFormStore.setLabels(task.labels);
+  };
   const load = async () => {
     setLoading(true);
     try {
       const taskData = await showTask({ targetId: Number(id) });
-      setTask(taskData);
+      setTaskFormValues(taskData);
     } catch (e) {
       snackbarStore.setSnackbarOptions({
         theme: SnackbarTheme.danger,
@@ -42,7 +47,7 @@ export const TaskShowContainer = () => {
   React.useEffect(() => {
     pageHeaderStore.setTitle('タスクを編集');
     if (foundTask) {
-      setTask(foundTask);
+      setTaskFormValues(foundTask);
 
       return;
     }
@@ -50,5 +55,17 @@ export const TaskShowContainer = () => {
     load();
   }, []);
 
-  return <TaskShow task={task} loading={loading} />;
+  return (
+    <TaskShow
+      title={taskFormStore.title}
+      content={taskFormStore.content}
+      status={taskFormStore.status}
+      labels={taskFormStore.labels}
+      onChangeTitle={handleChangeTitle}
+      onChangeContent={handleChangeContent}
+      onChangeStatus={handleChangeStatus}
+      onChangeLabels={handleChangeLabels}
+      loading={loading}
+    />
+  );
 };
