@@ -7,6 +7,7 @@ import { TaskForm } from '../TaskForm';
 import { Breadcrumbs } from '../Breadcrumbs';
 import { taskLabelTexts } from '../../constants/constants';
 import { paths } from '../../constants/paths';
+import { useTaskFormError } from '../../hooks/useTaskFormError';
 
 type Props = {
   onUpdateTask: ({
@@ -64,9 +65,11 @@ export const TaskShow = ({
   loading,
 }: Props) => {
   const [error, setError] = React.useState(false);
-  const titleError = React.useMemo(() => error && !title.trim(), [error, title]);
-  const contentError = React.useMemo(() => error && !content.trim(), [error, content]);
-  const errorCondition = React.useMemo(() => !title.trim() || !content.trim(), [title, content]);
+  const { titleError, contentError, errorCondition } = useTaskFormError({
+    error,
+    title,
+    content,
+  });
   const handleClickSubmit = React.useCallback(() => {
     setError(errorCondition);
     if (errorCondition) return;

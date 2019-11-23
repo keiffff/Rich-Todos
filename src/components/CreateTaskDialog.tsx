@@ -7,6 +7,7 @@ import { paths } from '../constants/paths';
 import { Task, TaskStatus } from '../models/models';
 import { taskLabelTexts } from '../constants/constants';
 import { TaskForm } from './TaskForm';
+import { useTaskFormError } from '../hooks/useTaskFormError';
 
 type Props = {
   open: boolean;
@@ -73,9 +74,11 @@ export const CreateTaskDialog = ({
   onReset,
 }: Props) => {
   const [error, setError] = React.useState(false);
-  const titleError = React.useMemo(() => error && !title.trim(), [error, title]);
-  const contentError = React.useMemo(() => error && !content.trim(), [error, content]);
-  const errorCondition = React.useMemo(() => !title.trim() || !content.trim(), [title, content]);
+  const { titleError, contentError, errorCondition } = useTaskFormError({
+    error,
+    title,
+    content,
+  });
   const handleCloseDialog = React.useCallback(() => {
     setError(false);
     onReset();
