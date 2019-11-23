@@ -73,7 +73,8 @@ export const TaskIndexContainer = () => {
   };
   const handleDeleteTasks = ({ targetIds }: { targetIds: number[] }) => {
     try {
-      deleteTasks({ targetIds, callback: load });
+      deleteTasks({ targetIds });
+      load();
       snackbarStore.setSnackbarOptions({
         theme: SnackbarTheme.success,
         message: `${targetIds.length}件のタスクを削除しました。`,
