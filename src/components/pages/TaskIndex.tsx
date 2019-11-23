@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ClassNames from 'classnames';
 import { css } from 'emotion';
-import { Fab } from '@material-ui/core';
+import { Fab, Tooltip } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import { LoadingScreen } from '../LoadingScreen';
 import { TaskLane } from '../TaskLane';
@@ -68,9 +68,11 @@ export const TaskIndex = ({ tasks, onUpdateTaskStatus, onAddNewTask, onClickTask
           ))}
         </section>
         <div className={addButtonContainerStyle}>
-          <Fab color="primary" onClick={handleClickAddButton}>
-            <Add />
-          </Fab>
+          <Tooltip title="新規タスク追加">
+            <Fab color="primary" onClick={handleClickAddButton}>
+              <Add />
+            </Fab>
+          </Tooltip>
         </div>
       </div>
       <CreateTaskDialog open={dialogVisible} onClose={handleCloseDialog} onAddNewTask={onAddNewTask} />
