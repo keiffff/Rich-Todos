@@ -59,7 +59,7 @@ const formContainerStyle = css({
   margin: '0 auto',
 });
 
-export const CreateTaskDialog = ({
+export const AddTaskDialog = ({
   open,
   onClose,
   onAddNewTask,

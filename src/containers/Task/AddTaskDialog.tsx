@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CreateTaskDialog } from '../../components/CreateTaskDialog';
+import { AddTaskDialog } from '../../components/AddTaskDialog';
 import { TaskContext } from '../../contexts/task';
 import { Task, TaskStatus } from '../../models/models';
 
@@ -13,7 +13,7 @@ type Props = {
   }) => void;
 };
 
-export const CreateTaskDialogContainer = ({ open, onClose, onAddNewTask }: Props) => {
+export const AddTaskDialogContainer = ({ open, onClose, onAddNewTask }: Props) => {
   const { taskFormStore } = React.useContext(TaskContext);
   const handleChangeTitle = React.useCallback((value: string) => taskFormStore.setTitle(value), []);
   const handleChangeContent = React.useCallback((value: string) => taskFormStore.setContent(value), []);
@@ -31,7 +31,7 @@ export const CreateTaskDialogContainer = ({ open, onClose, onAddNewTask }: Props
   }, []);
 
   return (
-    <CreateTaskDialog
+    <AddTaskDialog
       open={open}
       onClose={onClose}
       onAddNewTask={onAddNewTask}

@@ -5,7 +5,7 @@ import { Fab, Tooltip } from '@material-ui/core';
 import { Add, Delete } from '@material-ui/icons';
 import { LoadingScreen } from '../LoadingScreen';
 import { TaskLane } from '../TaskLane';
-import { CreateTaskDialogContainer as CreateTaskDialog } from '../../containers/Task/CreateTaskDialog';
+import { AddTaskDialogContainer as AddTaskDialog } from '../../containers/Task/AddTaskDialog';
 import { DeleteTaskDialog } from '../DeleteTaskDialog';
 import { Task, TaskStatus } from '../../models/models';
 import { statusLists } from '../../constants/constants';
@@ -47,12 +47,12 @@ const addButtonContainerStyle = css({
 export const TaskIndex = ({ tasks, onUpdateTaskStatus, onAddNewTask, onClickTask, loading }: Props) => {
   const [draggedId, setDraggedId] = React.useState(-1);
   const [deleteTaskDialogVisible, setDeleteTaskDialogVisible] = React.useState(false);
-  const [createTaskDialogVisible, setCreateTaskDialogVisible] = React.useState(false);
+  const [addTaskDialogVisible, setAddTaskDialogVisible] = React.useState(false);
   const handleChangeDraggedId = React.useCallback((id: number) => setDraggedId(id), []);
   const handleClickDeleteButton = React.useCallback(() => setDeleteTaskDialogVisible(true), []);
   const handleCloseDeleteTaskDialog = React.useCallback(() => setDeleteTaskDialogVisible(false), []);
-  const handleClickAddButton = React.useCallback(() => setCreateTaskDialogVisible(true), []);
-  const handleCloseCreateTaskDialog = React.useCallback(() => setCreateTaskDialogVisible(false), []);
+  const handleClickAddButton = React.useCallback(() => setAddTaskDialogVisible(true), []);
+  const handleCloseAddTaskDialog = React.useCallback(() => setAddTaskDialogVisible(false), []);
   const handleUpdateTaskStatus = React.useCallback(
     (status: TaskStatus) => {
       const draggedTask = tasks.find(task => task.id === draggedId);
@@ -98,11 +98,7 @@ export const TaskIndex = ({ tasks, onUpdateTaskStatus, onAddNewTask, onClickTask
         tasks={tasks}
         statuses={statusLists}
       />
-      <CreateTaskDialog
-        open={createTaskDialogVisible}
-        onClose={handleCloseCreateTaskDialog}
-        onAddNewTask={onAddNewTask}
-      />
+      <AddTaskDialog open={addTaskDialogVisible} onClose={handleCloseAddTaskDialog} onAddNewTask={onAddNewTask} />
       <LoadingScreen loading={loading} />
     </>
   );
