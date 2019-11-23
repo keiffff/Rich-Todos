@@ -22,7 +22,7 @@ type Props = {
   onDeleteTasks: ({ targetIds }: { targetIds: number[] }) => void;
 };
 
-const dialogStyle = css({
+const baseStyle = css({
   '.MuiDialog-paper': {
     width: '50%',
     height: '70%',
@@ -48,8 +48,25 @@ const controlStyle = css({
   margin: `24px 0 40px`,
 });
 
+const confirmDialogStyle = css({
+  textAlign: 'center',
+  '.MuiDialog-paper': {
+    width: '30%',
+  },
+});
+
+const confirmDialogButtonsContainerStyle = css({
+  display: 'flex',
+  margin: `auto 0`,
+  padding: `16px 24px`,
+  '> button': {
+    width: '100%',
+  },
+});
+
 export const DeleteTaskDialog = ({ open, onClose, tasks, statuses, onDeleteTasks }: Props) => {
   const [selectedIds, setSelectedIds] = React.useState<number[]>([]);
+  const [confirmDialogVisible, setConfirmDialogVisible] = React.useState(false);
   const isSelected = React.useCallback((id: number) => selectedIds.includes(id), [selectedIds]);
   const handleChangeSelectedIds = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,51 +87,63 @@ export const DeleteTaskDialog = ({ open, onClose, tasks, statuses, onDeleteTasks
   const handleClickSubmit = React.useCallback(() => {
     onDeleteTasks({ targetIds: selectedIds });
     setSelectedIds([]);
+    setConfirmDialogVisible(false);
     onClose();
   }, [selectedIds]);
+  const handleClickDeleteButton = React.useCallback(() => setConfirmDialogVisible(true), []);
+  const handleCloseConfirmDialog = React.useCallback(() => setConfirmDialogVisible(false), []);
 
   return (
-    <Dialog className={dialogStyle} open={open} onClose={onClose} maxWidth="lg">
-      <DialogContent>
-        <div className={formContainerStyle}>
-          {statuses.map(status => (
-            <FormControl key={status} fullWidth margin="normal">
-              <nav className={formNavStyle}>
-                <FormLabel>{taskStatusText[status]}</FormLabel>
-                <FormControlLabel
-                  control={<Checkbox value={status} onChange={handleChangeSelectedAllByStatus} />}
-                  label="すべて選択/解除"
-                />
-              </nav>
-              <FormGroup>
-                {tasks
-                  .filter(task => task.status === status)
-                  .map(task => (
-                    <FormControlLabel
-                      key={task.id}
-                      control={
-                        <Checkbox value={task.id} checked={isSelected(task.id)} onChange={handleChangeSelectedIds} />
-                      }
-                      label={task.title}
-                    />
-                  ))}
-              </FormGroup>
-            </FormControl>
-          ))}
-          <div className={controlStyle}>
-            <Button
-              className={deleteButtonStyle}
-              disabled={!selectedIds.length}
-              variant="contained"
-              color="secondary"
-              onClick={handleClickSubmit}
-            >
-              <Delete />
-              {selectedIds.length ? `${selectedIds.length}件のタスクを削除` : '選択してください'}
-            </Button>
+    <>
+      <Dialog className={baseStyle} open={open} onClose={onClose} maxWidth="lg">
+        <DialogContent>
+          <div className={formContainerStyle}>
+            {statuses.map(status => (
+              <FormControl key={status} fullWidth margin="normal">
+                <nav className={formNavStyle}>
+                  <FormLabel>{taskStatusText[status]}</FormLabel>
+                  <FormControlLabel
+                    control={<Checkbox value={status} onChange={handleChangeSelectedAllByStatus} />}
+                    label="すべて選択/解除"
+                  />
+                </nav>
+                <FormGroup>
+                  {tasks
+                    .filter(task => task.status === status)
+                    .map(task => (
+                      <FormControlLabel
+                        key={task.id}
+                        control={
+                          <Checkbox value={task.id} checked={isSelected(task.id)} onChange={handleChangeSelectedIds} />
+                        }
+                        label={task.title}
+                      />
+                    ))}
+                </FormGroup>
+              </FormControl>
+            ))}
+            <div className={controlStyle}>
+              <Button
+                className={deleteButtonStyle}
+                disabled={!selectedIds.length}
+                variant="contained"
+                color="secondary"
+                onClick={handleClickDeleteButton}
+              >
+                <Delete />
+                {selectedIds.length ? `${selectedIds.length}件のタスクを削除` : '選択してください'}
+              </Button>
+            </div>
           </div>
+        </DialogContent>
+      </Dialog>
+      <Dialog className={confirmDialogStyle} open={confirmDialogVisible} onClose={handleCloseConfirmDialog}>
+        <p>{`${selectedIds.length}件のタスクを削除します。本当によろしいですか？`}</p>
+        <div className={confirmDialogButtonsContainerStyle}>
+          <Button onClick={handleCloseConfirmDialog}>キャンセル</Button>
+          <Button onClick={handleClickSubmit}>送信</Button>
         </div>
-      </DialogContent>
-    </Dialog>
+      </Dialog>
+    </>
   );
 };
