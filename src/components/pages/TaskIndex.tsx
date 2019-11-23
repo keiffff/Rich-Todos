@@ -18,6 +18,7 @@ type Props = {
   }: {
     taskAttributeWithoutId: Pick<Task, 'title' | 'content' | 'labels' | 'status'>;
   }) => void;
+  onDeleteTasks: ({ targetIds }: { targetIds: number[] }) => void;
   onClickTask: (id: number) => void;
   loading: boolean;
 };
@@ -44,7 +45,7 @@ const addButtonContainerStyle = css({
   right: 20,
 });
 
-export const TaskIndex = ({ tasks, onUpdateTaskStatus, onAddNewTask, onClickTask, loading }: Props) => {
+export const TaskIndex = ({ tasks, onUpdateTaskStatus, onAddNewTask, onDeleteTasks, onClickTask, loading }: Props) => {
   const [draggedId, setDraggedId] = React.useState(-1);
   const [deleteTaskDialogVisible, setDeleteTaskDialogVisible] = React.useState(false);
   const [addTaskDialogVisible, setAddTaskDialogVisible] = React.useState(false);
@@ -97,6 +98,7 @@ export const TaskIndex = ({ tasks, onUpdateTaskStatus, onAddNewTask, onClickTask
         onClose={handleCloseDeleteTaskDialog}
         tasks={tasks}
         statuses={statusLists}
+        onDeleteTasks={onDeleteTasks}
       />
       <AddTaskDialog open={addTaskDialogVisible} onClose={handleCloseAddTaskDialog} onAddNewTask={onAddNewTask} />
       <LoadingScreen loading={loading} />

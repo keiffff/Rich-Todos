@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { paths } from '../../constants/paths';
 import { TaskIndex } from '../../components/pages/TaskIndex';
 import { Task, TaskStatus } from '../../models/models';
-import { fetchTasks, addTask, updateTask } from '../../api/Task';
+import { fetchTasks, addTask, deleteTasks, updateTask } from '../../api/Task';
 import { TaskContext } from '../../contexts/task';
 import { SnackbarContext } from '../../contexts/snackbar';
 import { PageHeaderContext } from '../../contexts/pageHeader';
@@ -30,6 +30,7 @@ export const TaskIndexContainer = () => {
       });
     }
     setLoading(false);
+    console.log('called');
   };
   const handleUpdateTaskStatus = ({ status, targetId }: { status: TaskStatus; targetId: number }) => {
     setLoading(true);
@@ -70,6 +71,21 @@ export const TaskIndexContainer = () => {
       throw e;
     }
   };
+  const handleDeleteTasks = ({ targetIds }: { targetIds: number[] }) => {
+    try {
+      deleteTasks({ targetIds, callback: load });
+      snackbarStore.setSnackbarOptions({
+        theme: SnackbarTheme.success,
+        message: `${targetIds.length}件のタスクを削除しました。`,
+      });
+    } catch (e) {
+      snackbarStore.setSnackbarOptions({
+        theme: SnackbarTheme.danger,
+        message: 'タスクの削除に失敗しました。再度やり直してください。',
+      });
+      throw e;
+    }
+  };
   React.useEffect(() => {
     pageHeaderStore.setTitle('Rich Todo App');
     load();
@@ -80,6 +96,7 @@ export const TaskIndexContainer = () => {
       tasks={taskStore.tasks}
       onUpdateTaskStatus={handleUpdateTaskStatus}
       onAddNewTask={handleAddNewTask}
+      onDeleteTasks={handleDeleteTasks}
       onClickTask={handleClickTask}
       loading={loading}
     />

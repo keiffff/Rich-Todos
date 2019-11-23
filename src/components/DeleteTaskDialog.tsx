@@ -19,6 +19,7 @@ type Props = {
   onClose: () => void;
   tasks: Task[];
   statuses: TaskStatus[];
+  onDeleteTasks: ({ targetIds }: { targetIds: number[] }) => void;
 };
 
 const dialogStyle = css({
@@ -47,7 +48,7 @@ const controlStyle = css({
   margin: `24px 0 40px`,
 });
 
-export const DeleteTaskDialog = ({ open, onClose, tasks, statuses }: Props) => {
+export const DeleteTaskDialog = ({ open, onClose, tasks, statuses, onDeleteTasks }: Props) => {
   const [selectedIds, setSelectedIds] = React.useState<number[]>([]);
   const isSelected = React.useCallback((id: number) => selectedIds.includes(id), [selectedIds]);
   const handleChangeSelectedIds = React.useCallback(
@@ -66,6 +67,11 @@ export const DeleteTaskDialog = ({ open, onClose, tasks, statuses }: Props) => {
     },
     [selectedIds, tasks],
   );
+  const handleClickSubmit = React.useCallback(() => {
+    onDeleteTasks({ targetIds: selectedIds });
+    setSelectedIds([]);
+    onClose();
+  }, [selectedIds]);
 
   return (
     <Dialog className={dialogStyle} open={open} onClose={onClose} maxWidth="lg">
@@ -96,7 +102,13 @@ export const DeleteTaskDialog = ({ open, onClose, tasks, statuses }: Props) => {
             </FormControl>
           ))}
           <div className={controlStyle}>
-            <Button className={deleteButtonStyle} disabled={!selectedIds.length} variant="contained" color="secondary">
+            <Button
+              className={deleteButtonStyle}
+              disabled={!selectedIds.length}
+              variant="contained"
+              color="secondary"
+              onClick={handleClickSubmit}
+            >
               <Delete />
               {selectedIds.length ? `${selectedIds.length}件のタスクを削除` : '選択してください'}
             </Button>
