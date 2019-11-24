@@ -54,7 +54,7 @@ export const TaskNewContainer = () => {
       });
       snackbarStore.setSnackbarOptions({
         theme: SnackbarTheme.success,
-        message: 'タスクを追加しました。ページが更新されない場合はリロードしてください。',
+        message: 'タスクを追加しました。',
       });
       history.push(paths.tasks.index);
     } catch (e) {
