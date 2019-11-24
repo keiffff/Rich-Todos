@@ -13,6 +13,7 @@ import {
 import { Delete } from '@material-ui/icons';
 import { Task, TaskStatus } from '../models/models';
 import { taskStatusText } from '../constants/constants';
+import { ConfirmDialog } from './ConfirmDialog';
 
 type Props = {
   open: boolean;
@@ -25,7 +26,6 @@ type Props = {
 const baseStyle = css({
   '.MuiDialog-paper': {
     width: '50%',
-    height: '70%',
   },
 });
 
@@ -45,23 +45,7 @@ const deleteButtonStyle = css({
 });
 
 const controlStyle = css({
-  margin: `24px 0 40px`,
-});
-
-const confirmDialogStyle = css({
-  textAlign: 'center',
-  '.MuiDialog-paper': {
-    width: '30%',
-  },
-});
-
-const confirmDialogButtonsContainerStyle = css({
-  display: 'flex',
-  margin: `auto 0`,
-  padding: `16px 24px`,
-  '> button': {
-    width: '100%',
-  },
+  paddingTop: 30,
 });
 
 export const DeleteTaskDialog = ({ open, onClose, tasks, statuses, onDeleteTasks }: Props) => {
@@ -137,13 +121,12 @@ export const DeleteTaskDialog = ({ open, onClose, tasks, statuses, onDeleteTasks
           </div>
         </DialogContent>
       </Dialog>
-      <Dialog className={confirmDialogStyle} open={confirmDialogVisible} onClose={handleCloseConfirmDialog}>
-        <p>{`${selectedIds.length}件のタスクを削除します。本当によろしいですか？`}</p>
-        <div className={confirmDialogButtonsContainerStyle}>
-          <Button onClick={handleCloseConfirmDialog}>キャンセル</Button>
-          <Button onClick={handleClickSubmit}>送信</Button>
-        </div>
-      </Dialog>
+      <ConfirmDialog
+        open={confirmDialogVisible}
+        onClose={handleCloseConfirmDialog}
+        onSubmit={handleClickSubmit}
+        message={`${selectedIds.length}件のタスクを削除します。`}
+      />
     </>
   );
 };

@@ -1,9 +1,12 @@
 import * as React from 'react';
 import { css } from 'emotion';
 import ClassNames from 'classnames';
+import { Fab, Tooltip } from '@material-ui/core';
+import { Delete } from '@material-ui/icons';
 import { LoadingScreen } from '../LoadingScreen';
 import { Task, TaskStatus } from '../../models/models';
 import { TaskForm } from '../TaskForm';
+import { ConfirmDialog } from '../ConfirmDialog';
 import { Breadcrumbs } from '../Breadcrumbs';
 import { taskLabelTexts } from '../../constants/constants';
 import { paths } from '../../constants/paths';
@@ -49,6 +52,12 @@ const formContainerStyle = css({
   borderRadius: 8,
 });
 
+const deleteButtonContainerStyle = css({
+  position: 'fixed',
+  bottom: 20,
+  right: 20,
+});
+
 const linkItems = [{ name: 'Home', to: paths.basePath }];
 
 export const TaskShow = ({
@@ -65,6 +74,7 @@ export const TaskShow = ({
   loading,
 }: Props) => {
   const [error, setError] = React.useState(false);
+  const [confirmDialogVisible, setConfirmDialogVisible] = React.useState(false);
   const { titleError, contentError, errorCondition } = useTaskFormError({
     error,
     title,
@@ -79,6 +89,8 @@ export const TaskShow = ({
     setError(false);
     onReset();
   }, [errorCondition, title, content, status, labels]);
+  const handleOpenConfirmDialog = React.useCallback(() => setConfirmDialogVisible(true), []);
+  const handleCloseConfirmDialog = React.useCallback(() => setConfirmDialogVisible(false), []);
   React.useEffect(() => () => onReset(), []);
 
   return (
@@ -105,7 +117,19 @@ export const TaskShow = ({
             />
           </div>
         </div>
+        <div className={deleteButtonContainerStyle}>
+          <Tooltip title="タスクを削除" placement="top">
+            <Fab onClick={handleOpenConfirmDialog}>
+              <Delete />
+            </Fab>
+          </Tooltip>
+        </div>
       </div>
+      <ConfirmDialog
+        open={confirmDialogVisible}
+        onClose={handleCloseConfirmDialog}
+        message={`「${title}」を削除します。`}
+      />
       <LoadingScreen loading={loading} />
     </>
   );
