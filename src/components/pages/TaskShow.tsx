@@ -18,6 +18,7 @@ type Props = {
   }: {
     taskAttributeWithoutId: Pick<Task, 'title' | 'content' | 'labels' | 'status'>;
   }) => void;
+  onDeleteTask: () => void;
   title: string;
   content: string;
   status: TaskStatus;
@@ -62,6 +63,7 @@ const linkItems = [{ name: 'Home', to: paths.basePath }];
 
 export const TaskShow = ({
   onUpdateTask,
+  onDeleteTask,
   title,
   content,
   status,
@@ -128,6 +130,7 @@ export const TaskShow = ({
       <ConfirmDialog
         open={confirmDialogVisible}
         onClose={handleCloseConfirmDialog}
+        onSubmit={onDeleteTask}
         message={`「${title}」を削除します。`}
       />
       <LoadingScreen loading={loading} />

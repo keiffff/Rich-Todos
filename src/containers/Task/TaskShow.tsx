@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { paths } from '../../constants/paths';
 import { TaskShow } from '../../components/pages/TaskShow';
-import { showTask, updateTask } from '../../api/Task';
+import { deleteTasks, showTask, updateTask } from '../../api/Task';
 import { Task, TaskStatus } from '../../models/models';
 import { TaskContext } from '../../contexts/task';
 import { SnackbarContext } from '../../contexts/snackbar';
@@ -16,6 +16,7 @@ export const TaskShowContainer = () => {
   const { snackbarStore } = React.useContext(SnackbarContext);
   const { pageHeaderStore } = React.useContext(PageHeaderContext);
   const [loading, setLoading] = React.useState(false);
+  const foundTask = React.useMemo(() => taskStore.tasks.find(t => t.id === Number(id)), [id]);
   const handleChangeTitle = React.useCallback((value: string) => taskFormStore.setTitle(value), []);
   const handleChangeContent = React.useCallback((value: string) => taskFormStore.setContent(value), []);
   const handleChangeStatus = React.useCallback((value: TaskStatus) => {
@@ -50,7 +51,6 @@ export const TaskShowContainer = () => {
     }
     setLoading(false);
   };
-  const foundTask = React.useMemo(() => taskStore.tasks.find(t => t.id === Number(id)), [id]);
   const handleUpdateTask = ({
     taskAttributeWithoutId,
   }: {
@@ -74,6 +74,23 @@ export const TaskShowContainer = () => {
       throw e;
     }
   };
+  const handleDeleteTask = () => {
+    setLoading(true);
+    try {
+      deleteTasks({ targetIds: [Number(id)] });
+      snackbarStore.setSnackbarOptions({
+        theme: SnackbarTheme.success,
+        message: 'タスクを削除しました。',
+      });
+      history.push(paths.tasks.index);
+    } catch (e) {
+      snackbarStore.setSnackbarOptions({
+        theme: SnackbarTheme.danger,
+        message: 'タスクの削除に失敗しました。再度やり直してください。',
+      });
+    }
+    setLoading(false);
+  };
   React.useEffect(() => {
     pageHeaderStore.setTitle('タスクを編集');
     if (foundTask) {
@@ -88,6 +105,7 @@ export const TaskShowContainer = () => {
   return (
     <TaskShow
       onUpdateTask={handleUpdateTask}
+      onDeleteTask={handleDeleteTask}
       title={taskFormStore.title}
       content={taskFormStore.content}
       status={taskFormStore.status}
