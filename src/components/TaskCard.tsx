@@ -20,6 +20,9 @@ const cardStyle = css({
 const footerStyle = css({
   width: '100%',
   paddingTop: 16,
+  '> .MuiChip-root + .MuiChip-root': {
+    marginLeft: 4,
+  },
 });
 
 export const TaskCard = ({ task }: Props) => {
