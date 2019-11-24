@@ -1,21 +1,27 @@
 import React from 'react';
-
+import { css } from 'emotion';
 import { storiesOf } from '@storybook/react';
 import { TaskStatus } from '../models/models';
 
 import { TaskCard } from '../components/TaskCard';
 
-const components = storiesOf('Components', module);
-components.add('TaskCard', () => (
-  <TaskCard
-    task={{
-      id: 0,
-      title: 'タスクのタイトル',
-      content: 'タスクの内容',
-      status: TaskStatus.todo,
-      labels: ['フロント', '新規'],
-      createdAt: null,
-      updatedAt: null,
-    }}
-  />
+const taskCardContainerStyle = css({
+  width: 328,
+});
+
+const components = storiesOf('TaskCard', module);
+components.add('with data', () => (
+  <div className={taskCardContainerStyle}>
+    <TaskCard
+      task={{
+        id: 0,
+        title: 'データ追加用ダイアログを作成',
+        content: 'firestoreにデータを追加するためのダイアログを作成する',
+        status: TaskStatus.todo,
+        labels: ['フロント', '新規'],
+        createdAt: null,
+        updatedAt: null,
+      }}
+    />
+  </div>
 ));
