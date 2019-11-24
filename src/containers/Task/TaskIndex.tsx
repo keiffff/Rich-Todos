@@ -38,7 +38,7 @@ export const TaskIndexContainer = () => {
       updateTask({ updateTaskAttribute: { status }, targetId });
       snackbarStore.setSnackbarOptions({
         theme: SnackbarTheme.success,
-        message: 'ステータスを更新しました。',
+        message: 'ステータスを更新しました。ページが更新されない場合はリロードしてください。',
       });
       load();
     } catch (e) {
@@ -61,7 +61,7 @@ export const TaskIndexContainer = () => {
       });
       snackbarStore.setSnackbarOptions({
         theme: SnackbarTheme.success,
-        message: 'タスクを追加しました。',
+        message: 'タスクを追加しました。ページが更新されない場合はリロードしてください。',
       });
       load();
     } catch (e) {
@@ -78,7 +78,7 @@ export const TaskIndexContainer = () => {
       load();
       snackbarStore.setSnackbarOptions({
         theme: SnackbarTheme.success,
-        message: `${targetIds.length}件のタスクを削除しました。`,
+        message: `${targetIds.length}件のタスクを削除しました。ページが更新されない場合はリロードしてください。`,
       });
     } catch (e) {
       snackbarStore.setSnackbarOptions({
