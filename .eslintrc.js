@@ -26,6 +26,17 @@ module.exports = {
     "no-restricted-syntax": "off",
     "jsx-a11y/click-events-have-key-events": "off",
     "jsx-a11y/no-noninteractive-element-interactions": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        devDependencies: [
+          ".storybook/**",
+          "stories/**",
+          "**/*/*.story.*",
+          "**/*/*.stories.*"
+        ]
+      }
+    ],
     // @typescript-eslint
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-unused-vars": "error",
