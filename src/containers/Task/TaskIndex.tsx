@@ -30,7 +30,6 @@ export const TaskIndexContainer = () => {
       });
     }
     setLoading(false);
-    console.log('called');
   };
   const handleUpdateTaskStatus = ({ status, targetId }: { status: TaskStatus; targetId: number }) => {
     setLoading(true);
