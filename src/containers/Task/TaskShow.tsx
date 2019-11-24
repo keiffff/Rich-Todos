@@ -60,12 +60,14 @@ export const TaskShowContainer = () => {
       updateTask({
         updateTaskAttribute: taskAttributeWithoutId,
         targetId: Number(id),
+        callback: () => {
+          snackbarStore.setSnackbarOptions({
+            theme: SnackbarTheme.success,
+            message: 'タスクを更新しました。',
+          });
+          history.push(paths.tasks.index);
+        },
       });
-      snackbarStore.setSnackbarOptions({
-        theme: SnackbarTheme.success,
-        message: 'タスクを更新しました。',
-      });
-      history.push(paths.tasks.index);
     } catch (e) {
       snackbarStore.setSnackbarOptions({
         theme: SnackbarTheme.danger,
@@ -75,21 +77,23 @@ export const TaskShowContainer = () => {
     }
   };
   const handleDeleteTask = () => {
-    setLoading(true);
     try {
-      deleteTasks({ targetIds: [Number(id)] });
-      snackbarStore.setSnackbarOptions({
-        theme: SnackbarTheme.success,
-        message: 'タスクを削除しました。',
+      deleteTasks({
+        targetIds: [Number(id)],
+        callback: () => {
+          snackbarStore.setSnackbarOptions({
+            theme: SnackbarTheme.success,
+            message: 'タスクを削除しました。',
+          });
+          history.push(paths.tasks.index);
+        },
       });
-      history.push(paths.tasks.index);
     } catch (e) {
       snackbarStore.setSnackbarOptions({
         theme: SnackbarTheme.danger,
         message: 'タスクの削除に失敗しました。再度やり直してください。',
       });
     }
-    setLoading(false);
   };
   React.useEffect(() => {
     pageHeaderStore.setTitle('タスクを編集');

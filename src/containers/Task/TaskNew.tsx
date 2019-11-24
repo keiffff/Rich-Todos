@@ -51,12 +51,14 @@ export const TaskNewContainer = () => {
     try {
       addTask({
         taskAttribute: { ...taskAttributeWithoutId, id: newTaskId },
+        callback: () => {
+          snackbarStore.setSnackbarOptions({
+            theme: SnackbarTheme.success,
+            message: 'タスクを追加しました。',
+          });
+          history.push(paths.tasks.index);
+        },
       });
-      snackbarStore.setSnackbarOptions({
-        theme: SnackbarTheme.success,
-        message: 'タスクを追加しました。',
-      });
-      history.push(paths.tasks.index);
     } catch (e) {
       snackbarStore.setSnackbarOptions({
         theme: SnackbarTheme.danger,
@@ -65,7 +67,6 @@ export const TaskNewContainer = () => {
       throw e;
     }
   };
-
   React.useEffect(() => {
     pageHeaderStore.setTitle('新規タスク追加');
     if (taskStore.tasks.length) return;

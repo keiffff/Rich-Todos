@@ -32,18 +32,17 @@ export const TaskIndexContainer = () => {
     setLoading(false);
   };
   const handleUpdateTaskStatus = ({ status, targetId }: { status: TaskStatus; targetId: number }) => {
-    const callbackOnUpdate = () => {
-      load();
-      snackbarStore.setSnackbarOptions({
-        theme: SnackbarTheme.success,
-        message: 'ステータスを更新しました。',
-      });
-    };
     try {
       updateTask({
         updateTaskAttribute: { status },
         targetId,
-        callback: callbackOnUpdate,
+        callback: () => {
+          load();
+          snackbarStore.setSnackbarOptions({
+            theme: SnackbarTheme.success,
+            message: 'ステータスを更新しました。',
+          });
+        },
       });
     } catch (e) {
       snackbarStore.setSnackbarOptions({
@@ -59,17 +58,16 @@ export const TaskIndexContainer = () => {
     taskAttributeWithoutId: Pick<Task, 'title' | 'content' | 'labels' | 'status'>;
   }) => {
     const newTaskId = taskStore.tasks.reduce((maxId, item) => (maxId < item.id ? item.id : maxId), 0) + 1;
-    const callbackOnUpdate = () => {
-      load();
-      snackbarStore.setSnackbarOptions({
-        theme: SnackbarTheme.success,
-        message: 'タスクを追加しました。',
-      });
-    };
     try {
       addTask({
         taskAttribute: { ...taskAttributeWithoutId, id: newTaskId },
-        callback: callbackOnUpdate,
+        callback: () => {
+          load();
+          snackbarStore.setSnackbarOptions({
+            theme: SnackbarTheme.success,
+            message: 'タスクを追加しました。',
+          });
+        },
       });
     } catch (e) {
       snackbarStore.setSnackbarOptions({
@@ -80,15 +78,17 @@ export const TaskIndexContainer = () => {
     }
   };
   const handleDeleteTasks = ({ targetIds }: { targetIds: number[] }) => {
-    const callbackOnUpdate = () => {
-      load();
-      snackbarStore.setSnackbarOptions({
-        theme: SnackbarTheme.success,
-        message: `${targetIds.length}件のタスクを削除しました。`,
-      });
-    };
     try {
-      deleteTasks({ targetIds, callback: callbackOnUpdate });
+      deleteTasks({
+        targetIds,
+        callback: () => {
+          load();
+          snackbarStore.setSnackbarOptions({
+            theme: SnackbarTheme.success,
+            message: `${targetIds.length}件のタスクを削除しました。`,
+          });
+        },
+      });
     } catch (e) {
       snackbarStore.setSnackbarOptions({
         theme: SnackbarTheme.danger,
