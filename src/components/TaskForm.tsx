@@ -43,6 +43,12 @@ const labelsSelectStyle = css(selectBaseStyle, {
   width: '100%',
 });
 
+const chipStyle = css({
+  '& + &': {
+    marginLeft: 4,
+  },
+});
+
 const addButtonStyle = css({
   width: '100%',
 });
@@ -120,7 +126,7 @@ export const TaskForm = ({
           input={<Input />}
           className={labelsSelectStyle}
           value={labels}
-          renderValue={selected => (selected as string[]).map(v => <Chip key={v} label={v} />)}
+          renderValue={selected => (selected as string[]).map(v => <Chip className={chipStyle} key={v} label={v} />)}
           onChange={handleChangeLabels}
         >
           {labelTexts &&
