@@ -93,6 +93,7 @@ export const TaskShowContainer = () => {
         theme: SnackbarTheme.danger,
         message: 'タスクの削除に失敗しました。再度やり直してください。',
       });
+      throw e;
     }
   };
   React.useEffect(() => {

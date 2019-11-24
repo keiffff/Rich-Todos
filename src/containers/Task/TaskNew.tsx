@@ -39,6 +39,7 @@ export const TaskNewContainer = () => {
         theme: SnackbarTheme.danger,
         message: 'タスク一覧の取得に失敗しました。',
       });
+      throw e;
     }
     setLoading(false);
   };
