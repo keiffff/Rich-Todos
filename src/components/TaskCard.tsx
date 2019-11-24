@@ -32,7 +32,7 @@ export const TaskCard = ({ task }: Props) => {
           </Avatar>
         }
         title={task.title}
-        subheader={`更新日時: ${task.updatedAt && format(task.updatedAt.toDate(), 'yyyy-MM-dd')}`}
+        subheader={`更新日時: ${task.updatedAt ? format(task.updatedAt.toDate(), 'yyyy-MM-dd') : ''}`}
       />
       <CardContent>
         {task.content}
