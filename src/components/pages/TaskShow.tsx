@@ -31,6 +31,7 @@ const baseStyle = css({
   display: 'flex',
   justifyContent: 'center',
   marginTop: 40,
+  paddingBottom: 72,
 });
 
 const offsetStyle = css({
@@ -44,7 +45,6 @@ const breadcrumbsContainerStyle = css({
 const formContainerStyle = css({
   width: '70%',
   padding: `40px 64px 64px`,
-  marginLeft: 20,
   border: '1px solid #d3d3d3',
   borderRadius: 8,
 });
