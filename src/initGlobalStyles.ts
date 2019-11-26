@@ -1,6 +1,6 @@
 import { injectGlobal } from 'emotion';
 
-export const makeGlobalStyles = () => {
+export const initGlobalStyles = () => {
   injectGlobal({
     body: {
       fontFamily:
