@@ -3,12 +3,14 @@ module.exports = {
   env: {
     browser: true,
     es6: true,
-    node: true
+    node: true,
+    "jest/globals": true
   },
   extends: [
     "airbnb",
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:jest/recommended",
     "prettier/@typescript-eslint",
     "plugin:prettier/recommended"
   ],
@@ -33,7 +35,11 @@ module.exports = {
           ".storybook/**",
           "stories/**",
           "**/*/*.story.*",
-          "**/*/*.stories.*"
+          "**/*/*.stories.*",
+          "**/__specs__/**",
+          "**/*/*.spec.*",
+          "**/__tests__/**",
+          "**/*/*.test.*"
         ]
       }
     ],
