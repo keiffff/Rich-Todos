@@ -3,6 +3,10 @@ module.exports = {
   transform: {
     "^.+\\.tsx?$": "ts-jest"
   },
-  testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
-  moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"]
+  transform: {
+    "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/.jest/transform.js"
+  },
+  testMatch: ["<rootDir>/**/?(*.)(spec|test).(ts|js)?(x)"],
+  moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
+  setupFiles: ["<rootDir>/.jest/setup.js"]
 };

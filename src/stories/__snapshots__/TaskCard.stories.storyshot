@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots TaskCard with data 1`] = `
+<div
+  className="css-1cjwcs3"
+>
+  <div
+    className="MuiPaper-root MuiPaper-elevation1 MuiCard-root css-126eak4 MuiPaper-rounded"
+  >
+    <div
+      className="MuiCardHeader-root"
+    >
+      <div
+        className="MuiCardHeader-avatar"
+      >
+        <div
+          className="MuiAvatar-root MuiAvatar-colorDefault"
+        >
+          <svg
+            aria-hidden="true"
+            className="MuiSvgIcon-root"
+            focusable="false"
+            role="presentation"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+            />
+          </svg>
+        </div>
+      </div>
+      <div
+        className="MuiCardHeader-content"
+      >
+        <span
+          className="MuiTypography-root MuiCardHeader-title MuiTypography-body2 MuiTypography-displayBlock"
+        >
+          データ追加用ダイアログを作成
+        </span>
+        <span
+          className="MuiTypography-root MuiCardHeader-subheader MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
+        >
+          更新日時: 
+        </span>
+      </div>
+    </div>
+    <div
+      className="MuiCardContent-root"
+    >
+      firestoreにデータを追加するためのダイアログを作成する
+      <footer
+        className="css-1cg8zzv"
+      >
+        <div
+          className="MuiChip-root"
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+        >
+          <span
+            className="MuiChip-label"
+          >
+            フロント
+          </span>
+        </div>
+        <div
+          className="MuiChip-root"
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+        >
+          <span
+            className="MuiChip-label"
+          >
+            新規
+          </span>
+        </div>
+      </footer>
+    </div>
+  </div>
+</div>
+`;
