@@ -1,3 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Storyshots TaskCard basic 1`] = `null`;
+
 exports[`Storyshots TaskCard with data 1`] = `null`;
