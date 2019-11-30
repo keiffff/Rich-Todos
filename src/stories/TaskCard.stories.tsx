@@ -9,8 +9,7 @@ const taskCardContainerStyle = css({
   width: 328,
 });
 
-const components = storiesOf('TaskCard', module);
-components.add('with data', () => (
+storiesOf('TaskCard', module).add('with data', () => (
   <div className={taskCardContainerStyle}>
     <TaskCard
       task={{

@@ -11,8 +11,7 @@ const taskLanesContainerStyle = css({
   padding: 20,
 });
 
-const components = storiesOf('TaskLane', module);
-components.add('with data', () => (
+storiesOf('TaskLane', module).add('with data', () => (
   <div className={taskLanesContainerStyle}>
     <TaskLane
       status={TaskStatus.todo}
